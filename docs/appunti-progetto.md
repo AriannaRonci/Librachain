@@ -5,6 +5,7 @@
 - Perchè il value di un asset cambia nella tapella pagina 28 slide U4Lab-PreliminaryAssesment?
 - Quando l'utente richiede di vedere il contenuto del registro, sempre considerando che possa farlo, l'off-chain manager comunica con l'on-chain manager per ottenere la posizione delle parti distribuite del registro. A questo punto, per poter rispondere all'utente, deve comunicare con gli shard per ottenere il contenuto delle singole parti?
 - La sicurezza fisica del server su cui si troverà l'off-chain manager va considerata? Dovremmo quindi, per esempio, prevedere possibili Jamming, oppure considerare il fatto che il server verrà deployato su strutture controllate da terzi, e il costo dovuto a questo?
+- Dovremmo considerare come asset i task dell'utente, che non sono di fatto serviti dall'applicazione, o dovremmo solo considerare i servizi offerti dall'applicazione che possono quindi essere vittima di DoS per esempio. Esempio specifico: send transaction request è il vettore attraverso il quale si può attuare un Sustained client engagement, o Flooding, ma poi la risorsa attaccata è l'off-chain manager o lo smart contrat sullo shard(gia prevede meccanismi per evitarlo). Dovremmo quindi fare queste considerazioni sull'asset send transaction request (e.g. prevedere nel codice di invio della richiesta un meccanismo di controllo), o dovremmo farlo sugli asset che lo subiscono, e specificare quindi lì che questo controllo va fatto?
 
 ## Attacchi
 
