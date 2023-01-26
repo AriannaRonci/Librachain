@@ -1,0 +1,190 @@
+{
+  "actors": [
+    {
+      "id": "bd98927d-ec8e-4366-962c-381277403a7d",
+      "text": "Honest Nodes",
+      "type": "istar.Actor",
+      "x": 606,
+      "y": 114,
+      "customProperties": {
+        "Description": ""
+      },
+      "nodes": [
+        {
+          "id": "d9cc119b-f4f1-4860-992e-67923597d82b",
+          "text": "Forge block",
+          "type": "istar.Task",
+          "x": 606,
+          "y": 190,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "802d33a5-f978-41ca-870a-fc7f7a89336f",
+          "text": "Get forge reward",
+          "type": "istar.Goal",
+          "x": 704,
+          "y": 123,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "a6d59716-6adc-4042-a614-bce5340e93e6",
+          "text": "Get consensus",
+          "type": "istar.Task",
+          "x": 701,
+          "y": 238,
+          "customProperties": {
+            "Description": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "7dd08e8e-4fab-49b5-9db1-a9b1d21b3b3c",
+      "text": "Attacker",
+      "type": "istar.Role",
+      "x": 40,
+      "y": 125,
+      "customProperties": {
+        "Description": ""
+      },
+      "nodes": [
+        {
+          "id": "d86b4d23-c09a-4c1f-8528-27b1eebc1e54",
+          "text": "Block Unjustification",
+          "type": "istar.Goal",
+          "x": 276,
+          "y": 179,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "e4f137b8-e176-4843-8831-b2e6497cdb57",
+          "text": "Be a node",
+          "type": "istar.Task",
+          "x": 206,
+          "y": 243,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "dac6e5c2-e9db-4ab1-85ed-638420295432",
+          "text": "Have 33%+1 of the stake",
+          "type": "istar.Task",
+          "x": 358,
+          "y": 243,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "cb9ea9bc-e440-429a-ac08-8b8b1a867b6d",
+          "text": "Block Modification",
+          "type": "istar.Goal",
+          "x": 121,
+          "y": 180,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "3237d157-a51f-41e5-a99d-66f6fb4563dc",
+          "text": "Edit block maliciously",
+          "type": "istar.Task",
+          "x": 40,
+          "y": 242,
+          "customProperties": {
+            "Description": ""
+          }
+        }
+      ]
+    }
+  ],
+  "orphans": [],
+  "dependencies": [
+    {
+      "id": "d97fc95d-c001-4729-a215-01ca2087c756",
+      "text": "Checksum vote",
+      "type": "istar.Resource",
+      "x": 498,
+      "y": 239,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "a6d59716-6adc-4042-a614-bce5340e93e6",
+      "target": "d86b4d23-c09a-4c1f-8528-27b1eebc1e54"
+    }
+  ],
+  "links": [
+    {
+      "id": "66a90f82-8227-4475-a342-1301f1bc53fb",
+      "type": "istar.DependencyLink",
+      "source": "d97fc95d-c001-4729-a215-01ca2087c756",
+      "target": "d86b4d23-c09a-4c1f-8528-27b1eebc1e54"
+    },
+    {
+      "id": "9a227c78-74de-40cb-b83c-dd245fa30684",
+      "type": "istar.DependencyLink",
+      "source": "a6d59716-6adc-4042-a614-bce5340e93e6",
+      "target": "d97fc95d-c001-4729-a215-01ca2087c756"
+    },
+    {
+      "id": "7061ce5c-b33c-4381-aea3-06d5ff61d81e",
+      "type": "istar.AndRefinementLink",
+      "source": "e4f137b8-e176-4843-8831-b2e6497cdb57",
+      "target": "d86b4d23-c09a-4c1f-8528-27b1eebc1e54"
+    },
+    {
+      "id": "4a028407-41e9-470c-98c0-c3900490b09c",
+      "type": "istar.AndRefinementLink",
+      "source": "dac6e5c2-e9db-4ab1-85ed-638420295432",
+      "target": "d86b4d23-c09a-4c1f-8528-27b1eebc1e54"
+    },
+    {
+      "id": "50466c6e-7096-40fb-9e0d-438cc99bcbf2",
+      "type": "istar.AndRefinementLink",
+      "source": "e4f137b8-e176-4843-8831-b2e6497cdb57",
+      "target": "cb9ea9bc-e440-429a-ac08-8b8b1a867b6d"
+    },
+    {
+      "id": "48462cd3-15e1-4d07-8dca-dff67adb5bec",
+      "type": "istar.AndRefinementLink",
+      "source": "3237d157-a51f-41e5-a99d-66f6fb4563dc",
+      "target": "cb9ea9bc-e440-429a-ac08-8b8b1a867b6d"
+    },
+    {
+      "id": "29344ddc-b46a-422e-b2b4-e280cb64513a",
+      "type": "istar.AndRefinementLink",
+      "source": "d9cc119b-f4f1-4860-992e-67923597d82b",
+      "target": "802d33a5-f978-41ca-870a-fc7f7a89336f"
+    },
+    {
+      "id": "93cf4702-6bf6-4dbd-a95a-da9d3f0e37cc",
+      "type": "istar.AndRefinementLink",
+      "source": "a6d59716-6adc-4042-a614-bce5340e93e6",
+      "target": "802d33a5-f978-41ca-870a-fc7f7a89336f"
+    }
+  ],
+  "display": {
+    "d86b4d23-c09a-4c1f-8528-27b1eebc1e54": {
+      "width": 106.5,
+      "height": 37.19999694824219
+    }
+  },
+  "tool": "pistar.2.1.0",
+  "istar": "2.0",
+  "saveDate": "Thu, 26 Jan 2023 11:55:18 GMT",
+  "diagram": {
+    "width": 1048,
+    "height": 700,
+    "name": "Welcome Model",
+    "customProperties": {
+      "Description": "Welcome to the piStar tool version 2.1.0, released on November, 2021! This model describes some of the recent improvements in the tool. Click on the purple elements for further info.\n\nFor help using this tool, please check the Help menu above"
+    }
+  }
+}
