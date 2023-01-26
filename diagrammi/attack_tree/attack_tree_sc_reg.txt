@@ -1,0 +1,426 @@
+{
+  "actors": [
+    {
+      "id": "a0a7c036-ff4e-457d-b5eb-2b730678df01",
+      "text": "Shards",
+      "type": "istar.Actor",
+      "x": 916,
+      "y": 315,
+      "customProperties": {
+        "Description": ""
+      },
+      "nodes": [
+        {
+          "id": "864051ab-0033-457b-9aae-cace13a14ef5",
+          "text": "Blocks",
+          "type": "istar.Resource",
+          "x": 988,
+          "y": 380,
+          "customProperties": {
+            "Description": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "9c8a0bef-548b-4ac9-a3a8-ad9d72169b6b",
+      "text": "Off-Chain Manager",
+      "type": "istar.Actor",
+      "x": 434,
+      "y": 317,
+      "customProperties": {
+        "Description": ""
+      },
+      "nodes": [
+        {
+          "id": "fcfac6b5-d985-4d91-8036-9601ad2ed1ec",
+          "text": "Get Shards' Mapping",
+          "type": "istar.Task",
+          "x": 503,
+          "y": 380,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "eb271417-1827-4ed9-ac6d-80cea012e8e9",
+          "text": "Get Register",
+          "type": "istar.Task",
+          "x": 568,
+          "y": 461,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "d853a762-b86d-4584-a7f1-82b2780aeaad",
+          "text": "Get Block",
+          "type": "istar.Task",
+          "x": 628,
+          "y": 380,
+          "customProperties": {
+            "Description": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "bf35e02b-7d90-428c-aace-b8bf0ba2dbf4",
+      "text": "On-Chain Manager",
+      "type": "istar.Actor",
+      "x": 85,
+      "y": 197,
+      "customProperties": {
+        "Description": ""
+      },
+      "nodes": [
+        {
+          "id": "3845a792-00f2-474b-a7c1-50d1d8b74649",
+          "text": "Shards' Mapping",
+          "type": "istar.Resource",
+          "x": 151,
+          "y": 262,
+          "customProperties": {
+            "Description": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "68504321-bc6f-4219-b7b2-186b2d09198b",
+      "text": "Attacker",
+      "type": "istar.Role",
+      "x": 361,
+      "y": 51,
+      "customProperties": {
+        "Description": ""
+      },
+      "nodes": [
+        {
+          "id": "497f4319-e91e-444b-9839-b09eacb9ff08",
+          "text": "Shard's Mapping Interception & Modification",
+          "type": "istar.Goal",
+          "x": 462,
+          "y": 67,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "24345e4a-4539-4bca-aac6-d4fb9684dcba",
+          "text": "Register Interception & Modification",
+          "type": "istar.Goal",
+          "x": 751,
+          "y": 68,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "1ff598a0-7784-47c0-a260-6521fb681145",
+          "text": "Mapping AiTM",
+          "type": "istar.Task",
+          "x": 555,
+          "y": 141,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "13026ca9-d69e-4513-a6d9-560d47c9851f",
+          "text": "Mapping Content Spoofing",
+          "type": "istar.Task",
+          "x": 426,
+          "y": 140,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "d0dfa3d7-1982-44e0-b446-eaf3079221e0",
+          "text": "Register Content Spoofing",
+          "type": "istar.Task",
+          "x": 717,
+          "y": 140,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "fa882a41-53e8-4b04-9cbc-41a7d1c1cf82",
+          "text": "Register AiTM",
+          "type": "istar.Task",
+          "x": 836,
+          "y": 139,
+          "customProperties": {
+            "Description": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "ad397aac-2a95-4806-9f23-2195045d66a7",
+      "text": "User",
+      "type": "istar.Actor",
+      "x": 82,
+      "y": 442,
+      "customProperties": {
+        "Description": ""
+      },
+      "nodes": [
+        {
+          "id": "de5fd4d7-0685-4d7b-80df-ac6d2d108e20",
+          "text": "Get Register",
+          "type": "istar.Goal",
+          "x": 163,
+          "y": 462,
+          "customProperties": {
+            "Description": ""
+          }
+        }
+      ]
+    }
+  ],
+  "orphans": [],
+  "dependencies": [
+    {
+      "id": "c3360c66-f9cb-4744-87dc-247505d37b24",
+      "text": "In transit Shards' Mapping",
+      "type": "istar.Resource",
+      "x": 150,
+      "y": 381,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "fcfac6b5-d985-4d91-8036-9601ad2ed1ec",
+      "target": "3845a792-00f2-474b-a7c1-50d1d8b74649"
+    },
+    {
+      "id": "695c785b-1a3d-4ac2-b2c3-1ea8c76a852f",
+      "text": "Register",
+      "type": "istar.Resource",
+      "x": 338,
+      "y": 460,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "de5fd4d7-0685-4d7b-80df-ac6d2d108e20",
+      "target": "eb271417-1827-4ed9-ac6d-80cea012e8e9"
+    },
+    {
+      "id": "597611cf-84cb-4473-8326-124c574946b3",
+      "text": "Modified Mapping",
+      "type": "istar.Resource",
+      "x": 433,
+      "y": 228,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "13026ca9-d69e-4513-a6d9-560d47c9851f",
+      "target": "fcfac6b5-d985-4d91-8036-9601ad2ed1ec"
+    },
+    {
+      "id": "d0b58513-fcd0-4b4a-9303-966b98dcc5e3",
+      "text": "Intercepted Mapping",
+      "type": "istar.Resource",
+      "x": 557,
+      "y": 229,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "1ff598a0-7784-47c0-a260-6521fb681145",
+      "target": "fcfac6b5-d985-4d91-8036-9601ad2ed1ec"
+    },
+    {
+      "id": "4d5937c8-0bcd-4218-9928-ad79956104d6",
+      "text": "Modified Register",
+      "type": "istar.Resource",
+      "x": 721,
+      "y": 224,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "d0dfa3d7-1982-44e0-b446-eaf3079221e0",
+      "target": "d853a762-b86d-4584-a7f1-82b2780aeaad"
+    },
+    {
+      "id": "13f5a8f3-0c2b-408e-a608-868c78b6c1b8",
+      "text": "Intercepted Register",
+      "type": "istar.Resource",
+      "x": 840,
+      "y": 221,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "fa882a41-53e8-4b04-9cbc-41a7d1c1cf82",
+      "target": "d853a762-b86d-4584-a7f1-82b2780aeaad"
+    },
+    {
+      "id": "82477835-9ab0-4b41-b370-096e2cc5c142",
+      "text": "Blocks",
+      "type": "istar.Resource",
+      "x": 799,
+      "y": 380,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "d853a762-b86d-4584-a7f1-82b2780aeaad",
+      "target": "864051ab-0033-457b-9aae-cace13a14ef5"
+    }
+  ],
+  "links": [
+    {
+      "id": "6ba3aac7-8a90-45b2-bff2-3c9e1cb14002",
+      "type": "istar.DependencyLink",
+      "source": "82477835-9ab0-4b41-b370-096e2cc5c142",
+      "target": "864051ab-0033-457b-9aae-cace13a14ef5"
+    },
+    {
+      "id": "678e471b-c6c8-4d40-92d6-d490f472d650",
+      "type": "istar.DependencyLink",
+      "source": "d853a762-b86d-4584-a7f1-82b2780aeaad",
+      "target": "82477835-9ab0-4b41-b370-096e2cc5c142"
+    },
+    {
+      "id": "3a99ee61-892a-4218-837c-5e87cdf00b46",
+      "type": "istar.DependencyLink",
+      "source": "13f5a8f3-0c2b-408e-a608-868c78b6c1b8",
+      "target": "d853a762-b86d-4584-a7f1-82b2780aeaad"
+    },
+    {
+      "id": "dd09f007-0d5d-4e2f-9d7a-d8fea68a51ea",
+      "type": "istar.DependencyLink",
+      "source": "fa882a41-53e8-4b04-9cbc-41a7d1c1cf82",
+      "target": "13f5a8f3-0c2b-408e-a608-868c78b6c1b8"
+    },
+    {
+      "id": "345bdf33-0d38-4acf-a31f-a0ce1ade5b5d",
+      "type": "istar.DependencyLink",
+      "source": "4d5937c8-0bcd-4218-9928-ad79956104d6",
+      "target": "d853a762-b86d-4584-a7f1-82b2780aeaad"
+    },
+    {
+      "id": "c90a2358-578a-4ba6-ada6-bd643894ee64",
+      "type": "istar.DependencyLink",
+      "source": "d0dfa3d7-1982-44e0-b446-eaf3079221e0",
+      "target": "4d5937c8-0bcd-4218-9928-ad79956104d6"
+    },
+    {
+      "id": "2db17bd4-145c-42cc-b81d-61d1a4213aec",
+      "type": "istar.DependencyLink",
+      "source": "d0b58513-fcd0-4b4a-9303-966b98dcc5e3",
+      "target": "fcfac6b5-d985-4d91-8036-9601ad2ed1ec"
+    },
+    {
+      "id": "d2ed0d49-47a7-492b-a546-967e8f11a387",
+      "type": "istar.DependencyLink",
+      "source": "1ff598a0-7784-47c0-a260-6521fb681145",
+      "target": "d0b58513-fcd0-4b4a-9303-966b98dcc5e3"
+    },
+    {
+      "id": "54018b35-7c99-455d-8cd3-7c938f194bd4",
+      "type": "istar.DependencyLink",
+      "source": "597611cf-84cb-4473-8326-124c574946b3",
+      "target": "fcfac6b5-d985-4d91-8036-9601ad2ed1ec"
+    },
+    {
+      "id": "16e07c74-96a7-40e6-83b9-8d1dfe28c69a",
+      "type": "istar.DependencyLink",
+      "source": "13026ca9-d69e-4513-a6d9-560d47c9851f",
+      "target": "597611cf-84cb-4473-8326-124c574946b3"
+    },
+    {
+      "id": "6e033de0-1bae-412f-9cf9-068221de3071",
+      "type": "istar.DependencyLink",
+      "source": "695c785b-1a3d-4ac2-b2c3-1ea8c76a852f",
+      "target": "eb271417-1827-4ed9-ac6d-80cea012e8e9"
+    },
+    {
+      "id": "246c6f21-f4a9-46f9-9754-9d1c21573496",
+      "type": "istar.DependencyLink",
+      "source": "de5fd4d7-0685-4d7b-80df-ac6d2d108e20",
+      "target": "695c785b-1a3d-4ac2-b2c3-1ea8c76a852f"
+    },
+    {
+      "id": "470f327c-7ca8-427a-a0ab-e2f70ed51609",
+      "type": "istar.DependencyLink",
+      "source": "c3360c66-f9cb-4744-87dc-247505d37b24",
+      "target": "3845a792-00f2-474b-a7c1-50d1d8b74649"
+    },
+    {
+      "id": "1965d949-a322-4fb8-a4e8-6e7b619c689a",
+      "type": "istar.DependencyLink",
+      "source": "fcfac6b5-d985-4d91-8036-9601ad2ed1ec",
+      "target": "c3360c66-f9cb-4744-87dc-247505d37b24"
+    },
+    {
+      "id": "caca6d77-33da-4081-a2a9-176c9830f0f5",
+      "type": "istar.AndRefinementLink",
+      "source": "fcfac6b5-d985-4d91-8036-9601ad2ed1ec",
+      "target": "eb271417-1827-4ed9-ac6d-80cea012e8e9"
+    },
+    {
+      "id": "65e988b7-f1a7-430c-b1d0-054d8c40937b",
+      "type": "istar.AndRefinementLink",
+      "source": "13026ca9-d69e-4513-a6d9-560d47c9851f",
+      "target": "497f4319-e91e-444b-9839-b09eacb9ff08"
+    },
+    {
+      "id": "4c02a8a3-df42-4535-ad4c-410f2982e70b",
+      "type": "istar.AndRefinementLink",
+      "source": "1ff598a0-7784-47c0-a260-6521fb681145",
+      "target": "497f4319-e91e-444b-9839-b09eacb9ff08"
+    },
+    {
+      "id": "f4d62f42-a3f0-45dd-84b5-77683c3ee13a",
+      "type": "istar.AndRefinementLink",
+      "source": "d853a762-b86d-4584-a7f1-82b2780aeaad",
+      "target": "eb271417-1827-4ed9-ac6d-80cea012e8e9"
+    }
+  ],
+  "display": {
+    "497f4319-e91e-444b-9839-b09eacb9ff08": {
+      "width": 144,
+      "height": 40.30000305175781
+    },
+    "24345e4a-4539-4bca-aac6-d4fb9684dcba": {
+      "width": 127.19999694824219,
+      "height": 37.20000457763672
+    },
+    "3a99ee61-892a-4218-837c-5e87cdf00b46": {
+      "vertices": [
+        {
+          "x": 888,
+          "y": 244
+        }
+      ]
+    },
+    "345bdf33-0d38-4acf-a31f-a0ce1ade5b5d": {
+      "vertices": [
+        {
+          "x": 770,
+          "y": 252
+        }
+      ]
+    },
+    "16e07c74-96a7-40e6-83b9-8d1dfe28c69a": {
+      "vertices": [
+        {
+          "x": 478,
+          "y": 180
+        }
+      ]
+    }
+  },
+  "tool": "pistar.2.1.0",
+  "istar": "2.0",
+  "saveDate": "Thu, 26 Jan 2023 10:12:45 GMT",
+  "diagram": {
+    "width": 1208,
+    "height": 884,
+    "name": "Welcome Model",
+    "customProperties": {
+      "Description": "Welcome to the piStar tool version 2.1.0, released on November, 2021! This model describes some of the recent improvements in the tool. Click on the purple elements for further info.\n\nFor help using this tool, please check the Help menu above"
+    }
+  }
+}
