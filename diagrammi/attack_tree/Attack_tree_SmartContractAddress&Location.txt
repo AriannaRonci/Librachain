@@ -1,0 +1,338 @@
+{
+  "actors": [
+    {
+      "id": "a3c15283-2381-4554-8936-687ddc743d64",
+      "text": "Attacker",
+      "type": "istar.Role",
+      "x": 160,
+      "y": 60,
+      "customProperties": {
+        "Description": ""
+      },
+      "nodes": [
+        {
+          "id": "fde3665f-66d7-40de-9df6-dee0c5ee1cd2",
+          "text": "Smart Contract Address Interception & Modification",
+          "type": "istar.Goal",
+          "x": 261,
+          "y": 102,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "ee315adc-90be-4e11-bca6-49597ce068ca",
+          "text": "Smart Contract Location Interception & Modification",
+          "type": "istar.Goal",
+          "x": 593,
+          "y": 98,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "5e5cf531-760a-40d6-887f-26dee3ddafce",
+          "text": "Smart Contract Address Content Spoofing",
+          "type": "istar.Task",
+          "x": 160,
+          "y": 201,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "ce72b742-aa8a-459f-ba54-eac5ecc3e6a9",
+          "text": "Smart Contract Address AiTM",
+          "type": "istar.Task",
+          "x": 372,
+          "y": 203,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "ae89fd47-9c57-46af-b795-f2f16d124fd1",
+          "text": "Smart Contract Location Content Spoofing",
+          "type": "istar.Task",
+          "x": 517,
+          "y": 206,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "daff4c02-c261-4119-8124-ac1e7046f1d1",
+          "text": "Smart Contract Location AiTM",
+          "type": "istar.Task",
+          "x": 739,
+          "y": 203,
+          "customProperties": {
+            "Description": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "59b51ca2-f463-410e-97b5-599ce47cd822",
+      "text": "Off-Chain Manager",
+      "type": "istar.Actor",
+      "x": 148,
+      "y": 428,
+      "customProperties": {
+        "Description": ""
+      },
+      "nodes": [
+        {
+          "id": "27b8933e-6265-4b35-80ec-19fcb54e8fe6",
+          "text": "Invoke Transaction Method",
+          "type": "istar.Task",
+          "x": 211,
+          "y": 492,
+          "customProperties": {
+            "Description": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "0e1b9cf8-a18e-4a0a-a3f9-a993500f7280",
+      "text": "On-Chain Manager",
+      "type": "istar.Actor",
+      "x": 549,
+      "y": 434,
+      "customProperties": {
+        "Description": ""
+      },
+      "nodes": [
+        {
+          "id": "4861de0b-a715-4093-ab40-8eec40b4f0c5",
+          "text": "Manage Shards",
+          "type": "istar.Goal",
+          "x": 625,
+          "y": 496,
+          "customProperties": {
+            "Description": ""
+          }
+        }
+      ]
+    }
+  ],
+  "orphans": [],
+  "dependencies": [
+    {
+      "id": "9dd46d75-3041-470c-98f7-091a6094eb55",
+      "text": "Modified Smart Contract Address",
+      "type": "istar.Resource",
+      "x": 169,
+      "y": 349,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "5e5cf531-760a-40d6-887f-26dee3ddafce",
+      "target": "27b8933e-6265-4b35-80ec-19fcb54e8fe6"
+    },
+    {
+      "id": "4b55a092-1f91-458c-bd5e-d975d9efe56f",
+      "text": "Intercepted Smart Contract Address",
+      "type": "istar.Resource",
+      "x": 358,
+      "y": 348,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "ce72b742-aa8a-459f-ba54-eac5ecc3e6a9",
+      "target": "27b8933e-6265-4b35-80ec-19fcb54e8fe6"
+    },
+    {
+      "id": "19c3d3a6-fe8f-4c8f-b58b-9a5995bf290b",
+      "text": "Smart Contract Location",
+      "type": "istar.Resource",
+      "x": 418,
+      "y": 494,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "27b8933e-6265-4b35-80ec-19fcb54e8fe6",
+      "target": "4861de0b-a715-4093-ab40-8eec40b4f0c5"
+    },
+    {
+      "id": "f93ccdbc-b9cd-4ac5-bd6f-4415629a4af1",
+      "text": "Smart Contract Address",
+      "type": "istar.Resource",
+      "x": 419,
+      "y": 558,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "4861de0b-a715-4093-ab40-8eec40b4f0c5",
+      "target": "27b8933e-6265-4b35-80ec-19fcb54e8fe6"
+    },
+    {
+      "id": "b6e2cf14-a427-4e06-b228-b630cad2ab63",
+      "text": "Modified Smart Contract Location",
+      "type": "istar.Resource",
+      "x": 525,
+      "y": 346,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "ae89fd47-9c57-46af-b795-f2f16d124fd1",
+      "target": "4861de0b-a715-4093-ab40-8eec40b4f0c5"
+    },
+    {
+      "id": "f26fed58-de83-4b49-8992-deae408ceb46",
+      "text": "Intercepted Smart Contract Location",
+      "type": "istar.Resource",
+      "x": 729,
+      "y": 351,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "daff4c02-c261-4119-8124-ac1e7046f1d1",
+      "target": "4861de0b-a715-4093-ab40-8eec40b4f0c5"
+    }
+  ],
+  "links": [
+    {
+      "id": "7a612d00-148f-4c44-826c-3434c0e3b16c",
+      "type": "istar.DependencyLink",
+      "source": "f26fed58-de83-4b49-8992-deae408ceb46",
+      "target": "4861de0b-a715-4093-ab40-8eec40b4f0c5"
+    },
+    {
+      "id": "21a35b07-0bb6-4a4d-86e3-0cec5d4831ad",
+      "type": "istar.DependencyLink",
+      "source": "daff4c02-c261-4119-8124-ac1e7046f1d1",
+      "target": "f26fed58-de83-4b49-8992-deae408ceb46"
+    },
+    {
+      "id": "34aefc42-fdaf-4f01-a58c-f6e603ddba66",
+      "type": "istar.DependencyLink",
+      "source": "b6e2cf14-a427-4e06-b228-b630cad2ab63",
+      "target": "4861de0b-a715-4093-ab40-8eec40b4f0c5"
+    },
+    {
+      "id": "b81d353f-7cb0-45cd-aa86-d2b6209e059c",
+      "type": "istar.DependencyLink",
+      "source": "ae89fd47-9c57-46af-b795-f2f16d124fd1",
+      "target": "b6e2cf14-a427-4e06-b228-b630cad2ab63"
+    },
+    {
+      "id": "b100bac0-014d-4427-9112-edbd20282936",
+      "type": "istar.DependencyLink",
+      "source": "f93ccdbc-b9cd-4ac5-bd6f-4415629a4af1",
+      "target": "27b8933e-6265-4b35-80ec-19fcb54e8fe6"
+    },
+    {
+      "id": "a23c9bf8-6a3a-4dd0-9294-17a059af3f14",
+      "type": "istar.DependencyLink",
+      "source": "4861de0b-a715-4093-ab40-8eec40b4f0c5",
+      "target": "f93ccdbc-b9cd-4ac5-bd6f-4415629a4af1"
+    },
+    {
+      "id": "1ca53f72-65af-4ee2-b821-39a86ba4ce10",
+      "type": "istar.DependencyLink",
+      "source": "19c3d3a6-fe8f-4c8f-b58b-9a5995bf290b",
+      "target": "4861de0b-a715-4093-ab40-8eec40b4f0c5"
+    },
+    {
+      "id": "4fce505a-d5c1-47cd-bb6e-5e5bdbaedc43",
+      "type": "istar.DependencyLink",
+      "source": "27b8933e-6265-4b35-80ec-19fcb54e8fe6",
+      "target": "19c3d3a6-fe8f-4c8f-b58b-9a5995bf290b"
+    },
+    {
+      "id": "72d14696-e745-4ef7-9d21-a1ff3ad47fe9",
+      "type": "istar.DependencyLink",
+      "source": "4b55a092-1f91-458c-bd5e-d975d9efe56f",
+      "target": "27b8933e-6265-4b35-80ec-19fcb54e8fe6"
+    },
+    {
+      "id": "3e9b0e78-1cde-402d-b669-92c3657d22ee",
+      "type": "istar.DependencyLink",
+      "source": "ce72b742-aa8a-459f-ba54-eac5ecc3e6a9",
+      "target": "4b55a092-1f91-458c-bd5e-d975d9efe56f"
+    },
+    {
+      "id": "25fb5ea0-1612-4bef-b161-3ed80e039d93",
+      "type": "istar.DependencyLink",
+      "source": "9dd46d75-3041-470c-98f7-091a6094eb55",
+      "target": "27b8933e-6265-4b35-80ec-19fcb54e8fe6"
+    },
+    {
+      "id": "1188e81a-c4a9-442f-a65e-239eead77f73",
+      "type": "istar.DependencyLink",
+      "source": "5e5cf531-760a-40d6-887f-26dee3ddafce",
+      "target": "9dd46d75-3041-470c-98f7-091a6094eb55"
+    },
+    {
+      "id": "370dc2d1-d69f-456b-8195-fdb54ba87527",
+      "type": "istar.OrRefinementLink",
+      "source": "5e5cf531-760a-40d6-887f-26dee3ddafce",
+      "target": "fde3665f-66d7-40de-9df6-dee0c5ee1cd2"
+    },
+    {
+      "id": "7dc1c6a2-a868-4608-8160-6f0dc52e55f5",
+      "type": "istar.OrRefinementLink",
+      "source": "ce72b742-aa8a-459f-ba54-eac5ecc3e6a9",
+      "target": "fde3665f-66d7-40de-9df6-dee0c5ee1cd2"
+    },
+    {
+      "id": "0925eb07-809b-4d75-bf0c-62bc3fa5f5dc",
+      "type": "istar.OrRefinementLink",
+      "source": "ae89fd47-9c57-46af-b795-f2f16d124fd1",
+      "target": "ee315adc-90be-4e11-bca6-49597ce068ca"
+    },
+    {
+      "id": "917efce4-9f84-4e49-a39a-eaa5a22aaa3f",
+      "type": "istar.OrRefinementLink",
+      "source": "daff4c02-c261-4119-8124-ac1e7046f1d1",
+      "target": "ee315adc-90be-4e11-bca6-49597ce068ca"
+    }
+  ],
+  "display": {
+    "fde3665f-66d7-40de-9df6-dee0c5ee1cd2": {
+      "width": 136.88748168945312,
+      "height": 34.92500305175781
+    },
+    "ee315adc-90be-4e11-bca6-49597ce068ca": {
+      "width": 143.88748168945312,
+      "height": 39.125
+    },
+    "5e5cf531-760a-40d6-887f-26dee3ddafce": {
+      "width": 123.88748168945312,
+      "height": 35.92500305175781
+    },
+    "ae89fd47-9c57-46af-b795-f2f16d124fd1": {
+      "width": 125.38748168945312,
+      "height": 35.725006103515625
+    },
+    "9dd46d75-3041-470c-98f7-091a6094eb55": {
+      "width": 106.88748168945312,
+      "height": 36.125
+    },
+    "4b55a092-1f91-458c-bd5e-d975d9efe56f": {
+      "width": 117.88748168945312,
+      "height": 39.125
+    },
+    "b6e2cf14-a427-4e06-b228-b630cad2ab63": {
+      "width": 116.88748168945312,
+      "height": 39.32500076293945
+    },
+    "f26fed58-de83-4b49-8992-deae408ceb46": {
+      "width": 117.88748168945312,
+      "height": 36.82500076293945
+    }
+  },
+  "tool": "pistar.2.1.0",
+  "istar": "2.0",
+  "saveDate": "Thu, 26 Jan 2023 11:57:51 GMT",
+  "diagram": {
+    "width": 1000,
+    "height": 745,
+    "name": "Welcome Model",
+    "customProperties": {
+      "Description": "Welcome to the piStar tool version 2.1.0, released on November, 2021! This model describes some of the recent improvements in the tool. Click on the purple elements for further info.\n\nFor help using this tool, please check the Help menu above"
+    }
+  }
+}

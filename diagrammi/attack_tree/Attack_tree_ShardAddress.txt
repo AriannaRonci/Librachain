@@ -1,0 +1,196 @@
+{
+  "actors": [
+    {
+      "id": "40c24267-2c17-46dd-b0d6-486b0b829031",
+      "text": "Attacker",
+      "type": "istar.Role",
+      "x": 549,
+      "y": 117,
+      "customProperties": {
+        "Description": ""
+      },
+      "nodes": [
+        {
+          "id": "27389998-3be3-4848-aab9-03ef21727e67",
+          "text": "Shard's Address Interception & Modification",
+          "type": "istar.Goal",
+          "x": 616,
+          "y": 177,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "4f0c021c-aa26-47a6-9796-0633bf02bb34",
+          "text": "Content Spoofing",
+          "type": "istar.Task",
+          "x": 558,
+          "y": 262,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "269b2f61-921b-4114-9849-69887ae51e5a",
+          "text": "AiTM",
+          "type": "istar.Task",
+          "x": 710,
+          "y": 263,
+          "customProperties": {
+            "Description": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "a984ac7e-0acf-47a3-be88-3beffa9c5138",
+      "text": "On-Chain Manager",
+      "type": "istar.Actor",
+      "x": 97,
+      "y": 583,
+      "customProperties": {
+        "Description": ""
+      },
+      "nodes": [
+        {
+          "id": "197ab18f-3c6b-420d-9e94-f44af3dfaa20",
+          "text": "Manage Shards",
+          "type": "istar.Goal",
+          "x": 155,
+          "y": 644,
+          "customProperties": {
+            "Description": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "c071b3fe-030d-4d01-860c-b74257d049f6",
+      "text": "Off-Chain Manager",
+      "type": "istar.Actor",
+      "x": 571,
+      "y": 593,
+      "customProperties": {
+        "Description": ""
+      },
+      "nodes": [
+        {
+          "id": "dc09d553-2692-4ecd-a88d-f8fd92659002",
+          "text": "Deploy transaction",
+          "type": "istar.Goal",
+          "x": 647,
+          "y": 648,
+          "customProperties": {
+            "Description": ""
+          }
+        }
+      ]
+    }
+  ],
+  "orphans": [],
+  "dependencies": [
+    {
+      "id": "3a5100f0-c779-4a4d-ba0f-c4b9ea5eb388",
+      "text": "In transit Shard's Address",
+      "type": "istar.Resource",
+      "x": 393,
+      "y": 648,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "dc09d553-2692-4ecd-a88d-f8fd92659002",
+      "target": "197ab18f-3c6b-420d-9e94-f44af3dfaa20"
+    },
+    {
+      "id": "f04920f8-ecf4-45b8-8913-c4722c00f955",
+      "text": "Modified Shard's Address",
+      "type": "istar.Resource",
+      "x": 563,
+      "y": 472,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "4f0c021c-aa26-47a6-9796-0633bf02bb34",
+      "target": "dc09d553-2692-4ecd-a88d-f8fd92659002"
+    },
+    {
+      "id": "ade5f605-59ff-4cb2-9bbe-7cf15b0340c3",
+      "text": "Intercepted Shard's Address",
+      "type": "istar.Resource",
+      "x": 711,
+      "y": 472,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "269b2f61-921b-4114-9849-69887ae51e5a",
+      "target": "dc09d553-2692-4ecd-a88d-f8fd92659002"
+    }
+  ],
+  "links": [
+    {
+      "id": "69d852dd-2550-40a0-8993-ca9b009191a5",
+      "type": "istar.DependencyLink",
+      "source": "ade5f605-59ff-4cb2-9bbe-7cf15b0340c3",
+      "target": "dc09d553-2692-4ecd-a88d-f8fd92659002"
+    },
+    {
+      "id": "95c03201-4075-41d0-9f1d-12ab46eecff6",
+      "type": "istar.DependencyLink",
+      "source": "269b2f61-921b-4114-9849-69887ae51e5a",
+      "target": "ade5f605-59ff-4cb2-9bbe-7cf15b0340c3"
+    },
+    {
+      "id": "7f102b1c-79d2-4158-b44e-e1a1503038f9",
+      "type": "istar.DependencyLink",
+      "source": "f04920f8-ecf4-45b8-8913-c4722c00f955",
+      "target": "dc09d553-2692-4ecd-a88d-f8fd92659002"
+    },
+    {
+      "id": "8e2665cf-c253-47a9-9235-f91953a7be4f",
+      "type": "istar.DependencyLink",
+      "source": "4f0c021c-aa26-47a6-9796-0633bf02bb34",
+      "target": "f04920f8-ecf4-45b8-8913-c4722c00f955"
+    },
+    {
+      "id": "dd165ac2-ee24-461a-ad2f-c1c5682e6623",
+      "type": "istar.DependencyLink",
+      "source": "3a5100f0-c779-4a4d-ba0f-c4b9ea5eb388",
+      "target": "197ab18f-3c6b-420d-9e94-f44af3dfaa20"
+    },
+    {
+      "id": "83e522c6-5fb1-430d-b914-70e6c034c8b8",
+      "type": "istar.DependencyLink",
+      "source": "dc09d553-2692-4ecd-a88d-f8fd92659002",
+      "target": "3a5100f0-c779-4a4d-ba0f-c4b9ea5eb388"
+    },
+    {
+      "id": "558d132e-5406-4751-aa1b-0c3af5ca59dd",
+      "type": "istar.OrRefinementLink",
+      "source": "4f0c021c-aa26-47a6-9796-0633bf02bb34",
+      "target": "27389998-3be3-4848-aab9-03ef21727e67"
+    },
+    {
+      "id": "9c1d2453-0b99-46e4-9596-77c953684a16",
+      "type": "istar.OrRefinementLink",
+      "source": "269b2f61-921b-4114-9849-69887ae51e5a",
+      "target": "27389998-3be3-4848-aab9-03ef21727e67"
+    }
+  ],
+  "display": {
+    "27389998-3be3-4848-aab9-03ef21727e67": {
+      "width": 116.88748168945312,
+      "height": 38.625
+    }
+  },
+  "tool": "pistar.2.1.0",
+  "istar": "2.0",
+  "saveDate": "Thu, 26 Jan 2023 11:56:41 GMT",
+  "diagram": {
+    "width": 1000,
+    "height": 1040,
+    "name": "Welcome Model",
+    "customProperties": {
+      "Description": "Welcome to the piStar tool version 2.1.0, released on November, 2021! This model describes some of the recent improvements in the tool. Click on the purple elements for further info.\n\nFor help using this tool, please check the Help menu above"
+    }
+  }
+}
