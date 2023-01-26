@@ -1,0 +1,278 @@
+{
+  "actors": [
+    {
+      "id": "0be87b46-d242-452c-8dde-1ee2e6229102",
+      "text": "Abuse User",
+      "type": "istar.Actor",
+      "x": 40,
+      "y": 65,
+      "customProperties": {
+        "Description": ""
+      },
+      "nodes": [
+        {
+          "id": "c5686859-60d0-47a0-a246-c7c5229218a0",
+          "text": "Wallet Key Theft",
+          "type": "istar.Goal",
+          "x": 303,
+          "y": 191,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "b0bdfc2e-bdba-4295-bae9-209ec4fc88ba",
+          "text": "Brute Forcing",
+          "type": "istar.Task",
+          "x": 223,
+          "y": 271,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "33902aa4-063c-4a3f-8b9a-221fa25d8977",
+          "text": "Use of Known Domain Credentials",
+          "type": "istar.Task",
+          "x": 377,
+          "y": 273,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "598bc02a-de5b-4839-bb0e-38ec915e163f",
+          "text": "Steal part of the credentials",
+          "type": "istar.Task",
+          "x": 532,
+          "y": 387,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "aed4f396-4929-4d8d-b304-d8d911edd605",
+          "text": "Steal full credentials",
+          "type": "istar.Task",
+          "x": 223,
+          "y": 388,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "40375631-8323-40db-817a-846322d3dd6c",
+          "text": "Create a dictionary",
+          "type": "istar.Task",
+          "x": 469,
+          "y": 475,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "bf9e6171-e0b1-4b31-8f47-b0703bbb6298",
+          "text": "Dictionary Attack",
+          "type": "istar.Task",
+          "x": 604,
+          "y": 474,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "36938472-2bcb-46d8-85b8-7ac8c147cdf3",
+          "text": "Phishing Attack",
+          "type": "istar.Task",
+          "x": 114,
+          "y": 475,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "b5f8ed70-7f9f-4ae2-9149-ee09dad0e64f",
+          "text": "Social Engineering",
+          "type": "istar.Task",
+          "x": 223,
+          "y": 475,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "590f9986-b61f-42da-a4e0-b9068be92d10",
+          "text": "Steal Physically Stored Credentials",
+          "type": "istar.Task",
+          "x": 333,
+          "y": 475,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "b8b9da8a-fbe2-4f8d-980f-cb4e5f5f49a0",
+          "text": "Make Wanted Transaction",
+          "type": "istar.Task",
+          "x": 445,
+          "y": 65,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "3d78121a-47dc-4e87-bde6-fb6b82ad0329",
+          "text": "User's Identity Violation",
+          "type": "istar.Goal",
+          "x": 305,
+          "y": 67,
+          "customProperties": {
+            "Description": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "cbb89558-68f5-477e-af35-e92cc0af56f2",
+      "text": "User",
+      "type": "istar.Actor",
+      "x": 732,
+      "y": 38,
+      "customProperties": {
+        "Description": ""
+      },
+      "nodes": [
+        {
+          "id": "48c57d4a-1745-4682-900a-0f47a183dfdf",
+          "text": "Wallet Keys",
+          "type": "istar.Resource",
+          "x": 800,
+          "y": 81,
+          "customProperties": {
+            "Description": ""
+          }
+        }
+      ]
+    }
+  ],
+  "orphans": [],
+  "dependencies": [
+    {
+      "id": "a7c36807-366a-4b09-8e06-8db6b17816f7",
+      "text": "Key",
+      "type": "istar.Resource",
+      "x": 801,
+      "y": 194,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "48c57d4a-1745-4682-900a-0f47a183dfdf",
+      "target": "c5686859-60d0-47a0-a246-c7c5229218a0"
+    }
+  ],
+  "links": [
+    {
+      "id": "718db9bf-92ac-4dcc-9747-ddcf19064f2d",
+      "type": "istar.DependencyLink",
+      "source": "a7c36807-366a-4b09-8e06-8db6b17816f7",
+      "target": "c5686859-60d0-47a0-a246-c7c5229218a0"
+    },
+    {
+      "id": "21dbab49-9928-4f6c-a4db-4ed55902345c",
+      "type": "istar.DependencyLink",
+      "source": "48c57d4a-1745-4682-900a-0f47a183dfdf",
+      "target": "a7c36807-366a-4b09-8e06-8db6b17816f7"
+    },
+    {
+      "id": "b931a1d1-210e-47ba-98b4-f76d11fc4bc3",
+      "type": "istar.OrRefinementLink",
+      "source": "b0bdfc2e-bdba-4295-bae9-209ec4fc88ba",
+      "target": "c5686859-60d0-47a0-a246-c7c5229218a0"
+    },
+    {
+      "id": "814e5666-ee9b-4a0d-a6b3-9cbca73a5279",
+      "type": "istar.OrRefinementLink",
+      "source": "598bc02a-de5b-4839-bb0e-38ec915e163f",
+      "target": "33902aa4-063c-4a3f-8b9a-221fa25d8977"
+    },
+    {
+      "id": "0def818d-4b35-4922-bea3-594415d4daa7",
+      "type": "istar.AndRefinementLink",
+      "source": "40375631-8323-40db-817a-846322d3dd6c",
+      "target": "598bc02a-de5b-4839-bb0e-38ec915e163f"
+    },
+    {
+      "id": "0ebe078c-386e-443d-8172-353932c39f14",
+      "type": "istar.AndRefinementLink",
+      "source": "bf9e6171-e0b1-4b31-8f47-b0703bbb6298",
+      "target": "598bc02a-de5b-4839-bb0e-38ec915e163f"
+    },
+    {
+      "id": "603e078d-8b57-4e64-850a-48706b2c9425",
+      "type": "istar.OrRefinementLink",
+      "source": "36938472-2bcb-46d8-85b8-7ac8c147cdf3",
+      "target": "aed4f396-4929-4d8d-b304-d8d911edd605"
+    },
+    {
+      "id": "dc68d86f-3419-4024-94b9-a973f7562b20",
+      "type": "istar.OrRefinementLink",
+      "source": "b5f8ed70-7f9f-4ae2-9149-ee09dad0e64f",
+      "target": "aed4f396-4929-4d8d-b304-d8d911edd605"
+    },
+    {
+      "id": "697719ed-b5fd-4ad1-8792-6e7afa899564",
+      "type": "istar.OrRefinementLink",
+      "source": "590f9986-b61f-42da-a4e0-b9068be92d10",
+      "target": "aed4f396-4929-4d8d-b304-d8d911edd605"
+    },
+    {
+      "id": "91ea92f9-8807-497f-b5b3-06971df3bd04",
+      "type": "istar.OrRefinementLink",
+      "source": "aed4f396-4929-4d8d-b304-d8d911edd605",
+      "target": "33902aa4-063c-4a3f-8b9a-221fa25d8977"
+    },
+    {
+      "id": "8a034132-e275-492c-a114-f6739a67d120",
+      "type": "istar.OrRefinementLink",
+      "source": "33902aa4-063c-4a3f-8b9a-221fa25d8977",
+      "target": "c5686859-60d0-47a0-a246-c7c5229218a0"
+    },
+    {
+      "id": "b3ed7a81-b61a-4cf3-a3bc-cfe1b4d5e8f4",
+      "type": "istar.AndRefinementLink",
+      "source": "c5686859-60d0-47a0-a246-c7c5229218a0",
+      "target": "3d78121a-47dc-4e87-bde6-fb6b82ad0329"
+    },
+    {
+      "id": "0ad5e365-04cd-4e8b-a219-b84a1cb2e8b9",
+      "type": "istar.AndRefinementLink",
+      "source": "b8b9da8a-fbe2-4f8d-980f-cb4e5f5f49a0",
+      "target": "3d78121a-47dc-4e87-bde6-fb6b82ad0329"
+    }
+  ],
+  "display": {
+    "590f9986-b61f-42da-a4e0-b9068be92d10": {
+      "width": 124.25,
+      "height": 36.80000305175781
+    },
+    "21dbab49-9928-4f6c-a4db-4ed55902345c": {
+      "vertices": [
+        {
+          "x": 845,
+          "y": 121
+        }
+      ]
+    }
+  },
+  "tool": "pistar.2.1.0",
+  "istar": "2.0",
+  "saveDate": "Wed, 25 Jan 2023 10:23:36 GMT",
+  "diagram": {
+    "width": 1151,
+    "height": 700,
+    "name": "Welcome Model",
+    "customProperties": {
+      "Description": "Welcome to the piStar tool version 2.1.0, released on November, 2021! This model describes some of the recent improvements in the tool. Click on the purple elements for further info.\n\nFor help using this tool, please check the Help menu above"
+    }
+  }
+}
