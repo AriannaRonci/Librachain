@@ -1,0 +1,290 @@
+{
+  "actors": [
+    {
+      "id": "d0fd649c-a18e-4624-8543-886ea8d4f198",
+      "text": "On-Chain Manager",
+      "type": "istar.Actor",
+      "x": 384,
+      "y": 543,
+      "customProperties": {
+        "Description": ""
+      },
+      "nodes": [
+        {
+          "id": "c1727b56-dce3-4421-b56e-b1fdc71c4e12",
+          "text": "Update Shards' State",
+          "type": "istar.Task",
+          "x": 448,
+          "y": 593,
+          "customProperties": {
+            "Description": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "e550b45b-d736-4671-9dc3-4a984d5114e4",
+      "text": "Attacker",
+      "type": "istar.Role",
+      "x": 153,
+      "y": 42,
+      "customProperties": {
+        "Description": ""
+      },
+      "nodes": [
+        {
+          "id": "a65400f0-1925-4b0d-933c-6d877452abc1",
+          "text": "Update Shard's State Request Interception & Modification",
+          "type": "istar.Goal",
+          "x": 254,
+          "y": 79,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "47e3bc33-bc05-4094-bb48-5c8463bacf93",
+          "text": "DoS Aimed Request",
+          "type": "istar.Goal",
+          "x": 533,
+          "y": 80,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "3a256e91-aa19-427c-a462-12034c4d02f1",
+          "text": "Unauthorized Communication with On-Chain Manager",
+          "type": "istar.Goal",
+          "x": 765,
+          "y": 77,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "15a566f2-9b56-4fe6-952f-9ff6e25a80bf",
+          "text": "Update Shard's State Content Spoofing",
+          "type": "istar.Task",
+          "x": 214,
+          "y": 174,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "30bad721-913d-4f73-b771-f1e0c5ee1aaa",
+          "text": "Update Shard's State AiTM",
+          "type": "istar.Task",
+          "x": 333,
+          "y": 175,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "8eaec98b-4847-4d24-9c70-3ca3b9c41bc1",
+          "text": "Request Flooding",
+          "type": "istar.Task",
+          "x": 450,
+          "y": 176,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "cc8cc08f-b813-41f7-aff7-e7656de4054b",
+          "text": "Request Sustained Client Engagement",
+          "type": "istar.Task",
+          "x": 588,
+          "y": 174,
+          "customProperties": {
+            "Description": ""
+          }
+        }
+      ]
+    }
+  ],
+  "orphans": [],
+  "dependencies": [
+    {
+      "id": "cd33e7c0-2910-46d5-8608-c99d386fabc4",
+      "text": "Send n Transaction Request",
+      "type": "istar.Task",
+      "x": 452,
+      "y": 285,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "8eaec98b-4847-4d24-9c70-3ca3b9c41bc1",
+      "target": "c1727b56-dce3-4421-b56e-b1fdc71c4e12"
+    },
+    {
+      "id": "6c89a9a6-20cc-422b-83cf-c8ed3f42c523",
+      "text": "Intercepted Shards' State",
+      "type": "istar.Resource",
+      "x": 336,
+      "y": 286,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "30bad721-913d-4f73-b771-f1e0c5ee1aaa",
+      "target": "c1727b56-dce3-4421-b56e-b1fdc71c4e12"
+    },
+    {
+      "id": "5e91b347-7897-4184-893e-96e1d9ef93d4",
+      "text": "Modified Shards' State",
+      "type": "istar.Resource",
+      "x": 215,
+      "y": 286,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "15a566f2-9b56-4fe6-952f-9ff6e25a80bf",
+      "target": "c1727b56-dce3-4421-b56e-b1fdc71c4e12"
+    },
+    {
+      "id": "5664fa47-1fc2-43cc-bffe-6f09095e6066",
+      "text": "Send Repeated Sequence of Transaction Request",
+      "type": "istar.Task",
+      "x": 577,
+      "y": 285,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "cc8cc08f-b813-41f7-aff7-e7656de4054b",
+      "target": "c1727b56-dce3-4421-b56e-b1fdc71c4e12"
+    },
+    {
+      "id": "15847e1a-cab9-4192-b2e3-5ac0ddc044ef",
+      "text": "Send Unauthorized Transaction Request",
+      "type": "istar.Task",
+      "x": 779,
+      "y": 290,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "3a256e91-aa19-427c-a462-12034c4d02f1",
+      "target": "c1727b56-dce3-4421-b56e-b1fdc71c4e12"
+    }
+  ],
+  "links": [
+    {
+      "id": "c208ddb8-3726-4aa1-b372-58af40ad807b",
+      "type": "istar.DependencyLink",
+      "source": "15847e1a-cab9-4192-b2e3-5ac0ddc044ef",
+      "target": "c1727b56-dce3-4421-b56e-b1fdc71c4e12"
+    },
+    {
+      "id": "42b93b7d-c4fd-4647-be3b-25a7e29204a9",
+      "type": "istar.DependencyLink",
+      "source": "3a256e91-aa19-427c-a462-12034c4d02f1",
+      "target": "15847e1a-cab9-4192-b2e3-5ac0ddc044ef"
+    },
+    {
+      "id": "5c6cd144-93b2-42fe-9fea-9d20546d13e0",
+      "type": "istar.DependencyLink",
+      "source": "5664fa47-1fc2-43cc-bffe-6f09095e6066",
+      "target": "c1727b56-dce3-4421-b56e-b1fdc71c4e12"
+    },
+    {
+      "id": "af58cf60-4192-422a-a365-932a8250e6a0",
+      "type": "istar.DependencyLink",
+      "source": "cc8cc08f-b813-41f7-aff7-e7656de4054b",
+      "target": "5664fa47-1fc2-43cc-bffe-6f09095e6066"
+    },
+    {
+      "id": "01104d4c-79db-43e6-9203-517c4eb693ea",
+      "type": "istar.DependencyLink",
+      "source": "5e91b347-7897-4184-893e-96e1d9ef93d4",
+      "target": "c1727b56-dce3-4421-b56e-b1fdc71c4e12"
+    },
+    {
+      "id": "b0a54f2a-88dc-419f-b1fb-2152cceff107",
+      "type": "istar.DependencyLink",
+      "source": "15a566f2-9b56-4fe6-952f-9ff6e25a80bf",
+      "target": "5e91b347-7897-4184-893e-96e1d9ef93d4"
+    },
+    {
+      "id": "c1d24269-c72f-4bc9-9d19-fdf53f7572f0",
+      "type": "istar.DependencyLink",
+      "source": "6c89a9a6-20cc-422b-83cf-c8ed3f42c523",
+      "target": "c1727b56-dce3-4421-b56e-b1fdc71c4e12"
+    },
+    {
+      "id": "163be620-33e8-43bb-bcaf-ec647a0ab3b4",
+      "type": "istar.DependencyLink",
+      "source": "30bad721-913d-4f73-b771-f1e0c5ee1aaa",
+      "target": "6c89a9a6-20cc-422b-83cf-c8ed3f42c523"
+    },
+    {
+      "id": "09a66d3e-9ae3-4856-8fd3-d7a3f2408c06",
+      "type": "istar.DependencyLink",
+      "source": "cd33e7c0-2910-46d5-8608-c99d386fabc4",
+      "target": "c1727b56-dce3-4421-b56e-b1fdc71c4e12"
+    },
+    {
+      "id": "6d2fe605-ff58-45b9-b8de-49361a3f0373",
+      "type": "istar.DependencyLink",
+      "source": "8eaec98b-4847-4d24-9c70-3ca3b9c41bc1",
+      "target": "cd33e7c0-2910-46d5-8608-c99d386fabc4"
+    },
+    {
+      "id": "5a5ee536-4126-4be1-b0d2-cf4cc01b506f",
+      "type": "istar.OrRefinementLink",
+      "source": "15a566f2-9b56-4fe6-952f-9ff6e25a80bf",
+      "target": "a65400f0-1925-4b0d-933c-6d877452abc1"
+    },
+    {
+      "id": "1c6a6527-c7c2-4ce7-953f-9a1264a7c9f4",
+      "type": "istar.OrRefinementLink",
+      "source": "30bad721-913d-4f73-b771-f1e0c5ee1aaa",
+      "target": "a65400f0-1925-4b0d-933c-6d877452abc1"
+    },
+    {
+      "id": "05c9480a-3dd3-46af-8c84-b7780c1b7fc1",
+      "type": "istar.OrRefinementLink",
+      "source": "8eaec98b-4847-4d24-9c70-3ca3b9c41bc1",
+      "target": "47e3bc33-bc05-4094-bb48-5c8463bacf93"
+    },
+    {
+      "id": "a5e7dac8-4d47-4c48-b1ee-0aaa222cd0b7",
+      "type": "istar.OrRefinementLink",
+      "source": "cc8cc08f-b813-41f7-aff7-e7656de4054b",
+      "target": "47e3bc33-bc05-4094-bb48-5c8463bacf93"
+    }
+  ],
+  "display": {
+    "a65400f0-1925-4b0d-933c-6d877452abc1": {
+      "width": 145.88748168945312,
+      "height": 34.225006103515625
+    },
+    "3a256e91-aa19-427c-a462-12034c4d02f1": {
+      "width": 150.88748168945312,
+      "height": 35.625
+    },
+    "cc8cc08f-b813-41f7-aff7-e7656de4054b": {
+      "width": 119.88748168945312,
+      "height": 37.125
+    },
+    "5664fa47-1fc2-43cc-bffe-6f09095e6066": {
+      "width": 139.88748168945312,
+      "height": 35.82498788833618
+    },
+    "15847e1a-cab9-4192-b2e3-5ac0ddc044ef": {
+      "width": 128.88748168945312,
+      "height": 34.52500009536743
+    }
+  },
+  "tool": "pistar.2.1.0",
+  "istar": "2.0",
+  "saveDate": "Fri, 03 Feb 2023 09:02:13 GMT",
+  "diagram": {
+    "width": 1000,
+    "height": 700,
+    "name": "Welcome Model",
+    "customProperties": {
+      "Description": "Welcome to the piStar tool version 2.1.0, released on November, 2021! This model describes some of the recent improvements in the tool. Click on the purple elements for further info.\n\nFor help using this tool, please check the Help menu above"
+    }
+  }
+}
