@@ -8,4 +8,4 @@ WORKDIR /app
 RUN npm install -g ganache-cli
 
 # Set the default command for the image
-CMD ["ganache-cli", "-h", "0.0.0.0", "--gasLimit", "1000000000000000000000"]
+CMD ["ganache-cli", "-h", "0.0.0.0", "-d", "Software Secutirity 1", "--gasLimit", "1000000000000000000000"]
