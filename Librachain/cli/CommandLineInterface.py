@@ -21,50 +21,57 @@ class CommandLineInterface:
         try:
             option = int(input('Enter your choice: '))
         except:
-            print('Wrong input. Please enter a number ...')
+            print('Wrong input. Please enter a number ...\n')
             return
 
         if option == 1:
-            print('Handle option \'Option 1: Register\'')
+            print('\nHandle option \'Option 1: Register\'')
             self.register_menu()
         elif option == 2:
-            print('Handle option \'Option 2: Log in\'')
+            print('\nHandle option \'Option 2: Log in\'')
             self.login_menu()
         elif option == 3:
-            print('Handle option \'Option 3: Exit\'')
+            print('\nHandle option \'Option 3: Exit\'')
             exit()
         else:
-            print('Invalid option. Please enter a number between 1 and 4.')
+            print('Invalid option. Please enter a number between 1 and 4.\n')
 
     def register_menu(self):
         w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7546"))
 
         print('Enter your wallet information.')
         public_key = input('Public Key:')
-        print(is_address(public_key))
 
         private_key = input('Private Key:')
-        private_key2 = input('Confirm Private Key:')
+        check_private_key = input('Confirm Private Key:')
 
-        pk = w3.eth.account.from_key(private_key)
+        try:
+            pk = w3.eth.account.from_key(private_key)
+        except:
+            print('Sorry, but the specified public key and private key do not match any account.\n')
+            return
 
-        if (is_address(public_key) & (public_key == pk.address) & (private_key2 == private_key)):
+        if (is_address(public_key) & (public_key == pk.address) & (private_key == check_private_key)):
             print('Enter your personal account information.')
-            print('(in this way every time you log in or want to perform a transaction it will not be necessary'
+            print('(in this way every time you log in or want to perform a transaction it will not be necessary\n'
                   ' to provide your private key, but the username and password that you will specify below)')
-            username = input('Username')
-            password = input('Password')
-            password = input('Check Passoword')
+            username = input('Username:')
+            password = input('Password:')
+            check_password = input('Confirm Passoword:')
+            while(password != check_password):
+                print('Password and confirm password do not match')
+                password = input('Password:')
+                check_password = input('Confirm Passoword:')
+            print('Registration was successful\n')
         else:
-            print('Sorry, but the specified public key and private key do not match any account.')
-
-
+            print('Sorry, but the specified public key and private key do not match any account.\n')
+            return
 
 
     def login_menu(self):
-        pass
+        username = input('Username:')
+        password = input('Password:')
 
 
-cli = CommandLineInterface()
-while (True):
-    cli.print_menu()
+
+
