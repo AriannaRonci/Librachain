@@ -12,21 +12,22 @@ class OnChainController:
         self.bytecode = contract_interface['bin']
         self.abi = contract_interface['abi']
         self.w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:8548"))
-        self.address = "0x254dffcd3277C0b1660F6d42EFbB754edaBAbC2B"
+        self.address = "0xe982E462b094850F12AF94d21D470e21bE9D0E9C"
         self.counter = self.w3.eth.contract(address=self.address, abi=self.abi)
 
 
 
     def getDeployed(self, shardAddress):
-        self.my_address = "0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1"
         result = self.counter.functions.getAddressList(shardAddress).call()
         print(result)
 
     def addToDictionary(self, shardAddress, contractAddress, myWallet):
-        self.counter = self.w3.eth.contract(address=self.address, abi=self.abi)
         result = self.counter.functions.addToDictionary(shardAddress, contractAddress).transact({"from": myWallet})
         self.w3.eth.wait_for_transaction_receipt(result)
         print(result)
 
+    def getBalance(self, shardAddress):
+        result = self.counter.functions.getBalance(shardAddress).call()
+        print(result)
 
 

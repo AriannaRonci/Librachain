@@ -1,4 +1,5 @@
 import controller
+from cli.CommandLineInterface import CommandLineInterface
 from controller.OnChainController import OnChainController
 
 if __name__ == "__main__":
@@ -10,3 +11,4 @@ if __name__ == "__main__":
     invoke_onchain = OnChainController()
     invoke_onchain.addToDictionary("http://127.0.0.1:8548", "0x254dffcd3277C0b1660F6d42EFbB754edaBAbC2B", myWallet)
     invoke_onchain.getDeployed("http://127.0.0.1:8548")
+    invoke_onchain.getBalance("http://127.0.0.1:8548")
