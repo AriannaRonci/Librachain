@@ -3,6 +3,7 @@ from web3 import Web3
 from solcx import compile_source
 solcx.install_solc('0.6.0')
 
+
 class OnChainController:
 
     def __init__(self):
