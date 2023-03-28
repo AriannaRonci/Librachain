@@ -10,6 +10,6 @@ if __name__ == "__main__":
     invoke_onchain.getBalance("http://127.0.0.1:8548")
     invoke_onchain.getDeployed("http://127.0.0.1:8548")
     invoke_onchain.addToDictionary("http://127.0.0.1:8548", "0x254dffcd3277C0b1660F6d42EFbB754edaBAbC2B", myWallet)
-    cli = CommandLineInterface()
-    while (True):
-        cli.print_menu()
+    #cli = CommandLineInterface()
+    #while (True):
+    #    cli.print_menu()
