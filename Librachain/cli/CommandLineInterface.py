@@ -47,7 +47,9 @@ class CommandLineInterface:
         public_key = input('Public Key: ')
 
         private_key = input('Private Key: ')
+        #private_key = getpass.getpass('Private Key: ')
         check_private_key = input('Confirm Private Key: ', )
+        #check_private_key = getpass.getpass('Confirm Private Key: ', )
 
         try:
             pk = w3.eth.account.from_key(private_key)
@@ -65,7 +67,7 @@ class CommandLineInterface:
             while(True):
                 password = getpass.getpass('Password: ')
                 check_password = getpass.getpass('Confirm Passoword: ')
-                if not re.fullmatch(r'(?=.*?\d)(?=.*?[A-Z])(?=.*?[a-z])[A-Za-z0-9@#$%^&+=]{8,}', password):
+                if not re.fullmatch(r'(?=.*?\d)(?=.*?[A-Z])(?=.*?[a-z])[A-Za-z0-9@#$%^&+=]{8,255}', password):
                     print('Passoword must contains at least 10 symbols, at least one digit, at least one uppercase letter, at least one lowercase letter\n')
                 elif (password != check_password):
                     print('Password and confirm password do not match')
