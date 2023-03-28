@@ -1,5 +1,10 @@
+<<<<<<< HEAD
+from cli.CommandLineInterface import CommandLineInterface
+from controller.Controller import Controller
+=======
 import controller
 from controller.OnChainController import OnChainController
+>>>>>>> main
 
 if __name__ == "__main__":
 
