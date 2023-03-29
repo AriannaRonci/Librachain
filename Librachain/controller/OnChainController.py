@@ -7,15 +7,18 @@ solcx.install_solc('0.6.0')
 class OnChainController:
 
     def __init__(self):
-        self.smart_contracts = "soliditycontracts"
+        with open('soliditycontracts/contract_address.txt', 'r') as f:
+            contract_address = f.readline().strip('\n')
         with open('soliditycontracts/OnChainManager.sol', 'r') as file:
             on_chain_source_code = file.read()
+
         compiled_contract = compile_source(on_chain_source_code, output_values=['abi', 'bin'])
         contract_id, contract_interface = compiled_contract.popitem()
-        self.bytecode = contract_interface['bin']
+        #self.bytecode = contract_interface['bin']
         self.abi = contract_interface['abi']
         self.w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:8548"))
-        self.address = "0xe982E462b094850F12AF94d21D470e21bE9D0E9C"
+        self.address = contract_address
+        print(contract_address)
         self.counter = self.w3.eth.contract(address=self.address, abi=self.abi)
 
 
