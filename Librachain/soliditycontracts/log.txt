@@ -1,0 +1,6 @@
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Storage.sol;  receipt: 0x630589690929E9cdEFDeF0734717a9eF3Ec7Fcfe
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Storage.sol;  receipt: 0xDb56f2e9369E0D7bD191099125a3f6C370F8ed15
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Storage.sol;  receipt: 0xDb56f2e9369E0D7bD191099125a3f6C370F8ed15
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Owner.sol;  receipt: 0x0E696947A06550DEf604e82C26fd9E493e576337
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Owner.sol;  receipt: 0xA94B7f0465E98609391C623d0560C5720a3f2D33
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Owner.sol;  receipt: 0xA94B7f0465E98609391C623d0560C5720a3f2D33

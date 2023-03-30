@@ -23,7 +23,7 @@ class OnChainController:
 
 
 
-    def getDeployed(self, shardAddress):
+    def getAddressList(self, shardAddress):
         result = self.counter.functions.getAddressList(shardAddress).call()
         print(result)
 
