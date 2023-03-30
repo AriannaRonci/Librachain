@@ -1,9 +1,9 @@
-from dal.user_repository import UserRepository
+#from dal.user_repository import UserRepository
 
 class Controller:
     
-    __init__(self, session):
-        self.user_repo = UserRepository()
+    #__init__(self, session):
+        #self.user_repo = UserRepository()
 
     def login(self, username, password, public_key, private_key):
         #Mettiamo tutta la logica dei tentativi qui?
