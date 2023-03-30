@@ -6,14 +6,21 @@ solcx.install_solc('0.6.0')
 import json
 
 # Set up the web3 provider
-web3 = Web3(HTTPProvider('http://localhost:8548'))
+shard1 = Web3(HTTPProvider('http://localhost:8545'))
+shard2 = Web3(HTTPProvider('http://localhost:8546'))
+shard3 = Web3(HTTPProvider('http://localhost:8547'))
+
 
 # Set up the contract and account information
 contract_name = 'OnChain'
-account = web3.eth.accounts[0]
+account1 = shard1.eth.accounts[0]
+account2 = shard2.eth.accounts[0]
+account3 = shard3.eth.accounts[0]
+
 contract_file = 'Librachain/soliditycontracts/OnChainManager.sol'
+
 with open(contract_file) as f:
-	on_chain_source_code = f.read()
+        on_chain_source_code = f.read()
 
 compiled_contract = compile_source(on_chain_source_code, output_values=['abi', 'bin'])
 contract_id, contract_interface = compiled_contract.popitem()
@@ -23,10 +30,10 @@ contract_bytecode = contract_interface['bin']
 # Deploy the contract
 contract_address = '0x2612Af3A521c2df9EAF28422Ca335b04AdF3ac66'
 
-MyContract = web3.eth.contract(abi=contract_abi, 
+MyContract = web3.eth.contract(abi=contract_abi,
 bytecode=contract_bytecode)
 tx_hash = MyContract.constructor().transact({'from': account})
-receipt = web3.eth.wait_for_transaction_receipt(tx_hash)
+receipt = web3.eth.waitForTransactionReceipt(tx_hash)
 
 logging.basicConfig(filename='Librachain/soliditycontracts/contract_address.txt', level=logging.DEBUG, format='')
 logging.info(receipt['contractAddress'])
