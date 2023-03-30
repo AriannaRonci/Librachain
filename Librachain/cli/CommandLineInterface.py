@@ -2,7 +2,7 @@ import re
 
 from eth_utils import is_address
 from web3 import Web3
-from controller.Controller import Controller
+from controllers.controller import Controller
 
 import getpass
 

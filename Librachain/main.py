@@ -1,8 +1,7 @@
 from cli.CommandLineInterface import CommandLineInterface
-from controller.Controller import Controller
-import controller
+from controllers.controller import Controller
 from cli.CommandLineInterface import CommandLineInterface
-from controller.OnChainController import OnChainController
+from controllers.OnChainController import OnChainController
 
 if __name__ == "__main__":
     myWallet = "0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1"
