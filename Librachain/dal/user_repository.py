@@ -1,9 +1,9 @@
 import sqlite3
-import libsodium
+#import libsodium
 import base64
 import hashlib
 from cryptography.fernet import Fernet
-from models.User import User
+from models.user import User
 import config
 
 class UserRepository:
@@ -19,17 +19,18 @@ class UserRepository:
         self.dklen=64
     
     def _create_table_if_not_exists(self):
-        self.cursor.execute(```
+        self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY,
                 username TEXT NOT NULL UNIQUE,
                 password_hash TEXT NOT NULL,
                 public_key TEXT NOT NULL,
                 private_key TEXT NOT NULL
-        ```)
+        """)
 
     def check_password(self, username, password):
-        c = self.cursor.execute("SELECT password_hash FROM Utenti WHERE username = ?", (username,)).fetchone()
+        res = self.cursor.execute("SELECT password_hash FROM Utenti WHERE username = ?", (username))
+        c = res.fetchone()
         if c:
             stored_pw = c[0]
             parameters = stored_pw.split('$')
@@ -50,12 +51,13 @@ class UserRepository:
 
     def get_user_by_username(self, username):
         user=None
-        tuple = self.cursor.execute(f"SELECT * FROM Users WHERE username={usernam}").fetchone():
+        res = self.cursor.execute("SELECT * FROM Users WHERE username=?", (username))
+        tuple = res.fetchone()
         user = User(tuple[0], tuple[1], tuple[2], tuple[3])
         return user
 
     def register_user(self, user):
-        self.cursor.execute(f"INSERT INTO Utenti (username, password_hash) VALUES (?, ?)", (username, self.encrypt_password(password))
+        self.cursor.execute(f"INSERT INTO Utenti (username, password_hash) VALUES (?, ?)", (username, self.encrypt_password(password)))
 
     def hash_password(self, password):
         salt = os.urandom(10)
@@ -70,12 +72,12 @@ class UserRepository:
         encrypted_private_key = cipher_suite.encrypt(private_key.encode('utf-8'))
         return encrypted_private_key
 
-    def decrypt_private_key(self, encrypted_private_key, password)
+    def decrypt_private_key(self, encrypted_private_key, password):
         password_hash = hashlib.sha256(password.encode('utf-8')).digest()
         key = base64.urlsafe_b64encode(password_hash.encode('utf-8'))
         cipher_suite = Fernet(key)
-        private_key = cipher_suite.decrypt(encrypted_private_key.encode('utf-8')
+        private_key = cipher_suite.decrypt(encrypted_private_key.encode('utf-8'))
         return private_key
 
     def delete_user(self, user):
-        self.cursor.execute(f"DELETE FROM Users WHERE id={user.get_id()})
+        self.cursor.execute("DELETE FROM Users WHERE id= ?)",(user.get_id()))

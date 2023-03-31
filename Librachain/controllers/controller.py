@@ -1,8 +1,9 @@
-#from dal.user_repository import UserRepository
+from dal.user_repository import UserRepository
+from session.session import Session
 
 class Controller:
     
-    __init__(self, session):
+    def __init__(self, session):
         self.user_repo = UserRepository()
         self.session = session
 

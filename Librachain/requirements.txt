@@ -1,4 +1,5 @@
 eth_utils
 web3
 py-solc
-sqlite3
+cryptography
+pyyaml
