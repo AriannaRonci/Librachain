@@ -57,7 +57,7 @@ class UserRepository:
         return user
 
     def register_user(self, username, password, public_key, private_key):
-        self.cursor.execute(f"INSERT INTO Users (username, password_hash, public_key, private_key) VALUES (?, ?, ?, ?)", (username, self.encrypt_password(password), public_key, private_key))
+        self.cursor.execute(f"INSERT INTO Users (username, password_hash, public_key, private_key) VALUES (?, ?, ?, ?)", (username, self.hash_password(password), public_key, private_key))
 
     def hash_password(self, password):
         salt = os.urandom(10)
