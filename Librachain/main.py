@@ -1,5 +1,4 @@
 from cli.command_line_interface import CommandLineInterface
-from controllers.controller import Controller
 from controllers.on_chain_controller import OnChainController
 from session.session import Session
 
@@ -11,5 +10,5 @@ if __name__ == "__main__":
     invoke_onchain.addToDictionary("http://127.0.0.1:8548", "0x254dffcd3277C0b1660F6d42EFbB754edaBAbC2B", myWallet)
     session_obj = Session()
     cli = CommandLineInterface(session_obj)
-    while (True):
+    while True:
         cli.print_menu()
