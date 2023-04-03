@@ -7,7 +7,7 @@ from models.user import User
 from config import config
 
 class UserRepository:
-    def __init__(self, str):
+    def __init__(self):
         self.conn = sqlite3.connect(config['dp_path'])
         self.cursor = self.conn.cursor()
         self._create_table_if_not_exists()
