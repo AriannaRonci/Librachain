@@ -20,12 +20,12 @@ class UserRepository:
     
     def _create_table_if_not_exists(self):
         self.cursor.execute("""
-            CREATE TABLE IF NOT EXISTS users (
+            CREATE TABLE IF NOT EXISTS Users (
                 id INTEGER PRIMARY KEY,
                 username TEXT NOT NULL UNIQUE,
                 password_hash TEXT NOT NULL,
                 public_key TEXT NOT NULL,
-                private_key TEXT NOT NULL
+                private_key TEXT NOT NULL )
         """)
 
     def check_password(self, username, password):
