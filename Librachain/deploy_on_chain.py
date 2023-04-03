@@ -29,7 +29,7 @@ bytecode=contract_bytecode)
 tx_hash = MyContract.constructor().transact({'from': account})
 receipt = web3.eth.wait_for_transaction_receipt(tx_hash)
 
-logging.basicConfig(filename='soliditycontracts/contract_address.txt', level=logging.DEBUG, format='')
+logging.basicConfig(filename='soliditycontracts/contract_address.txt', filemode="a", level=logging.DEBUG, format='')
 logging.info(receipt['contractAddress'])
 
 print(dict(receipt))
