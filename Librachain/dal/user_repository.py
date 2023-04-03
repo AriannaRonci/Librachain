@@ -4,11 +4,11 @@ import base64
 import hashlib
 from cryptography.fernet import Fernet
 from models.user import User
-import config
+from config import config
 
 class UserRepository:
     def __init__(self, str):
-        self.conn = sqlite3.connect(dp_path)
+        self.conn = sqlite3.connect(config['dp_path'])
         self.cursor = self.conn.cursor()
         self._create_table_if_not_exists()
 
