@@ -6,14 +6,14 @@ class Session:
         #self.id = str(uuid.uuid4())
         self.attempts = 0
 
-    def getUser():
+    def getUser(self):
         return self.user
 
-    def setUser(user):
+    def setUser(self,user):
         self.user = user
 
-    def getAttempts():
+    def getAttempts(self):
         return self.attempts
 
-    def incrementLoginAttemps():
+    def incrementLoginAttemps(self):
         self.attempts += 1

@@ -1,5 +1,5 @@
+import os
 import sqlite3
-#import libsodium
 import base64
 import hashlib
 from cryptography.fernet import Fernet
@@ -56,8 +56,8 @@ class UserRepository:
         user = User(tuple[0], tuple[1], tuple[2], tuple[3])
         return user
 
-    def register_user(self, user):
-        self.cursor.execute(f"INSERT INTO Utenti (username, password_hash) VALUES (?, ?)", (username, self.encrypt_password(password)))
+    def register_user(self, username, password):
+        self.cursor.execute(f"INSERT INTO Users (username, password_hash) VALUES (?, ?)", (username, self.encrypt_password(password)))
 
     def hash_password(self, password):
         salt = os.urandom(10)
@@ -80,4 +80,4 @@ class UserRepository:
         return private_key
 
     def delete_user(self, user):
-        self.cursor.execute("DELETE FROM Users WHERE id= ?)",(user.get_id()))
+        self.cursor.execute("DELETE FROM Users WHERE id=?",(user.get_id()))
