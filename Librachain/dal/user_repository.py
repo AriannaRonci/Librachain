@@ -56,8 +56,8 @@ class UserRepository:
         user = User(tuple[0], tuple[1], tuple[2], tuple[3])
         return user
 
-    def register_user(self, username, password):
-        self.cursor.execute(f"INSERT INTO Users (username, password_hash) VALUES (?, ?)", (username, self.encrypt_password(password)))
+    def register_user(self, username, password, public_key, private_key):
+        self.cursor.execute(f"INSERT INTO Users (username, password_hash, public_key, private_key) VALUES (?, ?, ?, ?)", (username, self.encrypt_password(password), public_key, private_key))
 
     def hash_password(self, password):
         salt = os.urandom(10)
