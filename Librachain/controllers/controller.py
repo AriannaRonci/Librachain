@@ -8,7 +8,7 @@ class Controller:
         self.user_repo = UserRepository()
         self.session = session
 
-    def login(self, username, password, public_key, private_key):
+    def login(self, username, password):
         if self.session.attempts < 5 and self.user_repo.check_password(username, password):
             self.session.setUser(username)
             return True
