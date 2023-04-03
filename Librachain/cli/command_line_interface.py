@@ -82,12 +82,12 @@ class CommandLineInterface:
 
     def login_menu(self):
 
-        public_key = input('Public Key: ')
-        private_key = getpass.getpass('Private Key: ')
+        #public_key = input('Public Key: ')
+        #private_key = getpass.getpass('Private Key: ')
         username = input('Username: ')
         password = getpass.getpass('Password: ')
 
-        self.controller.login(username, password, public_key, private_key)
+        self.controller.login(username, password)
 
 
 
