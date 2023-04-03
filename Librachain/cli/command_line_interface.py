@@ -8,9 +8,9 @@ import getpass
 
 class CommandLineInterface:
 
-    def __init__(self):
+    def __init__(self, session):
 
-        self.controller = Controller()
+        self.controller = Controller(session)
 
         self.menu_options = {
             1: 'Register',
