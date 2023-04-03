@@ -10,7 +10,8 @@ class Controller:
 
     def login(self, username, password):
         if self.session.attempts < 5 and self.user_repo.check_password(username, password):
-            self.session.setUser(username)
+            user = self.user_repo.get_user_by_username(username)
+            self.session.setUser(user.getUsername())
             return True
         elif self.session.attempts < 5:
             self.session.incrementLoginAttempts()
@@ -19,7 +20,7 @@ class Controller:
             return False
 
     def register(self, username, password, public_key, private_key):
-        if self.user_repo.register(username, password, public_key, private_key):
+        if self.user_repo.register_user(username, password, public_key, private_key):
             user = self.user_repo.get_user_by_username(username)
             self.session.setUser(user)
             return True
