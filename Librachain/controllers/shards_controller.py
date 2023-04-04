@@ -8,15 +8,12 @@ class ShardsController:
     def __init__(self, w3):
         self.w3 = w3
 
-    def by_abi(self, smart_contract_address, abi, wallet):
+    def deploy_smart_contract(self, smart_contract_code):
+        pass
+
+    def by_abi(self, smart_contract_address, abi):
         invoke_onchain = OnChainController()
         result = invoke_onchain.get_shard(smart_contract_address)
         if result:
             contract = self.w3.eth.contract(address=smart_contract_address, abi=abi)
             print(contract.all_functions())
-
-
-
-
-
-
