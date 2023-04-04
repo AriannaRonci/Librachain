@@ -80,7 +80,11 @@ class CommandLineInterface:
                 else:
                     break
 
-            self.controller.register(username, password, public_key, private_key)
+            res = self.controller.register(username, password, public_key, private_key)
+            if res:
+                print('Registration was successful!\n')
+            else:
+                print('Sorry, but something went wrong!\n')
 
         else:
             print('Sorry, but the specified public key and private key do not match any account.\n')
@@ -94,6 +98,7 @@ class CommandLineInterface:
 
             if res == 0:
                 print('You are login\n')
+                return
             elif res == -1:
                 print('Incorrect username or password\n')
                 self.login_menu()
