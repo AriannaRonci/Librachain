@@ -6,6 +6,7 @@ from controllers.controller import Controller
 
 import getpass
 
+
 class CommandLineInterface:
 
     def __init__(self, session):
@@ -47,9 +48,9 @@ class CommandLineInterface:
         public_key = input('Public Key: ')
 
         private_key = input('Private Key: ')
-        #private_key = getpass.getpass('Private Key: ')
+        # private_key = getpass.getpass('Private Key: ')
         check_private_key = input('Confirm Private Key: ', )
-        #check_private_key = getpass.getpass('Confirm Private Key: ', )
+        # check_private_key = getpass.getpass('Confirm Private Key: ', )
 
         try:
             pk = w3.eth.account.from_key(private_key)
@@ -64,14 +65,19 @@ class CommandLineInterface:
                   ' to provide your private key, but the username and password that you will specify below)')
             username = input('Username: ')
 
-            while(True):
-                password = getpass.getpass('Password: ')
-                check_password = getpass.getpass('Confirm Passoword: ')
-                if not re.fullmatch(r'(?=.*?\d)(?=.*?[A-Z])(?=.*?[a-z])[A-Za-z0-9@#$%^&+=]{101,255}', password):
-                    print('Passoword must contains at least 10 symbols, at least one digit, at least one uppercase letter, at least one lowercase letter\n')
+            while (True):
+                # password = getpass.getpass('Password: ')
+                # check_password = getpass.getpass('Confirm Passoword: ')
+                password = input('Password: ')
+
+                check_password = input('Confirm Passoword: ')
+                if not re.fullmatch(r'(?=.*?\d)(?=.*?[A-Z])(?=.*?[a-z])[A-Za-z0-9@#$%^&+=]{10,255}', password):
+                    print(
+                        'Passoword must contains at least 10 symbols, at least one digit, at least one uppercase letter, at least one lowercase letter\n')
                 elif (password != check_password):
                     print('Password and confirm password do not match')
-                else: break
+                else:
+                    break
 
             self.controller.register(username, password, public_key, private_key)
 
@@ -79,18 +85,21 @@ class CommandLineInterface:
             print('Sorry, but the specified public key and private key do not match any account.\n')
             return
 
-
     def login_menu(self):
 
-        #public_key = input('Public Key: ')
-        #private_key = getpass.getpass('Private Key: ')
-        username = input('Username: ')
-        password = getpass.getpass('Password: ')
+        if self.controller.check_number_attempts():
+            username = input('Username: ')
+            password = getpass.getpass('Password: ')
+            res = self.controller.login(username, password)
 
-        self.controller.login(username, password)
-
-
-
-
-
-
+            if res == 0:
+                print('You are login\n')
+            elif res == -1:
+                print('Incorrect username or password\n')
+                self.login_menu()
+            #elif res == 'Max Attempts':
+                #print('You have reached the maximum number of attempts')
+                #return
+        else:
+            print('You have reached the maximum number of attempts\n')
+            return
