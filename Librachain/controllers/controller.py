@@ -11,9 +11,6 @@ class Controller:
 
     def login(self, username, password):
 
-        if self.session.getTimeLeftForUnlock() < 0 & self.check_number_attempts() is False:
-            self.session.resetAttempts()
-
         if self.check_number_attempts() and self.user_repo.check_password(username, password):
             user = self.user_repo.get_user_by_username(username)
             self.session.setUser(user.getUsername())
