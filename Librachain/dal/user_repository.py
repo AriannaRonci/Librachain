@@ -29,7 +29,7 @@ class UserRepository:
         """)
 
     def check_password(self, username, password):
-        res = self.cursor.execute("SELECT password_hash FROM Utenti WHERE username = ?", (username))
+        res = self.cursor.execute("SELECT password_hash FROM Users WHERE username = ?", (username,))
         c = res.fetchone()
         if c:
             stored_pw = c[0]
@@ -51,10 +51,13 @@ class UserRepository:
 
     def get_user_by_username(self, username):
         user = None
-        res = self.cursor.execute("SELECT * FROM Users WHERE username=?", (username))
-        tuple = res.fetchone()
-        user = User(tuple[0], tuple[1], tuple[2], tuple[3])
-        return user
+        res = self.cursor.execute("SELECT * FROM Users WHERE username=?", (username,))
+        if res is None:
+            return None
+        else:
+            tuple = res.fetchone()
+            user = User(tuple[0], tuple[1], tuple[2], tuple[3], tuple[4])
+            return user
 
     def register_user(self, username, password, public_key, private_key):
         self.cursor.execute(f"INSERT INTO Users (username, password_hash, public_key, private_key) VALUES (?, ?, ?, ?)", (username, self.hash_password(password), public_key, private_key))

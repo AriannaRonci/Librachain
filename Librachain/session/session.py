@@ -17,7 +17,7 @@ class Session:
     def getAttempts(self):
         return self.attempts
 
-    def incrementLoginAttemps(self):
+    def incrementLoginAttempts(self):
         self.attempts += 1
 
     def resetAttempts(self):
