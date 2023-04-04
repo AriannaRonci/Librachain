@@ -12,6 +12,7 @@ class CommandLineInterface:
     def __init__(self, session):
 
         self.controller = Controller(session)
+        self.session = session
 
         self.menu_options = {
             1: 'Register',
@@ -86,8 +87,7 @@ class CommandLineInterface:
             return
 
     def login_menu(self):
-
-        if self.controller.check_number_attempts():
+        if self.session.getTimeLeftForUnlock() <= 0 & self.controller.check_number_attempts():
             username = input('Username: ')
             password = getpass.getpass('Password: ')
             res = self.controller.login(username, password)
@@ -101,5 +101,6 @@ class CommandLineInterface:
                 #print('You have reached the maximum number of attempts')
                 #return
         else:
-            print('You have reached the maximum number of attempts\n')
+            print('You have reached the maximum number of attempts')
+            print(f'Time left until next attempt: {int(self.session.getTimeLeftForUnlock())} seconds\n')
             return
