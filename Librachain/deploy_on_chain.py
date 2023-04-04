@@ -13,8 +13,6 @@ account = web3.eth.accounts[0]
 contract_file = 'soliditycontracts/OnChainManager.sol'
 with open(contract_file) as f:
 	on_chain_source_code = f.read()
-#contract_abi = contract_json['abi']
-#contract_bytecode = contract_json['bytecode']
 
 compiled_contract = compile_source(on_chain_source_code, output_values=['abi', 'bin'])
 contract_id, contract_interface = compiled_contract.popitem()
