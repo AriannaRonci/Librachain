@@ -65,9 +65,12 @@ class CommandLineInterface:
             username = input('Username: ')
 
             while(True):
-                password = getpass.getpass('Password: ')
-                check_password = getpass.getpass('Confirm Passoword: ')
-                if not re.fullmatch(r'(?=.*?\d)(?=.*?[A-Z])(?=.*?[a-z])[A-Za-z0-9@#$%^&+=]{101,255}', password):
+                #password = getpass.getpass('Password: ')
+                #check_password = getpass.getpass('Confirm Passoword: ')
+                password = input('Password: ')
+
+                check_password = input('Confirm Passoword: ')
+                if not re.fullmatch(r'(?=.*?\d)(?=.*?[A-Z])(?=.*?[a-z])[A-Za-z0-9@#$%^&+=]{10,255}', password):
                     print('Passoword must contains at least 10 symbols, at least one digit, at least one uppercase letter, at least one lowercase letter\n')
                 elif (password != check_password):
                     print('Password and confirm password do not match')

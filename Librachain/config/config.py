@@ -1,4 +1,3 @@
 import yaml
 
-config = yaml.safe_load(open('configuration.yml', 'r'))
-print(config["db_path"])
+config = yaml.safe_load(open('config/configuration.yml', 'r'))

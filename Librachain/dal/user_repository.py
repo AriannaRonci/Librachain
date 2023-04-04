@@ -8,7 +8,7 @@ from config import config
 
 class UserRepository:
     def __init__(self):
-        self.conn = sqlite3.connect(config.config['db_path'])
+        self.conn = sqlite3.connect(config.config["db_path"])
         self.cursor = self.conn.cursor()
         self._create_table_if_not_exists()
 
@@ -50,14 +50,15 @@ class UserRepository:
             return False
 
     def get_user_by_username(self, username):
-        user=None
+        user = None
         res = self.cursor.execute("SELECT * FROM Users WHERE username=?", (username))
         tuple = res.fetchone()
         user = User(tuple[0], tuple[1], tuple[2], tuple[3])
         return user
 
-    def register_user(self, username, password):
-        self.cursor.execute(f"INSERT INTO Users (username, password_hash) VALUES (?, ?)", (username, self.encrypt_password(password)))
+    def register_user(self, username, password, public_key, private_key):
+        self.cursor.execute(f"INSERT INTO Users (username, password_hash, public_key, private_key) VALUES (?, ?, ?, ?)", (username, self.hash_password(password), public_key, private_key))
+        self.conn.commit()
 
     def hash_password(self, password):
         salt = os.urandom(10)
