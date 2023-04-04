@@ -64,7 +64,7 @@ class CommandLineInterface:
             print('Sorry, but the specified public key and private key do not match any account.\n')
             return
 
-        if (is_address(public_key) and (public_key == pk.address)  (private_key == check_private_key)):
+        if (is_address(public_key) and (public_key == pk.address) and (private_key == check_private_key)):
 
             print('Enter your personal account information.')
             print('(in this way every time you log in or want to perform a transaction it will not be necessary\n'
