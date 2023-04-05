@@ -1,3 +1,4 @@
+import os
 import re
 
 from eth_utils import is_address
@@ -20,7 +21,7 @@ class CommandLineInterface:
             3: 'Exit',
         }
 
-        self.wrong_login_options = {
+        self.wrong_input_options = {
             1: 'Retry',
             2: 'Exit',
         }
@@ -69,9 +70,9 @@ class CommandLineInterface:
             pk = w3.eth.account.from_key(private_key)
         except:
             print('Sorry, but the specified public key and private key do not match any account.\n')
-            return
+            self.print_menu()
 
-        if (is_address(public_key) and (public_key == pk.address)(private_key == check_private_key)):
+        if (is_address(public_key) and (public_key == pk.address) and (private_key == check_private_key)):
 
             print('Enter your personal account information.')
             print('(in this way every time you log in or want to perform a transaction it will not be necessary\n'
@@ -97,10 +98,9 @@ class CommandLineInterface:
                 print('Registration was successful!\n')
             else:
                 print('Sorry, but something went wrong!\n')
-
         else:
             print('Sorry, but the specified public key and private key do not match any account.\n')
-            return
+            self.print_menu()
 
     def login_menu(self):
 
@@ -117,7 +117,7 @@ class CommandLineInterface:
                 self.print_user_options()
             elif res == -1:
                 print('\nIncorrect username or password\n')
-                self.print_retry_exit_menu()
+                self.print_retry_exit_menu('login')
             # elif res == 'Max Attempts':
             # print('You have reached the maximum number of attempts')
             # return
@@ -126,25 +126,31 @@ class CommandLineInterface:
             print(f'Time left until next attempt: {int(self.session.getTimeLeftForUnlock())} seconds\n')
             return
 
-    def print_retry_exit_menu(self):
-        for key in self.wrong_login_options.keys():
-            print(key, '--', self.wrong_login_options[key])
+    def print_retry_exit_menu(self, predecessor_method):
+        for key in self.wrong_input_options.keys():
+            print(key, '--', self.wrong_input_options[key])
 
         try:
             option = int(input('Enter your choice: '))
         except:
             print('Wrong input. Please enter a number ...\n')
-            self.print_retry_exit_menu()
+            self.print_retry_exit_menu(predecessor_method)
 
         if option == 1:
-            print('\nHandle option \'Option 1: Retry Login\'')
-            self.login_menu()
+            print('\nHandle option \'Option 1: Retry\'')
+            if predecessor_method == 'login':
+                self.login_menu()
+            elif predecessor_method == 'deploy':
+                self.read_smart_contract()
         elif option == 2:
             print('\nHandle option \'Option 2: Exit\'\n')
-            self.print_menu()
+            if predecessor_method == 'login':
+                self.print_menu()
+            elif predecessor_method == 'deploy':
+                self.print_user_options()
         else:
             print('Invalid option. Please enter a number between 1 and 2.\n')
-            self.print_retry_exit_menu()
+            self.print_retry_exit_menu(predecessor_method)
 
     def print_user_options(self):
         for key in self.user_options.keys():
@@ -168,3 +174,24 @@ class CommandLineInterface:
             self.print_menu()
         else:
             print('Invalid option. Please enter a number between 1 and 4.\n')
+
+    def deploy_menu(self):
+        print('Before proceeding with the deployment of Smart Contract it is necessary to enter the password ')
+        password = getpass.getpass('Password: ')
+        res = self.controller.check_password(self.session.getUser().getUsername(), password)
+        if res:
+            self.read_smart_contract()
+        else:
+            print('\nIncorrect password.\n Sorry but you can\'t proceed with the deployment of Smart Contract.\n')
+            self.print_user_options()
+
+    def read_smart_contract(self):
+        file_path = input('Enter the path of your file: ')
+        if not os.path.exists(file_path):
+            print(f'I did not find the file at, {str(file_path)}.\n')
+            self.print_retry_exit_menu('deploy')
+        else:
+            print("We found your file: Smart Contract loaded correctly!\n")
+
+
+
