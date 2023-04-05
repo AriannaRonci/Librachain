@@ -60,6 +60,10 @@ class UserRepository:
             return user
 
     def register_user(self, username, password, public_key, private_key):
+        """
+            FIX:
+                - username already present in DB
+        """
         try:
             self.cursor.execute(f"INSERT INTO Users (username, password_hash, public_key, private_key) VALUES (?, ?, ?, ?)", (username, self.hash_password(password), public_key, private_key))
             self.conn.commit()
