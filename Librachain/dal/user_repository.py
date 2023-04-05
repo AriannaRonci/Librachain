@@ -85,3 +85,11 @@ class UserRepository:
 
     def delete_user(self, user):
         self.cursor.execute("DELETE FROM Users WHERE id=?",(user.get_id()))
+        self.con.commit()
+
+    def getLatestTimestamp():
+        res = self.cursor.execute("SELECT * FROM Users WHERE username=?", (username,))
+
+    def setLatestTimestamp():
+        pass
+
