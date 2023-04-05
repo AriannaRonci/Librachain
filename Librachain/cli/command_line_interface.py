@@ -5,13 +5,14 @@ from eth_utils import is_address
 from web3 import Web3
 from controllers.controller import Controller
 from controllers.shards_controller import ShardsController
+from session.session import Session
 
 import getpass
 
 
 class CommandLineInterface:
 
-    def __init__(self, session):
+    def __init__(self, session: Session):
 
         self.controller = Controller(session)
         self.shards_controller = ShardsController()
@@ -106,10 +107,10 @@ class CommandLineInterface:
 
     def login_menu(self):
 
-        if not self.controller.check_number_attempts() and self.session.getTimeLeftForUnlock() < 0:
-            self.session.resetAttempts()
+        if not self.controller.check_number_attempts() and self.session.get_time_left_for_unlock() < 0:
+            self.session.reset_attempts()
 
-        if self.session.getTimeLeftForUnlock() <= 0 and self.controller.check_number_attempts():
+        if self.session.get_time_left_for_unlock() <= 0 and self.controller.check_number_attempts():
             username = input('Username: ')
             password = getpass.getpass('Password: ')
             res = self.controller.login(username, password)
@@ -125,7 +126,7 @@ class CommandLineInterface:
             # return
         else:
             print('\nYou have reached the maximum number of attempts')
-            print(f'Time left until next attempt: {int(self.session.getTimeLeftForUnlock())} seconds\n')
+            print(f'Time left until next attempt: {int(self.session.get_time_left_for_unlock())} seconds\n')
             return
 
     def print_retry_exit_menu(self, predecessor_method):
@@ -172,7 +173,7 @@ class CommandLineInterface:
             self.invoke_method_menu()
         elif option == 3:
             print('\nHandle option \'Option 3: Exit\'\n')
-            self.session.setUser(None)
+            self.session.set_user(None)
             self.print_menu()
         else:
             print('Invalid option. Please enter a number between 1 and 4.\n')
@@ -180,7 +181,7 @@ class CommandLineInterface:
     def deploy_menu(self):
         print('Before proceeding with the deployment of Smart Contract it is necessary to enter the password ')
         password = getpass.getpass('Password: ')
-        res = self.controller.check_password(self.session.getUser().getUsername(), password)
+        res = self.controller.check_password(self.session.get_user().get_username(), password)
         if res:
             file_path = self.read_smart_contract()
 
@@ -198,7 +199,7 @@ class CommandLineInterface:
                 except ValueError:
                     print('Wrong input. Please enter a number ...\n')
 
-            self.shards_controller.deploy_smart_contract(file_path, self.session.getUser().getPublicKey(), gas_limit, gas_price)
+            self.shards_controller.deploy_smart_contract(file_path, self.session.get_user().get_public_key(), gas_limit, gas_price)
 
         else:
             print('\nIncorrect password.\n Sorry but you can\'t proceed with the deployment of Smart Contract.\n')

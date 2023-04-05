@@ -31,10 +31,10 @@ class UserRepository:
         self._create_table_if_not_exists()
 
         # Parameters for password hashing
-        self.n=2
-        self.r=16
-        self.p=1
-        self.dklen=64
+        self.n_param=2
+        self.r_param=16
+        self.p_param=1
+        self.dklen_param=64
     
     def _create_table_if_not_exists(self):
         """Creates the user table in the db if it doesn't exist already"""
@@ -82,12 +82,9 @@ class UserRepository:
                 p=int(parameters[4]),
                 dklen=int(parameters[5])
             ) 
-            if hashed_password.hex() == parameters[0]:
-                return True
-            else:
-                return False
-        else:
-            return False
+            return hashed_password.hex() == parameters[0]
+
+        return False
 
     def get_user_by_username(self, username):
         """Retrieves user with supplied username from database.
@@ -102,12 +99,12 @@ class UserRepository:
             SELECT *
             FROM Users 
             WHERE username=?""", (username,))
-        if res is None:
-            return None
-        else:
+        if res is not None:
             tuple = res.fetchone()
             user = User(tuple[0], tuple[1], tuple[2], tuple[3], tuple[4])
             return user
+        
+        return None
 
     def register_user(self, username, password, public_key, private_key):
         """Inserts a new User record in the database.
@@ -131,7 +128,7 @@ class UserRepository:
             encrypted_private_key = self.encrypt_private_key(
                     private_key, password)
             hashed_password = self.hash_password(password)
-            self.cursor.execute(f"""
+            self.cursor.execute("""
                 INSERT INTO Users
                 (username, password_hash, public_key, private_key)
                 VALUES (?, ?, ?, ?)""",
@@ -159,14 +156,14 @@ class UserRepository:
             
         """
         salt = os.urandom(10)
-        hash = hashlib.scrypt(
+        digest = hashlib.scrypt(
             password.encode(), salt=salt,
-            n=self.n,
-            r=self.r,
-            p=self.p,
-            dklen=self.dklen
+            n=self.n_param,
+            r=self.r_param,
+            p=self.p_param,
+            dklen=self.dklen_param
         )
-        password_hash = f"{hash.hex()}${salt.hex()}${self.n}${self.r}${self.p}${self.dklen}"
+        password_hash = f"{digest.hex()}${salt.hex()}${self.n_param}${self.r_param}${self.p_param}${self.dklen_param}"
         return password_hash
 
     def encrypt_private_key(self, private_key: str, password: str):
@@ -226,9 +223,9 @@ class UserRepository:
         except:
             return -1
 
-    def getLatestTimestamp(self):
-        pass
+    #def get_latest_timestamp(self):
+    #    pass
 
-    def setLatestTimestamp(self):
-        pass
+    #def set_latest_timestamp(self):
+    #    pass
 
