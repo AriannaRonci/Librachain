@@ -17,13 +17,17 @@ class ShardsController:
         contract_id, contract_interface = compiled_contract.popitem()
         contract_abi = contract_interface['abi']
         contract_bytecode = contract_interface['bin']
-        w3 = self.shards_controller.balance_load()
+        w3 = self.balance_load()
         my_contract = w3.eth.contract(abi=contract_abi,
                                           bytecode=contract_bytecode)
-        tx_hash = my_contract.constructor().transact({'from': wallet})
+        tx_hash = my_contract.constructor().transact({#'gasPrice': gas_price,
+                                                      #'gasLimit': gas_limit,
+                                                      'from': wallet})
         receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
         print(receipt['contractAddress'])
         print(dict(receipt))
+        invoke_onchain = OnChainController()
+        invoke_onchain.add_to_dictionary(self.balance_load().provider.endpoint_uri, receipt['contractAddress'], wallet)
 
     def by_abi(self, smart_contract_address, abi):
         invoke_onchain = OnChainController()
@@ -31,12 +35,12 @@ class ShardsController:
         if w3 != 'contract not deployed':
             contract = w3.eth.contract(address=smart_contract_address, abi=abi)
             functions = contract.all_functions()
-            contract_functions = []
+            cli_functions = []
             for i in range(0, len(functions)):
                 function = str(functions[i]).replace('<Function', '').replace('>', '')
-                contract_functions.append(function)
-            print(contract_functions)
-            return contract_functions, contract
+                cli_functions.append(function)
+            print(cli_functions)
+            return cli_functions, contract, functions
 
     def balance_load(self):
         shard1 = Web3(HTTPProvider('http://localhost:8545'))
@@ -58,7 +62,7 @@ class ShardsController:
         return chosen_shard
 
     def call_function(self, contract_function, contract):
-        pass#contract.functions.contract_function().call()
+        pass
 
 
 
