@@ -4,6 +4,7 @@ import re
 from eth_utils import is_address
 from web3 import Web3
 from controllers.controller import Controller
+from controllers.shards_controller import ShardsController
 
 import getpass
 
@@ -13,6 +14,7 @@ class CommandLineInterface:
     def __init__(self, session):
 
         self.controller = Controller(session)
+        self.shards_controller = ShardsController()
         self.session = session
 
         self.menu_options = {
@@ -38,7 +40,7 @@ class CommandLineInterface:
 
         try:
             option = int(input('Enter your choice: '))
-        except:
+        except ValueError:
             print('Wrong input. Please enter a number ...\n')
             self.print_menu()
 
@@ -132,7 +134,7 @@ class CommandLineInterface:
 
         try:
             option = int(input('Enter your choice: '))
-        except:
+        except ValueError:
             print('Wrong input. Please enter a number ...\n')
             self.print_retry_exit_menu(predecessor_method)
 
@@ -158,7 +160,7 @@ class CommandLineInterface:
 
         try:
             option = int(input('Enter your choice: '))
-        except:
+        except ValueError:
             print('Wrong input. Please enter a number ...\n')
             self.print_user_options()
 
@@ -180,7 +182,24 @@ class CommandLineInterface:
         password = getpass.getpass('Password: ')
         res = self.controller.check_password(self.session.getUser().getUsername(), password)
         if res:
-            self.read_smart_contract()
+            file_path = self.read_smart_contract()
+
+            while (True):
+                try:
+                    gas_limit = int(input('Gas limit: '))
+                    break
+                except ValueError:
+                    print('Wrong input. Please enter a number ...\n')
+
+            while (True):
+                try:
+                    gas_price = int(input('Gas price: '))
+                    break
+                except ValueError:
+                    print('Wrong input. Please enter a number ...\n')
+
+            self.shards_controller.deploy_smart_contract(file_path, self.session.getUser().getPublicKey(), gas_limit, gas_price)
+
         else:
             print('\nIncorrect password.\n Sorry but you can\'t proceed with the deployment of Smart Contract.\n')
             self.print_user_options()
@@ -191,7 +210,8 @@ class CommandLineInterface:
             print(f'I did not find the file at, {str(file_path)}.\n')
             self.print_retry_exit_menu('deploy')
         else:
-            print("We found your file: Smart Contract loaded correctly!\n")
+            print('We found your file: Smart Contract loaded correctly!\n')
+            return file_path
 
 
 
