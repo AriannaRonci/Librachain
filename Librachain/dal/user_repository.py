@@ -7,7 +7,25 @@ from models.user import User
 from config import config
 
 class UserRepository:
+    """User Data Access Layer to access the database.
+
+    Attributes:
+        conn: Connection object representing the connection to the SQLite DB
+        cursor: Cursor object to execute operations on the DB
+        n:  Integer memory/cpu factor for the password hashing algorithm
+        r: Integer block size for the password hashing algorithm
+        p: parallelization factor for the password hashing algorithm
+        dklen: length of the derived key from password the hashing algorithm
+    """
+
     def __init__(self):
+        """Initializes the class and the db Connection and Cursor object.
+        
+        Connection object is created with the database present in the
+        path contained in config.config["db_path"].
+        The _create_table_if_not_exists method is called to ensure the
+        User table exists.
+        """
         self.conn = sqlite3.connect(config.config["db_path"])
         self.cursor = self.conn.cursor()
         self._create_table_if_not_exists()
@@ -19,6 +37,7 @@ class UserRepository:
         self.dklen=64
     
     def _create_table_if_not_exists(self):
+        """Creates the user table in the db if it doesn't exist already"""
         self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS Users (
                 id INTEGER PRIMARY KEY,
@@ -29,7 +48,28 @@ class UserRepository:
         """)
 
     def check_password(self, username, password):
-        res = self.cursor.execute("SELECT password_hash FROM Users WHERE username = ?", (username,))
+        """Checks that the given credentials are valid.
+
+        Password hash recovered from the database and compared to 
+        supplied password digest. If a user with the supplied username
+        exists in the database and the corresponding password hash
+        matches the digest of the supplied password than the credentials 
+        are valid.
+
+        Args:
+            ursername: username string
+            password: password string
+
+        Returns:
+            A boolean that identifies the result:
+            - True: supplied credentials are valid
+            - False: supplied credentials are not valid
+        """
+        res = self.cursor.execute("""
+        SELECT password_hash 
+        FROM Users 
+        WHERE username = ?""", (username,)
+        )
         c = res.fetchone()
         if c:
             stored_pw = c[0]
@@ -50,8 +90,18 @@ class UserRepository:
             return False
 
     def get_user_by_username(self, username):
-        user = None
-        res = self.cursor.execute("SELECT * FROM Users WHERE username=?", (username,))
+        """Retrieves user with supplied username from database.
+
+        Args:
+            username: username string
+
+        Returns:
+            A User object if a match is found in the database, None otherwise.
+        """
+        res = self.cursor.execute("""
+            SELECT *
+            FROM Users 
+            WHERE username=?""", (username,))
         if res is None:
             return None
         else:
@@ -60,44 +110,125 @@ class UserRepository:
             return user
 
     def register_user(self, username, password, public_key, private_key):
-        """
-            FIX:
-                - username already present in DB
+        """Inserts a new User record in the database.
+
+        The private key is encrypted using password as seed, and
+        password is hashed upon insertion.
+
+        Args:
+            username: user's username string
+            password: user's password string
+            public_key: user's public key string
+            private_key: user's private key string
+
+        Returns:
+            An integer the identifies the result:
+                 0: insertion done correctly
+                -1: supplied username already present in the database
+                -2: uknown database error
         """
         try:
-            self.cursor.execute(f"INSERT INTO Users (username, password_hash, public_key, private_key) VALUES (?, ?, ?, ?)", (username, self.hash_password(password), public_key, private_key))
+            encrypted_private_key = self.encrypt_private_key(
+                    private_key, password)
+            hashed_password = self.hash_password(password)
+            self.cursor.execute(f"""
+                INSERT INTO Users
+                (username, password_hash, public_key, private_key)
+                VALUES (?, ?, ?, ?)""",
+                (username,hashed_password, public_key, encrypted_private_key)
+            )
             self.conn.commit()
-            return True
-        except Exception as err:
-            print(err)
-            return False
-    def hash_password(self, password):
+            return 0
+        except sqlite3.IntegrityError:
+            return -1
+        except sqlite3.DatabaseError:
+            return -2
+
+    def hash_password(self, password: str):
+        """Hashes the supplied password.
+
+        The parameters used by scrypt algorithm are appended to the digest
+        and returned.
+
+        Args:
+            password: supplied password string
+
+        Returns:
+            A string containing the hashed password and the parameters used
+            to hash it.
+            
+        """
         salt = os.urandom(10)
-        hash = hashlib.scrypt(password.encode(), salt=salt, n=self.n, r=self.r, p=self.p, dklen=self.dklen)
+        hash = hashlib.scrypt(
+            password.encode(), salt=salt,
+            n=self.n,
+            r=self.r,
+            p=self.p,
+            dklen=self.dklen
+        )
         password_hash = f"{hash.hex()}${salt.hex()}${self.n}${self.r}${self.p}${self.dklen}"
         return password_hash
 
-    def encrypt_private_key(self, private_key, password):
+    def encrypt_private_key(self, private_key: str, password: str):
+        """Encrypts the supplied private key.
+
+        The password is hashed with sha256 and used as key for the private key
+        encryption.
+
+        Args:
+            private_key: private key string
+            password: password string
+
+        Returns:
+            a string containing encrypted private key.
+        """
         password_hash = hashlib.sha256(password.encode('utf-8')).digest()
-        key = base64.urlsafe_b64encode(password_hash.encode("utf-8"))
+        key = base64.urlsafe_b64encode(password_hash)
         cipher_suite = Fernet(key)
-        encrypted_private_key = cipher_suite.encrypt(private_key.encode('utf-8'))
+        encrypted_private_key = cipher_suite.encrypt(
+                private_key.encode('utf-8'))
         return encrypted_private_key
 
     def decrypt_private_key(self, encrypted_private_key, password):
+        """Decrypts the supplied private key.
+
+        The password is hashed with sha256 and used as key for the private key
+        decryption.
+
+        Args:
+            encrypted_private_key: encrypt_private_key key string
+            password: password string
+
+        Returns:
+            A string containing the decrypted private key.
+        """
         password_hash = hashlib.sha256(password.encode('utf-8')).digest()
-        key = base64.urlsafe_b64encode(password_hash.encode('utf-8'))
+        key = base64.urlsafe_b64encode(password_hash)
         cipher_suite = Fernet(key)
-        private_key = cipher_suite.decrypt(encrypted_private_key.encode('utf-8'))
-        return private_key
+        private_key = cipher_suite.decrypt(
+                encrypted_private_key.encode('utf-8'))
+        return private_key.decode('utf-8')
 
     def delete_user(self, user):
-        self.cursor.execute("DELETE FROM Users WHERE id=?",(user.get_id()))
-        self.con.commit()
+        """Deletes the supplied user from the database.
 
-    def getLatestTimestamp():
-        res = self.cursor.execute("SELECT * FROM Users WHERE username=?", (username,))
+        Args:
+            user: User object which database entry has to be deleted
+        Returns:
+            An integer that identifies the result:
+                  0: user deleted correctly
+                 -1: unknown database error
+        """
+        try:
+            self.cursor.execute("DELETE FROM Users WHERE id=?",(user.get_id()))
+            self.conn.commit()
+            return 0
+        except:
+            return -1
 
-    def setLatestTimestamp():
+    def getLatestTimestamp(self):
+        pass
+
+    def setLatestTimestamp(self):
         pass
 
