@@ -47,4 +47,5 @@ for i in range(0, 2):
         r = "contract address: " + receipt['contractAddress']
         logging.info('%s %s %s', a, c, r)
 
+
 print(dict(receipt))

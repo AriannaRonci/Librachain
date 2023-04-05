@@ -1,7 +1,6 @@
 # import uuid
 import time
 
-
 class Session:
     def __init__(self):
         self.__user = None
@@ -24,8 +23,8 @@ class Session:
     def resetAttempts(self):
         self.__attempts = 0
 
-    def setExceededAttemptsTimeout(self):
-        self.__exceededTimestamp = time.time() + 30
+    def setExceededAttemptsTimeout(self, lock_time):
+        self.__exceededTimestamp = time.time() + lock_time
 
     def getTimeLeftForUnlock(self):
         return self.__exceededTimestamp - time.time()

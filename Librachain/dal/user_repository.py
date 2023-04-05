@@ -60,6 +60,10 @@ class UserRepository:
             return user
 
     def register_user(self, username, password, public_key, private_key):
+        """
+            FIX:
+                - username already present in DB
+        """
         try:
             self.cursor.execute(f"INSERT INTO Users (username, password_hash, public_key, private_key) VALUES (?, ?, ?, ?)", (username, self.hash_password(password), public_key, private_key))
             self.conn.commit()
@@ -89,3 +93,11 @@ class UserRepository:
 
     def delete_user(self, user):
         self.cursor.execute("DELETE FROM Users WHERE id=?",(user.get_id()))
+        self.con.commit()
+
+    def getLatestTimestamp():
+        res = self.cursor.execute("SELECT * FROM Users WHERE username=?", (username,))
+
+    def setLatestTimestamp():
+        pass
+
