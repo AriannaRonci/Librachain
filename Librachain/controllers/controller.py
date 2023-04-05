@@ -44,7 +44,7 @@ class Controller:
         """
         if self.check_number_attempts() and self.user_repo.check_password(username, password):
             user = self.user_repo.get_user_by_username(username)
-            self.session.setUser(user.getUsername())
+            self.session.setUser(user)
             return 0
         elif self.check_number_attempts():
             self.session.incrementLoginAttempts()
@@ -96,6 +96,9 @@ class Controller:
                  0: user registered correctly
                 -1: username already present in the database
                 -2: unknown database error
+
+        FIX:
+            -missing register check
         """
         if self.user_repo.register_user(username, password, public_key, private_key):
             user = self.user_repo.get_user_by_username(username)
