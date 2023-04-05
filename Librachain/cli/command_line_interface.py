@@ -25,6 +25,12 @@ class CommandLineInterface:
             2: 'Exit',
         }
 
+        self.user_options = {
+            1: 'Deploy Smart Contract',
+            2: 'Invoke Smart Contact\'s Method',
+            3: 'Logout'
+        }
+
     def print_menu(self):
         for key in self.menu_options.keys():
             print(key, '--', self.menu_options[key])
@@ -33,7 +39,7 @@ class CommandLineInterface:
             option = int(input('Enter your choice: '))
         except:
             print('Wrong input. Please enter a number ...\n')
-            return
+            self.print_menu()
 
         if option == 1:
             print('\nHandle option \'Option 1: Register\'')
@@ -46,6 +52,7 @@ class CommandLineInterface:
             exit()
         else:
             print('Invalid option. Please enter a number between 1 and 4.\n')
+            self.print_menu()
 
     def register_menu(self):
         w3 = Web3(Web3.HTTPProvider("http://0.0.0.0:8548"))
@@ -64,7 +71,7 @@ class CommandLineInterface:
             print('Sorry, but the specified public key and private key do not match any account.\n')
             return
 
-        if (is_address(public_key) and (public_key == pk.address) and (private_key == check_private_key)):
+        if (is_address(public_key) and (public_key == pk.address)(private_key == check_private_key)):
 
             print('Enter your personal account information.')
             print('(in this way every time you log in or want to perform a transaction it will not be necessary\n'
@@ -107,20 +114,19 @@ class CommandLineInterface:
 
             if res == 0:
                 print('\nYou are login\n')
-                return
+                self.print_user_options()
             elif res == -1:
                 print('\nIncorrect username or password\n')
-                self.retry_exit_menu()
-            #elif res == 'Max Attempts':
-                #print('You have reached the maximum number of attempts')
-                #return
+                self.print_retry_exit_menu()
+            # elif res == 'Max Attempts':
+            # print('You have reached the maximum number of attempts')
+            # return
         else:
             print('\nYou have reached the maximum number of attempts')
             print(f'Time left until next attempt: {int(self.session.getTimeLeftForUnlock())} seconds\n')
             return
 
-
-    def retry_exit_menu(self):
+    def print_retry_exit_menu(self):
         for key in self.wrong_login_options.keys():
             print(key, '--', self.wrong_login_options[key])
 
@@ -128,15 +134,37 @@ class CommandLineInterface:
             option = int(input('Enter your choice: '))
         except:
             print('Wrong input. Please enter a number ...\n')
-            self.retry_exit_menu()
+            self.print_retry_exit_menu()
 
         if option == 1:
-            print('\nHandle option \'Option 1: Login\'')
+            print('\nHandle option \'Option 1: Retry Login\'')
             self.login_menu()
         elif option == 2:
+            print('\nHandle option \'Option 2: Exit\'\n')
             self.print_menu()
         else:
             print('Invalid option. Please enter a number between 1 and 2.\n')
-            self.retry_exit_menu()
+            self.print_retry_exit_menu()
 
+    def print_user_options(self):
+        for key in self.user_options.keys():
+            print(key, '--', self.user_options[key])
 
+        try:
+            option = int(input('Enter your choice: '))
+        except:
+            print('Wrong input. Please enter a number ...\n')
+            self.print_user_options()
+
+        if option == 1:
+            print('\nHandle option \'Option 1: Deploy Smart Contract\'')
+            self.deploy_menu()
+        elif option == 2:
+            print('\nHandle option \'Option 2: Invoke Smart Contract\' Method\'')
+            self.invoke_method_menu()
+        elif option == 3:
+            print('\nHandle option \'Option 3: Exit\'\n')
+            self.session.setUser(None)
+            self.print_menu()
+        else:
+            print('Invalid option. Please enter a number between 1 and 4.\n')
