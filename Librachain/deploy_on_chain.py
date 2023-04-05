@@ -10,6 +10,7 @@ web3 = Web3(HTTPProvider('http://localhost:8548'))
 # Set up the contract and account information
 contract_name = 'OnChain'
 account = web3.eth.accounts[0]
+print(account)
 contract_file = 'soliditycontracts/OnChainManager.sol'
 with open(contract_file) as f:
 	on_chain_source_code = f.read()
