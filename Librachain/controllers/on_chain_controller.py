@@ -32,8 +32,10 @@ class OnChainController:
 
     def get_balance(self, shard_address):
         result = self.on_chain.functions.getBalance(shard_address).call()
+        return result
         print(result)
 
     def get_shard(self, shard_address):
         result = self.on_chain.functions.getShard(shard_address).call()
+        return result
         print(result)
