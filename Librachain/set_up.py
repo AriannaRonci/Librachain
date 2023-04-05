@@ -44,7 +44,7 @@ for i in range(0, 2):
                             level=logging.INFO, format='')
         a = "account: " + accounts[j] + "; "
         c = "contract: " + contracts[i] + "; "
-        r = "receipt: " + receipt['contractAddress']
+        r = "contract address: " + receipt['contractAddress']
         logging.info('%s %s %s', a, c, r)
 
 print(dict(receipt))

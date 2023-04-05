@@ -60,9 +60,13 @@ class UserRepository:
             return user
 
     def register_user(self, username, password, public_key, private_key):
-        self.cursor.execute(f"INSERT INTO Users (username, password_hash, public_key, private_key) VALUES (?, ?, ?, ?)", (username, self.hash_password(password), public_key, private_key))
-        self.conn.commit()
-
+        try:
+            self.cursor.execute(f"INSERT INTO Users (username, password_hash, public_key, private_key) VALUES (?, ?, ?, ?)", (username, self.hash_password(password), public_key, private_key))
+            self.conn.commit()
+            return True
+        except Exception as err:
+            print(err)
+            return False
     def hash_password(self, password):
         salt = os.urandom(10)
         hash = hashlib.scrypt(password.encode(), salt=salt, n=self.n, r=self.r, p=self.p, dklen=self.dklen)

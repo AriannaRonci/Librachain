@@ -12,11 +12,17 @@ class CommandLineInterface:
     def __init__(self, session):
 
         self.controller = Controller(session)
+        self.session = session
 
         self.menu_options = {
             1: 'Register',
             2: 'Log in',
             3: 'Exit',
+        }
+
+        self.wrong_login_options = {
+            1: 'Retry',
+            2: 'Exit',
         }
 
     def print_menu(self):
@@ -58,7 +64,7 @@ class CommandLineInterface:
             print('Sorry, but the specified public key and private key do not match any account.\n')
             return
 
-        if (is_address(public_key) & (public_key == pk.address) & (private_key == check_private_key)):
+        if (is_address(public_key) and (public_key == pk.address) and (private_key == check_private_key)):
 
             print('Enter your personal account information.')
             print('(in this way every time you log in or want to perform a transaction it will not be necessary\n'
@@ -79,7 +85,11 @@ class CommandLineInterface:
                 else:
                     break
 
-            self.controller.register(username, password, public_key, private_key)
+            res = self.controller.register(username, password, public_key, private_key)
+            if res:
+                print('Registration was successful!\n')
+            else:
+                print('Sorry, but something went wrong!\n')
 
         else:
             print('Sorry, but the specified public key and private key do not match any account.\n')
@@ -87,19 +97,46 @@ class CommandLineInterface:
 
     def login_menu(self):
 
-        if self.controller.check_number_attempts():
+        if not self.controller.check_number_attempts() and self.session.getTimeLeftForUnlock() < 0:
+            self.session.resetAttempts()
+
+        if self.session.getTimeLeftForUnlock() <= 0 and self.controller.check_number_attempts():
             username = input('Username: ')
             password = getpass.getpass('Password: ')
             res = self.controller.login(username, password)
 
             if res == 0:
-                print('You are login\n')
+                print('\nYou are login\n')
+                return
             elif res == -1:
-                print('Incorrect username or password\n')
-                self.login_menu()
+                print('\nIncorrect username or password\n')
+                self.retry_exit_menu()
             #elif res == 'Max Attempts':
                 #print('You have reached the maximum number of attempts')
                 #return
         else:
-            print('You have reached the maximum number of attempts\n')
+            print('\nYou have reached the maximum number of attempts')
+            print(f'Time left until next attempt: {int(self.session.getTimeLeftForUnlock())} seconds\n')
             return
+
+
+    def retry_exit_menu(self):
+        for key in self.wrong_login_options.keys():
+            print(key, '--', self.wrong_login_options[key])
+
+        try:
+            option = int(input('Enter your choice: '))
+        except:
+            print('Wrong input. Please enter a number ...\n')
+            self.retry_exit_menu()
+
+        if option == 1:
+            print('\nHandle option \'Option 1: Login\'')
+            self.login_menu()
+        elif option == 2:
+            self.print_menu()
+        else:
+            print('Invalid option. Please enter a number between 1 and 2.\n')
+            self.retry_exit_menu()
+
+
