@@ -12,7 +12,7 @@ class Session:
         return self.__user
 
     def setUser(self, user):
-        self.user = user
+        self.__user = user
 
     def getAttempts(self):
         return self.__attempts

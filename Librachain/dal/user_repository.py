@@ -53,10 +53,8 @@ class UserRepository:
         user = None
         res = self.cursor.execute("SELECT * FROM Users WHERE username=?", (username,))
         if res is None:
-            print("Result is None")
             return None
         else:
-            print("Result is not None")
             tuple = res.fetchone()
             user = User(tuple[0], tuple[1], tuple[2], tuple[3], tuple[4])
             return user
