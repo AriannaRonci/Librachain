@@ -41,15 +41,21 @@ class ShardsController:
         except:
             print('Deployement failed')
 
-    def estimate(self, smart_contract_path, gas_limit, gas_price, wallet):
+    def estimate(self, smart_contract_path, gas_price, wallet):
         my_contract, w3 = self.create_contract(smart_contract_path)
-        tx = my_contract.constructor().build_transaction({
-            'gasPrice': gas_price,
-            'gasLimit': gas_limit,
-            'from': wallet
-        })
-        gas = w3.eth.estimate_gas(tx)
-        return gas
+        try:
+            tx = my_contract.constructor().build_transaction({
+                'gasPrice': gas_price,
+                #'gasLimit': gas_limit,
+                'from': wallet
+            })
+            gas = w3.eth.estimate_gas(tx)
+            print(gas)
+            return gas
+        except ContractLogicError:
+            print('Your gas limit is too low')
+        except:
+            print('Prediction failed')
 
     def by_abi(self, smart_contract_address, abi):
         invoke_onchain = OnChainController()
