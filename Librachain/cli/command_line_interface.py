@@ -183,7 +183,7 @@ class CommandLineInterface:
         password = getpass.getpass('Password: ')
         res = self.controller.check_password(self.session.get_user().get_username(), password)
         if res:
-            while(True):
+            while (True):
                 file_path = self.read_smart_contract()
                 if file_path:
                     break
@@ -202,7 +202,38 @@ class CommandLineInterface:
                 except ValueError:
                     print('Wrong input. Please enter a number ...\n')
 
-            self.shards_controller.deploy_smart_contract(file_path, self.session.get_user().get_public_key(), gas_limit, gas_price)
+            estemate_cost = self.shards_controller.estimate(file_path, gas_limit, gas_price,
+                                                            self.session.get_user().get_public_key())
+            if estemate_cost == -1:
+                print('Your gas limit is too low.\n')
+                self.print_user_options()
+            else:
+                print(f'The estimated cost to deploy the smart contract is {str(estemate_cost)}.\n')
+                print('Do you want proceed with the deploy (Y/N)?')
+                while True:
+                    response = input('')
+                    if response == 'Y' or response == 'y':
+                        res = self.shards_controller.deploy_smart_contract(file_path, gas_limit, gas_price,
+                                                                           self.session.get_user().get_public_key())
+                        if res == 0:
+                            print('Deployement successful\n')
+                            self.print_user_options()
+                            break
+                        elif res == -1:
+                            print('Your gas limit is too low\n')
+                            self.print_user_options()
+                            break
+                        elif res == -2:
+                            print('Deployement failed\n')
+                            self.print_user_options()
+                            break
+
+                    elif response == 'N' or response == 'n':
+                        print('Transaction cancelled\n')
+                        self.print_user_options()
+                        break
+                    else:
+                        print('Wrong input.\n')
 
         else:
             print('\nIncorrect password.\n Sorry but you can\'t proceed with the deployment of Smart Contract.\n')
@@ -210,12 +241,15 @@ class CommandLineInterface:
 
     def read_smart_contract(self):
         file_path = input('Enter the path of your file: ')
-        if not os.path.exists(file_path):
-            print(f'I did not find the file at, {str(file_path)}.\n')
+        if not os.path.exists(file_path) and os.path.isfile(file_path):
+            print(f'I did not find the file at {str(file_path)}.\n')
             return False
+        # elif file_path.endswith('.sol'):
+        # print('File extension must be .sol')
+        # return False
         else:
             print('We found your file: Smart Contract loaded correctly!\n')
             return file_path
 
-
-
+    def invoke_method_menu(self):
+        pass

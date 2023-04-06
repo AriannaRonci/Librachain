@@ -32,30 +32,28 @@ class ShardsController:
                                                           'from': wallet})
             receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
             # print(receipt['contractAddress'])
-            print(dict(receipt))
+            # print(dict(receipt))
             invoke_onchain = OnChainController()
             invoke_onchain.add_to_dictionary(self.balance_load().provider.endpoint_uri, receipt['contractAddress'],
                                              wallet)
+            return 0
         except ContractLogicError:
-            print('Your gas limit is too low')
+            return -1
         except:
-            print('Deployement failed')
+            return -2
 
-    def estimate(self, smart_contract_path, gas_price, wallet):
+    def estimate(self, smart_contract_path, gas_limit, gas_price, wallet):
         my_contract, w3 = self.create_contract(smart_contract_path)
         try:
             tx = my_contract.constructor().build_transaction({
                 'gasPrice': gas_price,
-                #'gasLimit': gas_limit,
+                'gasLimit': gas_limit,
                 'from': wallet
             })
             gas = w3.eth.estimate_gas(tx)
-            print(gas)
             return gas
         except ContractLogicError:
-            print('Your gas limit is too low')
-        except:
-            print('Prediction failed')
+            return -1
 
     def by_abi(self, smart_contract_address, abi):
         invoke_onchain = OnChainController()
