@@ -183,7 +183,10 @@ class CommandLineInterface:
         password = getpass.getpass('Password: ')
         res = self.controller.check_password(self.session.get_user().get_username(), password)
         if res:
-            file_path = self.read_smart_contract()
+            while(True):
+                file_path = self.read_smart_contract()
+                if file_path:
+                    break
 
             while (True):
                 try:
@@ -209,7 +212,7 @@ class CommandLineInterface:
         file_path = input('Enter the path of your file: ')
         if not os.path.exists(file_path):
             print(f'I did not find the file at, {str(file_path)}.\n')
-            self.print_retry_exit_menu('deploy')
+            return False
         else:
             print('We found your file: Smart Contract loaded correctly!\n')
             return file_path
