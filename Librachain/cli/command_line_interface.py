@@ -41,21 +41,22 @@ class CommandLineInterface:
 
         try:
             option = int(input('Enter your choice: '))
+
+            if option == 1:
+                print('\nHandle option \'Option 1: Register\'')
+                self.register_menu()
+            elif option == 2:
+                print('\nHandle option \'Option 2: Log in\'')
+                self.login_menu()
+            elif option == 3:
+                print('\nHandle option \'Option 3: Exit\'')
+                exit()
+            else:
+                print('Invalid option. Please enter a number between 1 and 4.\n')
+                self.print_menu()
+
         except ValueError:
             print('Wrong input. Please enter a number ...\n')
-            self.print_menu()
-
-        if option == 1:
-            print('\nHandle option \'Option 1: Register\'')
-            self.register_menu()
-        elif option == 2:
-            print('\nHandle option \'Option 2: Log in\'')
-            self.login_menu()
-        elif option == 3:
-            print('\nHandle option \'Option 3: Exit\'')
-            exit()
-        else:
-            print('Invalid option. Please enter a number between 1 and 4.\n')
             self.print_menu()
 
     def register_menu(self):
@@ -71,11 +72,11 @@ class CommandLineInterface:
 
         try:
             pk = w3.eth.account.from_key(private_key)
-        except:
+        except Exception:
             print('Sorry, but the specified public key and private key do not match any account.\n')
             self.print_menu()
 
-        if (is_address(public_key) and (public_key == pk.address) and (private_key == check_private_key)):
+        if is_address(public_key) and (public_key == pk.address) and (private_key == check_private_key):
 
             print('Enter your personal account information.')
             print('(in this way every time you log in or want to perform a transaction it will not be necessary\n'
@@ -89,9 +90,9 @@ class CommandLineInterface:
 
                 check_password = input('Confirm Passoword: ')
                 if not re.fullmatch(r'(?=.*?\d)(?=.*?[A-Z])(?=.*?[a-z])[A-Za-z0-9@#$%^&+=]{10,255}', password):
-                    print(
-                        'Passoword must contains at least 10 symbols, at least one digit, at least one uppercase letter, at least one lowercase letter\n')
-                elif (password != check_password):
+                    print('Passoword must contains at least 10 symbols, at least one digit, at least one uppercase '
+                          'letter, at least one lowercase letter\n')
+                elif password != check_password:
                     print('Password and confirm password do not match')
                 else:
                     break
@@ -179,23 +180,23 @@ class CommandLineInterface:
             print('Invalid option. Please enter a number between 1 and 4.\n')
 
     def deploy_menu(self):
-        print('Before proceeding with the deployment of Smart Contract it is necessary to enter the password ')
+        print('Before proceeding with the deployment of Smart Contract it is necessary to enter the password.')
         password = getpass.getpass('Password: ')
         res = self.controller.check_password(self.session.get_user().get_username(), password)
         if res:
-            while (True):
+            while True:
                 file_path = self.read_smart_contract()
                 if file_path:
                     break
 
-            while (True):
+            while True:
                 try:
                     gas_limit = int(input('Gas limit: '))
                     break
                 except ValueError:
                     print('Wrong input. Please enter a number ...\n')
 
-            while (True):
+            while True:
                 try:
                     gas_price = int(input('Gas price: '))
                     break
@@ -252,4 +253,13 @@ class CommandLineInterface:
             return file_path
 
     def invoke_method_menu(self):
-        pass
+        print('Before proceeding with the invocation of a method of a smart contract it is necessary to enter the '
+              'password.')
+        password = getpass.getpass('Password: ')
+        res = self.controller.check_password(self.session.get_user().get_username(), password)
+        if res:
+            pass
+        else:
+            print('\nIncorrect password.\n Sorry but you can\'t proceed with invocation of a method of a smart '
+                  'contract.\n')
+            self.print_user_options()
