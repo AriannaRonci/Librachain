@@ -202,7 +202,7 @@ class CommandLineInterface:
                 except ValueError:
                     print('Wrong input. Please enter a number ...\n')
 
-            self.shards_controller.deploy_smart_contract(file_path, self.session.get_user().get_public_key(), gas_limit, gas_price)
+            self.shards_controller.deploy_smart_contract(file_path, gas_limit, gas_price, self.session.get_user().get_public_key())
 
         else:
             print('\nIncorrect password.\n Sorry but you can\'t proceed with the deployment of Smart Contract.\n')
@@ -216,6 +216,4 @@ class CommandLineInterface:
         else:
             print('We found your file: Smart Contract loaded correctly!\n')
             return file_path
-
-
 
