@@ -84,7 +84,7 @@ class ShardsController:
                 chosen_shard = shards_providers[i]
             elif shards[shards_name[i]] < shards[shards_name[i - 1]]:
                 chosen_shard = shards_providers[i]
-        print(chosen_shard)
+        #print(chosen_shard)
         return chosen_shard
 
     def call_function(self, contract_function, contract):
