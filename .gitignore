@@ -1,2 +1,3 @@
 *.pyc
 ./Librachain/soliditycontracts/contract_address.txt
+./Librachain/db/librachain

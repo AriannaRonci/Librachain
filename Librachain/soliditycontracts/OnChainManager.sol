@@ -38,7 +38,7 @@ contract OnChainManager {
     }
 
     function getShard(address smartContractAddress) public view returns (string memory){
-        string[3] memory shards = ["http://127.0.0.1:8545", "http://127.0.0.1:8546", "http://127.0.0.1:8547"];
+        string[3] memory shards = ['http://localhost:8545', 'http://localhost:8546', 'http://localhost:8547'];
         for(uint i=0; i<2; i++){
             string memory shard = shards[i];
             if (findString(shardsMapping[shard], smartContractAddress)==true)
