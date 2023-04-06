@@ -136,24 +136,23 @@ class CommandLineInterface:
 
         try:
             option = int(input('Enter your choice: '))
+            if option == 1:
+                print('\nHandle option \'Option 1: Retry\'')
+                if predecessor_method == 'login':
+                    self.login_menu()
+                elif predecessor_method == 'deploy':
+                    self.read_smart_contract()
+            elif option == 2:
+                print('\nHandle option \'Option 2: Exit\'\n')
+                if predecessor_method == 'login':
+                    self.print_menu()
+                elif predecessor_method == 'deploy':
+                    self.print_user_options()
+            else:
+                print('Invalid option. Please enter a number between 1 and 2.\n')
+                self.print_retry_exit_menu(predecessor_method)
         except ValueError:
             print('Wrong input. Please enter a number ...\n')
-            self.print_retry_exit_menu(predecessor_method)
-
-        if option == 1:
-            print('\nHandle option \'Option 1: Retry\'')
-            if predecessor_method == 'login':
-                self.login_menu()
-            elif predecessor_method == 'deploy':
-                self.read_smart_contract()
-        elif option == 2:
-            print('\nHandle option \'Option 2: Exit\'\n')
-            if predecessor_method == 'login':
-                self.print_menu()
-            elif predecessor_method == 'deploy':
-                self.print_user_options()
-        else:
-            print('Invalid option. Please enter a number between 1 and 2.\n')
             self.print_retry_exit_menu(predecessor_method)
 
     def print_user_options(self):
@@ -162,22 +161,21 @@ class CommandLineInterface:
 
         try:
             option = int(input('Enter your choice: '))
+            if option == 1:
+                print('\nHandle option \'Option 1: Deploy Smart Contract\'')
+                self.deploy_menu()
+            elif option == 2:
+                print('\nHandle option \'Option 2: Invoke Smart Contract\' Method\'')
+                self.invoke_method_menu()
+            elif option == 3:
+                print('\nHandle option \'Option 3: Exit\'\n')
+                self.session.set_user(None)
+                self.print_menu()
+            else:
+                print('Invalid option. Please enter a number between 1 and 4.\n')
         except ValueError:
             print('Wrong input. Please enter a number ...\n')
             self.print_user_options()
-
-        if option == 1:
-            print('\nHandle option \'Option 1: Deploy Smart Contract\'')
-            self.deploy_menu()
-        elif option == 2:
-            print('\nHandle option \'Option 2: Invoke Smart Contract\' Method\'')
-            self.invoke_method_menu()
-        elif option == 3:
-            print('\nHandle option \'Option 3: Exit\'\n')
-            self.session.set_user(None)
-            self.print_menu()
-        else:
-            print('Invalid option. Please enter a number between 1 and 4.\n')
 
     def deploy_menu(self):
         print('Before proceeding with the deployment of Smart Contract it is necessary to enter the password.')
