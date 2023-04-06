@@ -210,8 +210,11 @@ class CommandLineInterface:
 
     def read_smart_contract(self):
         file_path = input('Enter the path of your file: ')
-        if not os.path.exists(file_path):
-            print(f'I did not find the file at, {str(file_path)}.\n')
+        if not os.path.exists(file_path) and os.path.isfile(file_path):
+            print(f'I did not find the file at {str(file_path)}.\n')
+            return False
+        elif file_path.endswith('.sol'):
+            print('File extension must be .sol')
             return False
         else:
             print('We found your file: Smart Contract loaded correctly!\n')
