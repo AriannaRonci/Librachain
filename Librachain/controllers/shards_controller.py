@@ -1,16 +1,18 @@
 import solcx
 from web3 import Web3, HTTPProvider
+from web3.exceptions import ContractLogicError
 
 from controllers.on_chain_controller import OnChainController
 from solcx import compile_source
 
 solcx.install_solc('0.6.0')
 
+
 class ShardsController:
     def __init__(self):
         pass
 
-    def deploy_smart_contract(self, smart_contract_path, gas_limit, gas_price, wallet):
+    def create_contract(self, smart_contract_path):
         with open(smart_contract_path, 'r') as file:
             smart_contract_code = file.read()
         compiled_contract = compile_source(smart_contract_code, output_values=['abi', 'bin'])
@@ -19,17 +21,35 @@ class ShardsController:
         contract_bytecode = contract_interface['bin']
         w3 = self.balance_load()
         my_contract = w3.eth.contract(abi=contract_abi,
-                                          bytecode=contract_bytecode)
-        tx_hash = my_contract.constructor().transact({'gasPrice': gas_price,
-                                                      'gasLimit': gas_limit,
-                                                      'from': wallet})
-        #print("fee=")
-        #print(w3.eth.max_priority_fee())
-        receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
-        print(receipt['contractAddress'])
-        print(dict(receipt))
-        invoke_onchain = OnChainController()
-        invoke_onchain.add_to_dictionary(self.balance_load().provider.endpoint_uri, receipt['contractAddress'], wallet)
+                                      bytecode=contract_bytecode)
+        return my_contract, w3
+
+    def deploy_smart_contract(self, smart_contract_path, gas_limit, gas_price, wallet):
+        my_contract, w3 = self.create_contract(smart_contract_path)
+        try:
+            tx_hash = my_contract.constructor().transact({'gasPrice': gas_price,
+                                                          'gasLimit': gas_limit,
+                                                          'from': wallet})
+            receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+            # print(receipt['contractAddress'])
+            print(dict(receipt))
+            invoke_onchain = OnChainController()
+            invoke_onchain.add_to_dictionary(self.balance_load().provider.endpoint_uri, receipt['contractAddress'],
+                                             wallet)
+        except ContractLogicError:
+            print('Your gas limit is too low')
+        except:
+            print('Deployement failed')
+
+    def estimate(self, smart_contract_path, gas_limit, gas_price, wallet):
+        my_contract, w3 = self.create_contract(smart_contract_path)
+        tx = my_contract.constructor().build_transaction({
+            'gasPrice': gas_price,
+            'gasLimit': gas_limit,
+            'from': wallet
+        })
+        gas = w3.eth.estimate_gas(tx)
+        return gas
 
     def by_abi(self, smart_contract_address, abi):
         invoke_onchain = OnChainController()
@@ -51,10 +71,10 @@ class ShardsController:
         shards_providers = [shard1, shard2, shard3]
         shards_name = ['shard1', 'shard2', 'shard3']
         shards = {
-                    shards_name[0]: shard1.eth.block_number,
-                    shards_name[1]: shard2.eth.block_number,
-                    shards_name[2]: shard3.eth.block_number
-                }
+            shards_name[0]: shard1.eth.block_number,
+            shards_name[1]: shard2.eth.block_number,
+            shards_name[2]: shard3.eth.block_number
+        }
         for i in range(0, len(shards)):
             if i == 0:
                 chosen_shard = shards_providers[i]
@@ -65,12 +85,3 @@ class ShardsController:
 
     def call_function(self, contract_function, contract):
         pass
-
-
-
-
-
-
-
-
-
