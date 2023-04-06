@@ -10,7 +10,7 @@ class ShardsController:
     def __init__(self):
         pass
 
-    def deploy_smart_contract(self, smart_contract_path, gas_limit, wallet):
+    def deploy_smart_contract(self, smart_contract_path, gas_limit, gas_price, wallet):
         with open(smart_contract_path, 'r') as file:
             smart_contract_code = file.read()
         compiled_contract = compile_source(smart_contract_code, output_values=['abi', 'bin'])
@@ -20,7 +20,7 @@ class ShardsController:
         w3 = self.balance_load()
         my_contract = w3.eth.contract(abi=contract_abi,
                                           bytecode=contract_bytecode)
-        tx_hash = my_contract.constructor().transact({#'gasPrice': gas_price,
+        tx_hash = my_contract.constructor().transact({'gasPrice': gas_price,
                                                       'gasLimit': gas_limit,
                                                       'from': wallet})
         #print("fee=")

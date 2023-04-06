@@ -75,7 +75,7 @@ if __name__ == "__main__":
     shards_controller.balance_load()
     shards_controller.deploy_smart_contract(
         '/Users/chiaragobbi/Desktop/Università/magistrale/primo anno/primo semestre/software security and block chain/'
-        'progetto/swsb-project/Librachain/soliditycontracts/Storage.sol',my_wallet)
+        'progetto/swsb-project/Librachain/soliditycontracts/Storage.sol','20000000',my_wallet)
 
 
 
