@@ -1,11 +1,13 @@
 import os
 import re
 
-from eth_utils import is_address
+from eth_utils import is_address, decode_hex
 from web3 import Web3
 from controllers.controller import Controller
 from controllers.shards_controller import ShardsController
 from session.session import Session
+from eth_keys import keys
+
 
 import getpass
 
@@ -60,8 +62,6 @@ class CommandLineInterface:
             self.print_menu()
 
     def register_menu(self):
-        w3 = Web3(Web3.HTTPProvider("http://0.0.0.0:8548"))
-
         print('Enter your wallet information.')
         public_key = input('Public Key: ')
 
@@ -71,12 +71,14 @@ class CommandLineInterface:
         # check_private_key = getpass.getpass('Confirm Private Key: ', )
 
         try:
-            pk = w3.eth.account.from_key(private_key)
+            priv_key_bytes = decode_hex(private_key)
+            priv_key = keys.PrivateKey(priv_key_bytes)
+            pk = priv_key.public_key.to_checksum_address()
         except Exception:
             print('Sorry, but the specified public key and private key do not match any account.\n')
             self.print_menu()
 
-        if is_address(public_key) and (public_key == pk.address) and (private_key == check_private_key):
+        if is_address(public_key) and (public_key == pk) and (private_key == check_private_key):
 
             print('Enter your personal account information.')
             print('(in this way every time you log in or want to perform a transaction it will not be necessary\n'
