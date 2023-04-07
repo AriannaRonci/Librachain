@@ -1,11 +1,12 @@
 import os
 import re
 
-from eth_utils import is_address
+from eth_utils import is_address, decode_hex
 from web3 import Web3
 from controllers.controller import Controller
 from controllers.shards_controller import ShardsController
 from session.session import Session
+from eth_keys import keys
 
 import getpass
 
@@ -60,8 +61,6 @@ class CommandLineInterface:
             self.print_menu()
 
     def register_menu(self):
-        w3 = Web3(Web3.HTTPProvider("http://0.0.0.0:8548"))
-
         print('Enter your wallet information.')
         public_key = input('Public Key: ')
 
@@ -71,19 +70,21 @@ class CommandLineInterface:
         # check_private_key = getpass.getpass('Confirm Private Key: ', )
 
         try:
-            pk = w3.eth.account.from_key(private_key)
+            priv_key_bytes = decode_hex(private_key)
+            priv_key = keys.PrivateKey(priv_key_bytes)
+            pk = priv_key.public_key.to_checksum_address()
         except Exception:
             print('Sorry, but the specified public key and private key do not match any account.\n')
             self.print_menu()
 
-        if is_address(public_key) and (public_key == pk.address) and (private_key == check_private_key):
+        if is_address(public_key) and (public_key == pk) and (private_key == check_private_key):
 
             print('Enter your personal account information.')
             print('(in this way every time you log in or want to perform a transaction it will not be necessary\n'
                   ' to provide your private key, but the username and password that you will specify below)')
             username = input('Username: ')
 
-            while (True):
+            while True:
                 # password = getpass.getpass('Password: ')
                 # check_password = getpass.getpass('Confirm Passoword: ')
                 password = input('Password: ')
@@ -214,16 +215,17 @@ class CommandLineInterface:
                     if response == 'Y' or response == 'y':
                         res = self.shards_controller.deploy_smart_contract(file_path, gas_limit, gas_price,
                                                                            self.session.get_user().get_public_key())
-                        if res == 0:
-                            print('Deployement successful\n')
-                            self.print_user_options()
-                            break
-                        elif res == -1:
+                        if res == -1:
                             print('Your gas limit is too low\n')
                             self.print_user_options()
                             break
                         elif res == -2:
                             print('Deployement failed\n')
+                            self.print_user_options()
+                            break
+                        else:
+                            print('Deployement successful\n')
+                            print(f'Contract deployed at address: {str(res)}.\n')
                             self.print_user_options()
                             break
 
@@ -256,8 +258,58 @@ class CommandLineInterface:
         password = getpass.getpass('Password: ')
         res = self.controller.check_password(self.session.get_user().get_username(), password)
         if res:
-            pass
+            while True:
+                file_path = self.read_smart_contract()
+                if file_path:
+                    break
+
+            while True:
+                smart_contract_address = input('Enter smart contact address:')
+                if is_address(smart_contract_address):
+                    break
+                else:
+                    print('Invalid smart contract address')
+
+            list_methods, contract, functions = self.shards_controller.smart_contract_methods_by_sourcecode(
+                smart_contract_address, file_path)
+            self.print_smart_contract_methods(list_methods)
+
         else:
             print('\nIncorrect password.\n Sorry but you can\'t proceed with invocation of a method of a smart '
                   'contract.\n')
             self.print_user_options()
+
+    def print_smart_contract_methods(self, list_methods):
+        n = 0
+        for i in list_methods:
+            n = n + 1
+            print(f'{str(n)}) {str(i)}')
+
+        while True:
+            try:
+                choice = int(input('Which of these methods do you want to invoke (press 0 to exit)? '))
+            except ValueError:
+                print('Wrong input. Please enter a number ...\n')
+
+            if choice < 0 or choice > n:
+                print('No option correspond to your choice. Retry.\n')
+            elif choice == 0:
+                self.print_user_options()
+                break
+            else:
+                parameters = self.print_parameters_methods(list_methods[choice-1])
+                print(parameters)
+                break
+
+    def print_parameters_methods(self, method):
+        parameters = method.replace(')', '').split('(')
+        p = []
+        n = 0
+        parameters = parameters.remove(0)
+        if len(parameters) > 0:
+            for i in parameters:
+                n = n + 1
+                param = input(f'Parameter {str(n)} (type {str(i)}): ')
+                p.append(param)
+
+        return p
