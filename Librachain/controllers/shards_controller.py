@@ -31,12 +31,12 @@ class ShardsController:
                                                           'gasLimit': gas_limit,
                                                           'from': wallet})
             receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
-            # print(receipt['contractAddress'])
-            # print(dict(receipt))
+            #print(receipt['contractAddress'])
+            #print(dict(receipt))
             invoke_onchain = OnChainController()
             invoke_onchain.add_to_dictionary(self.balance_load().provider.endpoint_uri, receipt['contractAddress'],
                                              wallet)
-            return 0
+            return receipt['contractAddress']
         except ContractLogicError:
             return -1
         except:
@@ -54,6 +54,25 @@ class ShardsController:
             return gas
         except ContractLogicError:
             return -1
+
+
+    def smart_contract_mathods_by_sourcecode(self,smart_contract_address, path_source_code):
+        with open(path_source_code, 'r') as file:
+            source_code = file.read()
+        compiled_contract = compile_source(source_code, output_values=['abi', 'bin'])
+        contract_id, contract_interface = compiled_contract.popitem()
+        abi = contract_interface['abi']
+        invoke_onchain = OnChainController()
+        w3 = Web3(HTTPProvider(invoke_onchain.get_shard(smart_contract_address)))
+        if w3 != 'contract not deployed':
+            contract = w3.eth.contract(address=smart_contract_address, abi=abi)
+            functions = contract.all_functions()
+            cli_functions = []
+            for i in range(0, len(functions)):
+                function = str(functions[i]).replace('<Function', '').replace('>', '')
+                cli_functions.append(function)
+            print(cli_functions)
+            return cli_functions, contract, functions
 
     def by_abi(self, smart_contract_address, abi):
         invoke_onchain = OnChainController()
@@ -84,7 +103,8 @@ class ShardsController:
                 chosen_shard = shards_providers[i]
             elif shards[shards_name[i]] < shards[shards_name[i - 1]]:
                 chosen_shard = shards_providers[i]
-        #print(chosen_shard)
+        print("Chosen Shard =")
+        print(chosen_shard)
         return chosen_shard
 
     def call_function(self, contract_function, contract):
