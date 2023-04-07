@@ -86,7 +86,7 @@ class ShardsController:
                 attributes_string += ","
         attributes_string += ")"
         command = "contract.functions."+str(function_name)+attributes_string+".call()"
-        return command
+        exec(command)
 
     def by_abi(self, smart_contract_address, abi):
         invoke_onchain = OnChainController()
