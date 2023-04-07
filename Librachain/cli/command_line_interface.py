@@ -8,7 +8,6 @@ from controllers.shards_controller import ShardsController
 from session.session import Session
 from eth_keys import keys
 
-
 import getpass
 
 
@@ -85,7 +84,7 @@ class CommandLineInterface:
                   ' to provide your private key, but the username and password that you will specify below)')
             username = input('Username: ')
 
-            while (True):
+            while True:
                 # password = getpass.getpass('Password: ')
                 # check_password = getpass.getpass('Confirm Passoword: ')
                 password = input('Password: ')
@@ -216,16 +215,17 @@ class CommandLineInterface:
                     if response == 'Y' or response == 'y':
                         res = self.shards_controller.deploy_smart_contract(file_path, gas_limit, gas_price,
                                                                            self.session.get_user().get_public_key())
-                        if res == 0:
-                            print('Deployement successful\n')
-                            self.print_user_options()
-                            break
-                        elif res == -1:
+                        if res == -1:
                             print('Your gas limit is too low\n')
                             self.print_user_options()
                             break
                         elif res == -2:
                             print('Deployement failed\n')
+                            self.print_user_options()
+                            break
+                        else:
+                            print('Deployement successful\n')
+                            print(f'Contract deployed at address: {str(res)}.\n')
                             self.print_user_options()
                             break
 
@@ -258,8 +258,28 @@ class CommandLineInterface:
         password = getpass.getpass('Password: ')
         res = self.controller.check_password(self.session.get_user().get_username(), password)
         if res:
-            pass
+            while True:
+                file_path = self.read_smart_contract()
+                if file_path:
+                    break
+
+            while True:
+                smart_contract_address = input('Enter smart contact address:')
+                if is_address(smart_contract_address):
+                    break
+                else:
+                    print('Invalid smart contract address')
+
+            list_methods, contract, functions = self.shards_controller.smart_contract_methods_by_sourcecode(
+                smart_contract_address, file_path)
+            self.print_smart_contract_methods(list_methods)
+
         else:
             print('\nIncorrect password.\n Sorry but you can\'t proceed with invocation of a method of a smart '
                   'contract.\n')
             self.print_user_options()
+
+    def print_smart_contract_methods(self, list_methods):
+        n = 0
+        for i in list_methods:
+            print(i)
