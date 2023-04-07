@@ -55,7 +55,8 @@ class ShardsController:
         except ContractLogicError:
             return -1
 
-    def smart_contract_methods_by_sourcecode(self, smart_contract_address, path_source_code):
+
+    def smart_contract_methods_by_sourcecode(self,smart_contract_address, path_source_code):
         with open(path_source_code, 'r') as file:
             source_code = file.read()
         compiled_contract = compile_source(source_code, output_values=['abi', 'bin'])
@@ -70,8 +71,22 @@ class ShardsController:
             for i in range(0, len(functions)):
                 function = str(functions[i]).replace('<Function', '').replace('>', '')
                 cli_functions.append(function)
-            print(cli_functions)
-            return cli_functions, contract, functions
+            function_names = []
+            sep = '('
+            for i in range(0, len(cli_functions)):
+                stripped = cli_functions[i].split(sep, 1)[0].replace(' ', '')
+                function_names.append(stripped)
+            return cli_functions, contract, function_names
+
+    def call_function(self, function_name, attributes):
+        attributes_string = "("
+        for i in range(0, len(attributes)):
+            attributes_string += str(attributes[i])
+            if i != (len(attributes)-1):
+                attributes_string += ","
+        attributes_string += ")"
+        command = "contract.functions."+str(function_name)+attributes_string+".call()"
+        return command
 
     def by_abi(self, smart_contract_address, abi):
         invoke_onchain = OnChainController()
@@ -83,7 +98,6 @@ class ShardsController:
             for i in range(0, len(functions)):
                 function = str(functions[i]).replace('<Function', '').replace('>', '')
                 cli_functions.append(function)
-            print(cli_functions)
             return cli_functions, contract, functions
 
     def balance_load(self):
@@ -102,9 +116,6 @@ class ShardsController:
                 chosen_shard = shards_providers[i]
             elif shards[shards_name[i]] < shards[shards_name[i - 1]]:
                 chosen_shard = shards_providers[i]
-        print("Chosen Shard =")
-        print(chosen_shard)
         return chosen_shard
 
-    def call_function(self, contract_function, contract):
-        pass
+
