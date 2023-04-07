@@ -31,8 +31,8 @@ class ShardsController:
                                                           'gasLimit': gas_limit,
                                                           'from': wallet})
             receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
-            #print(receipt['contractAddress'])
-            #print(dict(receipt))
+            # print(receipt['contractAddress'])
+            # print(dict(receipt))
             invoke_onchain = OnChainController()
             invoke_onchain.add_to_dictionary(self.balance_load().provider.endpoint_uri, receipt['contractAddress'],
                                              wallet)
@@ -55,8 +55,7 @@ class ShardsController:
         except ContractLogicError:
             return -1
 
-
-    def smart_contract_mathods_by_sourcecode(self,smart_contract_address, path_source_code):
+    def smart_contract_methods_by_sourcecode(self, smart_contract_address, path_source_code):
         with open(path_source_code, 'r') as file:
             source_code = file.read()
         compiled_contract = compile_source(source_code, output_values=['abi', 'bin'])

@@ -282,4 +282,19 @@ class CommandLineInterface:
     def print_smart_contract_methods(self, list_methods):
         n = 0
         for i in list_methods:
-            print(i)
+            n = n + 1
+            print(f'{str(n)}) {str(i)}')
+
+        while True:
+            try:
+                choice = int(input('Which of these methods do you want to invoke (press 0 to exit)?'))
+            except ValueError:
+                print('Wrong input. Please enter a number ...\n')
+
+            if choice < 0 or choice > n:
+                print('No option correspond to your choice. Retry.\n')
+            elif choice == 0:
+                self.print_user_options()
+                break
+            else:
+                break
