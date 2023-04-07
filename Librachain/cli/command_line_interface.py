@@ -287,7 +287,7 @@ class CommandLineInterface:
 
         while True:
             try:
-                choice = int(input('Which of these methods do you want to invoke (press 0 to exit)?'))
+                choice = int(input('Which of these methods do you want to invoke (press 0 to exit)? '))
             except ValueError:
                 print('Wrong input. Please enter a number ...\n')
 
@@ -297,4 +297,19 @@ class CommandLineInterface:
                 self.print_user_options()
                 break
             else:
+                parameters = self.print_parameters_methods(list_methods[choice-1])
+                print(parameters)
                 break
+
+    def print_parameters_methods(self, method):
+        parameters = method.replace(')', '').split('(')
+        p = []
+        n = 0
+        parameters = parameters.remove(0)
+        if len(parameters) > 0:
+            for i in parameters:
+                n = n + 1
+                param = input(f'Parameter {str(n)} (type {str(i)}): ')
+                p.append(param)
+
+        return p
