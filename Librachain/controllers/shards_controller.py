@@ -111,8 +111,9 @@ class ShardsController:
         contract_id, contract_interface = compiled_contract.popitem()
         abi = contract_interface['abi']
         invoke_onchain = OnChainController()
-        w3 = Web3(HTTPProvider(invoke_onchain.get_shard(smart_contract_address)))
-        if w3 != 'contract not deployed':
+        valid_address = (invoke_onchain.is_valid_address(shard, smart_contract_address))
+        if valid_address:
+            w3 = Web3(Web3.HTTPProvider(shard))
             contract = w3.eth.contract(address=smart_contract_address, abi=abi)
             functions = contract.all_functions()
             cli_functions = []
