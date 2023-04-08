@@ -5,16 +5,19 @@ if __name__ == '__main__':
     cur=con.cursor()
     cur.execute('''
         CREATE TABLE Users(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT NOT NULL UNIQUE,
-        password_hash TEXT NOT NULL,
-        public_key TEST NOT NULL,
-        private_key TEST NOT NULL
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL UNIQUE,
+            password_hash TEXT NOT NULL,
+            public_key TEST NOT NULL,
+            private_key TEST NOT NULL
         );
 
-        CREATE TABLE Timestamps(
-            
-        );
+        CREATE TABLE SmartContracts(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            address TEXT NOT NULL,
+            user_id FOREIGN KEY REFERENCES Users(id)
+        )
     ''')
     con.commit()
     con.close()
