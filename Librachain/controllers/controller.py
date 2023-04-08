@@ -1,4 +1,5 @@
 from dal.user_repository import UserRepository
+from models.smart_contract import SmartContract
 from session.session import Session
 from models.user import User
 
@@ -103,7 +104,8 @@ class Controller:
         FIX:
             -missing register check
         """
-        registering_result = self.user_repo.register_user(username, password, public_key, private_key)
+        registering_result = self.user_repo.register_user(username, password, 
+                                                          public_key, private_key)
         if registering_result == 0:
             user = self.user_repo.get_user_by_username(username)
             self.session.set_user(user)
@@ -126,3 +128,7 @@ class Controller:
             A string containing the decrypted private key
         """
         return self.user_repo.decrypt_private_key(encrypted_private_key, password)
+
+    def insert_smart_contract(self, name: str, address: str, user: User):
+        smart_contract = SmartContract(name, address, user.get_id())
+        self.user_repo.insert_deployed_smart_contract(smart_contract)
