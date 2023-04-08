@@ -1,6 +1,6 @@
 class SmartContract:
 
-    def __init__(self, id: int, name, address, user_id:int):
+    def __init__(self, name, address, user_id:int, id: int = 0):
         self.__id = id
         self.__name = name
         self.__address = address

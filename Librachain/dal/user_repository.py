@@ -52,7 +52,7 @@ class UserRepository:
             CREATE TABLE IF NOT EXISTS SmartContracts(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
-                address TEXT NOT NULL,
+                address TEXT NOT NULL UNIQUE,
                 user_id INTEGER,
                 FOREIGN KEY (user_id) REFERENCES Users (id)
         )
