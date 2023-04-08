@@ -2,7 +2,6 @@ import os
 import re
 
 from eth_utils import is_address, decode_hex
-from web3 import Web3
 from controllers.controller import Controller
 from controllers.shards_controller import ShardsController
 from session.session import Session
@@ -33,7 +32,8 @@ class CommandLineInterface:
         self.user_options = {
             1: 'Deploy Smart Contract',
             2: 'Invoke Smart Contact\'s Method',
-            3: 'Logout'
+            3: 'Consult your Smart Contract',
+            4: 'Logout'
         }
 
     def print_menu(self):
@@ -88,10 +88,10 @@ class CommandLineInterface:
                 # password = getpass.getpass('Password: ')
                 # check_password = getpass.getpass('Confirm Passoword: ')
                 password = input('Password: ')
+                check_password = input('Confirm Password: ')
 
-                check_password = input('Confirm Passoword: ')
                 if not re.fullmatch(r'(?=.*?\d)(?=.*?[A-Z])(?=.*?[a-z])[A-Za-z0-9@#$%^&+=]{10,255}', password):
-                    print('Passoword must contains at least 10 symbols, at least one digit, at least one uppercase '
+                    print('Password must contains at least 10 symbols, at least one digit, at least one uppercase '
                           'letter, at least one lowercase letter\n')
                 elif password != check_password:
                     print('Password and confirm password do not match')
@@ -99,10 +99,13 @@ class CommandLineInterface:
                     break
 
             res = self.controller.register(username, password, public_key, private_key)
-            if res:
+            if res == 0:
                 print('Registration was successful!\n')
-            else:
+            elif res == -1:
+                print('Username already present in the database')
+            elif res == -2:
                 print('Sorry, but something went wrong!\n')
+
         else:
             print('Sorry, but the specified public key and private key do not match any account.\n')
             self.print_menu()
@@ -123,9 +126,9 @@ class CommandLineInterface:
             elif res == -1:
                 print('\nIncorrect username or password\n')
                 self.print_retry_exit_menu('login')
-            # elif res == 'Max Attempts':
-            # print('You have reached the maximum number of attempts')
-            # return
+            elif res == -2:
+                print('You have reached the maximum number of login attempts')
+                return
         else:
             print('\nYou have reached the maximum number of attempts')
             print(f'Time left until next attempt: {int(self.session.get_time_left_for_unlock())} seconds\n')
@@ -169,7 +172,14 @@ class CommandLineInterface:
                 print('\nHandle option \'Option 2: Invoke Smart Contract\' Method\'')
                 self.invoke_method_menu()
             elif option == 3:
-                print('\nHandle option \'Option 3: Exit\'\n')
+                print('\nHandle option \'Option 3: Consult your Smart Contract\'\n')
+                smart_contract = self.session.get_user().get_smart_contracts()
+                for contract in smart_contract:
+                    print(f'Contract name: {str(contract.get_name())}')
+                    print(f'Contract address: {str(contract.get_address())}\n')
+                self.print_menu()
+            elif option == 4:
+                print('\nHandle option \'Option 4: Exit\'\n')
                 self.session.set_user(None)
                 self.print_menu()
             else:
@@ -187,6 +197,8 @@ class CommandLineInterface:
                 file_path = self.read_smart_contract()
                 if file_path:
                     break
+
+            smart_contract_name = input('Smart Contract Name: ')
 
             while True:
                 try:
@@ -297,7 +309,7 @@ class CommandLineInterface:
                 self.print_user_options()
                 break
             else:
-                parameters = self.print_parameters_methods(list_methods[choice-1])
+                parameters = self.print_parameters_methods(list_methods[choice - 1])
                 print(parameters)
                 break
 
