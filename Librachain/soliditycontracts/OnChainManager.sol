@@ -37,13 +37,13 @@ contract OnChainManager {
         return false;
     }
 
-    function getShard(address smartContractAddress) public view returns (string memory){
-        string[3] memory shards = ['http://localhost:8545', 'http://localhost:8546', 'http://localhost:8547'];
+    function isValidAddress(string memory shard, address smartContractAddress) public view returns (bool){
+        //string[3] memory shards = ['http://localhost:8545', 'http://localhost:8546', 'http://localhost:8547'];
         for(uint i=0; i<2; i++){
-            string memory shard = shards[i];
+            //string memory shard = shards[i];
             if (findString(shardsMapping[shard], smartContractAddress)==true)
-                return shard;
+                return true;
         }
-        return "contract not deployed";
+        return false;
     }
 }

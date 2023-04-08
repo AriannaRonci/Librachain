@@ -37,9 +37,9 @@ class ShardsController:
                                               bytecode=contract_bytecode)
                 return my_contract, w3
         except FileNotFoundError:
-            print("File not found")
-        except:
-            print("Compiling error")
+            raise FileNotFoundError
+        except Exception:
+            raise Exception
 
     def deploy_smart_contract(self, smart_contract_path, gas_limit, gas_price, wallet):
         """
@@ -50,8 +50,8 @@ class ShardsController:
         :param wallet: wallet of the user
         :return: contract address if the try does not fail
         """
-        my_contract, w3 = self.create_contract(smart_contract_path)
         try:
+            my_contract, w3 = self.create_contract(smart_contract_path)
             tx_hash = my_contract.constructor().transact({'gasPrice': gas_price,
                                                           'gasLimit': gas_limit,
                                                           'from': wallet})
@@ -62,7 +62,9 @@ class ShardsController:
             return receipt['contractAddress']
         except ContractLogicError:
             return -1
-        except:
+        #except FileNotFoundError:
+        #    return -3
+        except Exception:
             return -2
 
     def estimate(self, smart_contract_path, gas_limit, gas_price, wallet):
@@ -88,7 +90,7 @@ class ShardsController:
         except:
             return -2
 
-    def smart_contract_methods_by_sourcecode(self, smart_contract_address, path_source_code):
+    def smart_contract_methods_by_sourcecode(self, shard, smart_contract_address, path_source_code):
         """
         Retrieves smart contract methods
         :param smart_contract_address: address of the deployed smart contract
