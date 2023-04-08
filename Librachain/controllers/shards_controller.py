@@ -13,6 +13,7 @@ class ShardsController:
     """
     ShardsController manages the interaction between shards, user and On-Chain-Controller
     """
+
     def __init__(self):
         pass
 
@@ -85,7 +86,7 @@ class ShardsController:
         except ContractLogicError:
             return -1
         except:
-            print("Error Occurred")
+            return -2
 
     def smart_contract_methods_by_sourcecode(self, smart_contract_address, path_source_code):
         """
@@ -119,9 +120,9 @@ class ShardsController:
                     function_names.append(stripped)
                 return cli_functions, contract, function_names
         except FileNotFoundError:
-            print("File not found")
-        except:
-            print("Error occurred")
+            raise FileNotFoundError
+        except Exception:
+            raise Exception
 
     def call_function(self, function_name, attributes, contract):
         """
@@ -135,13 +136,13 @@ class ShardsController:
             calling_function = getattr(contract.functions, function_name)
             return calling_function(*attributes).call()
         except InvalidAddress:
-            print("The specified address is not valid.")
+            return -1
         except web3.exceptions.ValidationError:
-            print('Wrong number of inputs')
+            return -2
         except:
-            print("Error Occurred")
+            return -3
 
-    #not used
+    # not used
     def by_abi(self, smart_contract_address, abi):
         invoke_onchain = OnChainController()
         w3 = Web3(HTTPProvider(invoke_onchain.get_shard(smart_contract_address)))

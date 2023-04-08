@@ -177,9 +177,9 @@ class CommandLineInterface:
                 for contract in smart_contract:
                     print(f'Contract name: {str(contract.get_name())}')
                     print(f'Contract address: {str(contract.get_address())}\n')
-                self.print_menu()
+                self.print_user_options()
             elif option == 4:
-                print('\nHandle option \'Option 4: Exit\'\n')
+                print('\nHandle option \'Option 4: Logout\'\n')
                 self.session.set_user(None)
                 self.print_menu()
             else:
@@ -218,6 +218,9 @@ class CommandLineInterface:
                                                             self.session.get_user().get_public_key())
             if estemate_cost == -1:
                 print('Your gas limit is too low.\n')
+                self.print_user_options()
+            elif estemate_cost == -2:
+                print('Error Occurred.\n')
                 self.print_user_options()
             else:
                 print(f'The estimated cost to deploy the smart contract is {str(estemate_cost)}.\n')
@@ -283,10 +286,30 @@ class CommandLineInterface:
                 else:
                     print('Invalid smart contract address')
 
-            list_methods, contract, functions = self.shards_controller.smart_contract_methods_by_sourcecode(
+            try:
+                list_methods, contract, functions = self.shards_controller.smart_contract_methods_by_sourcecode(
                 smart_contract_address, file_path)
-            self.print_smart_contract_methods(list_methods)
-
+            except FileNotFoundError:
+                print('File not found')
+                self.print_user_options()
+            except Exception:
+                print('Error occurred')
+                self.print_user_options()
+            else:
+                choice = self.print_smart_contract_methods(list_methods)
+                if choice == 0:
+                    self.print_user_options()
+                else:
+                    parameters = self.print_parameters_methods(list_methods[choice])
+                    res = self.shards_controller.call_function(list_methods[choice], parameters, contract)
+                    if res == -1:
+                        print("The specified address is not valid.")
+                    elif res == -2:
+                        print('Wrong number of inputs')
+                    elif res == -3:
+                        print("Error Occurred")
+                    else:
+                        print(f'Result: {str(res)}')
         else:
             print('\nIncorrect password.\n Sorry but you can\'t proceed with invocation of a method of a smart '
                   'contract.\n')
@@ -307,12 +330,9 @@ class CommandLineInterface:
             if choice < 0 or choice > n:
                 print('No option correspond to your choice. Retry.\n')
             elif choice == 0:
-                self.print_user_options()
-                break
+                return 0
             else:
-                parameters = self.print_parameters_methods(list_methods[choice - 1])
-                print(parameters)
-                break
+                return choice-1
 
     def print_parameters_methods(self, method):
         parameters = method.replace(')', '').split('(')
@@ -324,5 +344,4 @@ class CommandLineInterface:
                 n = n + 1
                 param = input(f'Parameter {str(n)} (type {str(i)}): ')
                 p.append(param)
-
         return p
