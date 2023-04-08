@@ -7,6 +7,7 @@ from models.smart_contract import SmartContract
 from models.user import User
 from config import config
 
+
 class UserRepository:
     """User Data Access Layer to access the database.
 
@@ -117,8 +118,6 @@ class UserRepository:
             return user
 
         return None
-
-    
 
     def register_user(self, username, password, public_key, private_key):
         """Inserts a new User record in the database.
@@ -296,4 +295,3 @@ class UserRepository:
 
     #def set_latest_timestamp(self):
     #    pass
-
