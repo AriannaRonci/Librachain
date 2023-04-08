@@ -8,14 +8,21 @@ from solcx import compile_source
 
 solcx.install_solc('0.6.0')
 
-"""
 
-"""
 class ShardsController:
+    """
+    ShardsController manages the interaction between shards, user and On-Chain-Controller
+    """
     def __init__(self):
         pass
 
     def create_contract(self, smart_contract_path):
+        """
+        This class creates a contract object based on source code and chooses the w3 provider
+        considering the load on the blockchain
+        :param smart_contract_path: path of the source code of the smart contract
+        :return: built contract and w3 provider
+        """
         try:
             with open(smart_contract_path, 'r') as file:
                 smart_contract_code = file.read()
@@ -24,15 +31,24 @@ class ShardsController:
             contract_abi = contract_interface['abi']
             contract_bytecode = contract_interface['bin']
             w3 = self.balance_load()
-            my_contract = w3.eth.contract(abi=contract_abi,
-                                          bytecode=contract_bytecode)
-            return my_contract, w3
+            if w3 != 'Error Occurred':
+                my_contract = w3.eth.contract(abi=contract_abi,
+                                              bytecode=contract_bytecode)
+                return my_contract, w3
         except FileNotFoundError:
             print("File not found")
         except:
             print("Compiling error")
 
     def deploy_smart_contract(self, smart_contract_path, gas_limit, gas_price, wallet):
+        """
+        Deployes a smart contract
+        :param smart_contract_path: path of the source code of the smart contract
+        :param gas_limit: gas limit of the smart contract to deploy
+        :param gas_price: gas price of the smart contract to deploy
+        :param wallet: wallet of the user
+        :return: contract address if the try does not fail
+        """
         my_contract, w3 = self.create_contract(smart_contract_path)
         try:
             tx_hash = my_contract.constructor().transact({'gasPrice': gas_price,
@@ -49,6 +65,14 @@ class ShardsController:
             return -2
 
     def estimate(self, smart_contract_path, gas_limit, gas_price, wallet):
+        """
+        Estimates the gas used for a certain transaction
+        :param smart_contract_path: path of the source code of the smart contract
+        :param gas_limit: gas limit of the transaction
+        :param gas_price: gas price of the transaction
+        :param wallet: wallet of the user
+        :return: the amount of gas estimated if the try does not fail
+        """
         my_contract, w3 = self.create_contract(smart_contract_path)
         try:
             tx = my_contract.constructor().build_transaction({
@@ -63,8 +87,16 @@ class ShardsController:
         except:
             print("Error Occurred")
 
-
-    def smart_contract_methods_by_sourcecode(self,smart_contract_address, path_source_code):
+    def smart_contract_methods_by_sourcecode(self, smart_contract_address, path_source_code):
+        """
+        Retrieves smart contract methods
+        :param smart_contract_address: address of the deployed smart contract
+        :param path_source_code: path of the source code of the smart contract
+        :return: if try does not fail
+            - cli_functions: array of functions with params
+            - contract: contract object built
+            - function_names: array of the name of the functions
+        """
         try:
             with open(path_source_code, 'r') as file:
                 source_code = file.read()
@@ -92,6 +124,13 @@ class ShardsController:
             print("Error occurred")
 
     def call_function(self, function_name, attributes, contract):
+        """
+        Calls a Smart Contract method
+        :param function_name: name of the function to call
+        :param attributes: attributes of the function to call
+        :param contract: contract object built by source code and address
+        :return: boolean true if the call() method is successful
+        """
         try:
             calling_function = getattr(contract.functions, function_name)
             return calling_function(*attributes).call()
@@ -102,6 +141,7 @@ class ShardsController:
         except:
             print("Error Occurred")
 
+    #not used
     def by_abi(self, smart_contract_address, abi):
         invoke_onchain = OnChainController()
         w3 = Web3(HTTPProvider(invoke_onchain.get_shard(smart_contract_address)))
@@ -115,6 +155,11 @@ class ShardsController:
             return cli_functions, contract, functions
 
     def balance_load(self):
+        """
+        Balances the load of the blockchain
+        :return: calculated provider to make next transaction is the
+                 try does not fail
+        """
         try:
             shard1 = Web3(HTTPProvider('http://localhost:8545'))
             shard2 = Web3(HTTPProvider('http://localhost:8546'))
@@ -134,5 +179,3 @@ class ShardsController:
             return chosen_shard
         except:
             print("Error Occurred")
-
-
