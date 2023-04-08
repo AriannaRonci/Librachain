@@ -1,6 +1,7 @@
 import solcx
+import web3.exceptions
 from web3 import Web3, HTTPProvider
-from web3.exceptions import ContractLogicError
+from web3.exceptions import ContractLogicError, InvalidAddress
 
 from controllers.on_chain_controller import OnChainController
 from solcx import compile_source
@@ -78,15 +79,23 @@ class ShardsController:
                 function_names.append(stripped)
             return cli_functions, contract, function_names
 
-    def call_function(self, function_name, attributes):
-        attributes_string = "("
-        for i in range(0, len(attributes)):
-            attributes_string += str(attributes[i])
-            if i != (len(attributes)-1):
-                attributes_string += ","
-        attributes_string += ")"
-        command = "contract.functions."+str(function_name)+attributes_string+".call()"
-        exec(command)
+    def call_function(self, function_name, attributes, contract):
+        try:
+            calling_function = getattr(contract.functions, function_name)
+            return calling_function(*attributes).call()
+        except InvalidAddress:
+            print("The specified address is not valid.")
+        except web3.exceptions.ValidationError:
+            print('Wrong number of inputs')
+
+        #attributes_string = "("
+        #for i in range(0, len(attributes)):
+        #    attributes_string += str(attributes[i])
+        #    if i != (len(attributes)-1):
+        #        attributes_string += ","
+        #attributes_string += ")"
+        #command = "contract.functions."+str(function_name)+attributes_string+".call()"
+        #exec(command)
 
     def by_abi(self, smart_contract_address, abi):
         invoke_onchain = OnChainController()
