@@ -3,6 +3,7 @@ import sqlite3
 import base64
 import hashlib
 from cryptography.fernet import Fernet
+from models.smart_contract import SmartContract
 from models.user import User
 from config import config
 
@@ -44,8 +45,17 @@ class UserRepository:
                 username TEXT NOT NULL UNIQUE,
                 password_hash TEXT NOT NULL,
                 public_key TEXT NOT NULL,
-                private_key TEXT NOT NULL )
+                private_key TEXT NOT NULL );
         """)
+        self.cursor.execute("""
+            CREATE TABLE SmartContracts(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                address TEXT NOT NULL,
+                user_id FOREIGN KEY REFERENCES Users(id)
+        )
+        """)
+        self.conn.commit()
 
     def check_password(self, username, password):
         """Checks that the given credentials are valid.
@@ -100,11 +110,14 @@ class UserRepository:
             FROM Users 
             WHERE username=?""", (username,))
         if res is not None:
-            tuple = res.fetchone()
-            user = User(tuple[0], tuple[1], tuple[2], tuple[3], tuple[4])
+            user_attr = res.fetchone()
+            deployed_smart_contracts = self.get_user_smart_contracts(user_attr[0])
+            user = User(user_attr[0], user_attr[1], user_attr[2], user_attr[3], user_attr[4], deployed_smart_contracts)
             return user
-        
+
         return None
+
+    
 
     def register_user(self, username, password, public_key, private_key):
         """Inserts a new User record in the database.
@@ -217,11 +230,65 @@ class UserRepository:
                  -1: unknown database error
         """
         try:
-            self.cursor.execute("DELETE FROM Users WHERE id=?",(user.get_id()))
+            self.cursor.execute("DELETE FROM Users WHERE id=?",(user.get_id(),))
             self.conn.commit()
             return 0
         except:
             return -1
+
+    def get_user_smart_contracts(self, user_id: int):
+        """Retrives the list of smart contracts deployed by a user.
+
+        Args:
+            user_id: Integer, user's id
+        Returns:
+            the list of smart contracts
+        Raises:
+            Many types of possible exceptions, not yet specified
+        """
+        try:
+            res = self.cursor.execute("SELECT * FROM SmartContracts WHERE user_id=?",(user_id,)).fetchall()
+            smart_contracts = [SmartContract(row[0],row[1],row[2], row[3]) for row in res]
+            return smart_contracts
+        except Exception as ex:
+            raise ex
+
+    def insert_deployed_smart_contract(self, smart_contract: SmartContract):
+        """Inserts smart contract entry in database.
+
+        Args:
+            smart_contract:
+        Returns:
+            An integer that identifies the result:
+                  0: user deleted correctly
+                 -1: invalid entry
+                 -2: unknown database error
+        """
+        try:
+            self.cursor.execute("""
+                    INSERT INTO SmartContracts
+                    (name, address, user_id)
+                    VALUES (?, ?, ?)""",
+                    (smart_contract.get_name(),
+                     smart_contract.get_address(), 
+                     smart_contract.get_user_id())
+            )
+            self.conn.commit()
+            return 0
+        except sqlite3.OperationalError:
+            return -1
+        except Exception:
+            return -2
+        
+    def delete_deployed_smart_contract(self, smart_contract: SmartContract):
+        try:
+            self.cursor.execute("DELETE FROM SmartContracts WHERE id=?",(smart_contract.get_id(),))
+            self.conn.commit()
+            return 0
+        except sqlite3.OperationalError:
+            return -1
+        except Exception:
+            return -2
 
     #def get_latest_timestamp(self):
     #    pass
