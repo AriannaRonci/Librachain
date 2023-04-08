@@ -49,7 +49,7 @@ class UserRepository:
                 private_key TEXT NOT NULL );
         """)
         self.cursor.execute("""
-            CREATE TABLE SmartContracts(
+            CREATE TABLE IF NOT EXISTS SmartContracts(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
                 address TEXT NOT NULL,
