@@ -38,9 +38,7 @@ contract OnChainManager {
     }
 
     function isValidAddress(string memory shard, address smartContractAddress) public view returns (bool){
-        //string[3] memory shards = ['http://localhost:8545', 'http://localhost:8546', 'http://localhost:8547'];
         for(uint i=0; i<2; i++){
-            //string memory shard = shards[i];
             if (findString(shardsMapping[shard], smartContractAddress)==true)
                 return true;
         }
