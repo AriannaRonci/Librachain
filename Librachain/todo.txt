@@ -4,3 +4,4 @@ aggiungi l'autoselezione di solc-select
 - smart contract address and abi: mettere try catch
 - estimate gas limit
 - deploy shards and add to dictionary
+- 
