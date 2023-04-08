@@ -52,7 +52,7 @@ class UserRepository:
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
                 address TEXT NOT NULL,
-                user_id INTEGER FOREIGN KEY REFERENCES Users(id),
+                user_id INTEGER,
                 FOREIGN KEY (user_id) REFERENCES Users (id)
         )
         """)
