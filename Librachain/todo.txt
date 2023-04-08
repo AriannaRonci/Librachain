@@ -2,3 +2,5 @@ aggiungi l'autoselezione di solc-select
 - controllo su duplicate key
 - try catch with open
 - smart contract address and abi: mettere try catch
+- estimate gas limit
+- deploy shards and add to dictionary
