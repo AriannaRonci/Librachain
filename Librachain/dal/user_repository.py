@@ -14,10 +14,10 @@ class UserRepository:
     Attributes:
         conn: Connection object representing the connection to the SQLite DB
         cursor: Cursor object to execute operations on the DB
-        n:  Integer memory/cpu factor for the password hashing algorithm
-        r: Integer block size for the password hashing algorithm
-        p: parallelization factor for the password hashing algorithm
-        dklen: length of the derived key from password the hashing algorithm
+        n_param:  Integer memory/cpu factor for the password hashing algorithm
+        r_param: Integer block size for the password hashing algorithm
+        p_param: parallelization factor for the password hashing algorithm
+        dklen_param: length of the derived key from password the hashing algorithm
     """
 
     def __init__(self):
