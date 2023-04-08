@@ -101,28 +101,28 @@ class ShardsController:
         try:
             with open(path_source_code, 'r') as file:
                 source_code = file.read()
-            compiled_contract = compile_source(source_code, output_values=['abi', 'bin'])
-            contract_id, contract_interface = compiled_contract.popitem()
-            abi = contract_interface['abi']
-            invoke_onchain = OnChainController()
-            w3 = Web3(HTTPProvider(invoke_onchain.get_shard(smart_contract_address)))
-            if w3 != 'contract not deployed':
-                contract = w3.eth.contract(address=smart_contract_address, abi=abi)
-                functions = contract.all_functions()
-                cli_functions = []
-                for i in range(0, len(functions)):
-                    function = str(functions[i]).replace('<Function', '').replace('>', '')
-                    cli_functions.append(function)
-                function_names = []
-                sep = '('
-                for i in range(0, len(cli_functions)):
-                    stripped = cli_functions[i].split(sep, 1)[0].replace(' ', '')
-                    function_names.append(stripped)
-                return cli_functions, contract, function_names
         except FileNotFoundError:
             raise FileNotFoundError
-        except Exception:
+        except:
             raise Exception
+        compiled_contract = compile_source(source_code, output_values=['abi', 'bin'])
+        contract_id, contract_interface = compiled_contract.popitem()
+        abi = contract_interface['abi']
+        invoke_onchain = OnChainController()
+        w3 = Web3(HTTPProvider(invoke_onchain.get_shard(smart_contract_address)))
+        if w3 != 'contract not deployed':
+            contract = w3.eth.contract(address=smart_contract_address, abi=abi)
+            functions = contract.all_functions()
+            cli_functions = []
+            for i in range(0, len(functions)):
+                function = str(functions[i]).replace('<Function', '').replace('>', '')
+                cli_functions.append(function)
+            function_names = []
+            sep = '('
+            for i in range(0, len(cli_functions)):
+                stripped = cli_functions[i].split(sep, 1)[0].replace(' ', '')
+                function_names.append(stripped)
+            return cli_functions, contract, function_names
 
     def call_function(self, function_name, attributes, contract):
         """
