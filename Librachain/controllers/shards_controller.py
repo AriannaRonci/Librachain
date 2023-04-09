@@ -15,7 +15,10 @@ class ShardsController:
     """
 
     def __init__(self):
-        pass
+        self.__shards = ['http://localhost:8545', 'http://localhost:8546', 'http://localhost:8547']
+
+    def get_shards(self):
+        return self.__shards
 
     def create_contract(self, smart_contract_path):
         """
@@ -103,8 +106,6 @@ class ShardsController:
         try:
             with open(path_source_code, 'r') as file:
                 source_code = file.read()
-        except FileNotFoundError:
-            raise FileNotFoundError
         except:
             raise Exception
         compiled_contract = compile_source(source_code, output_values=['abi', 'bin'])
@@ -127,7 +128,7 @@ class ShardsController:
                 function_names.append(stripped)
             return cli_functions, contract, function_names
 
-    def call_function(self, function_name, attributes, contract):
+    def call_function(self, function_name, i, attributes, contract, my_wallet):
         """
         Calls a Smart Contract method
         :param function_name: name of the function to call
@@ -137,7 +138,10 @@ class ShardsController:
         """
         try:
             calling_function = getattr(contract.functions, function_name)
-            return calling_function(*attributes).call()
+            if self.on_chain.abi[i]['stateMutability'] == 'view':
+                return calling_function(*attributes).call()
+            else:
+                return calling_function(*attributes).transact({'from': my_wallet})
         except InvalidAddress:
             return -1
         except web3.exceptions.ValidationError:

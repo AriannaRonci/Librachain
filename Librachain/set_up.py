@@ -60,7 +60,7 @@ for i in range(0, 2):
         c = "contract: " + contracts[i] + "; "
         r = "contract address: " + receipt['contractAddress']
         splitted_r = r.split(": ", 1)[1]
-        on_chain.functions.addToDictionary(shard_names[j], splitted_r)
+        on_chain.functions.addToDictionary(shard_names[j], splitted_r).transact({'from': accounts[j]})
         shard_name = shard_names[j]
         logging.info('%s %s %s %s', a, c, shard_name, r)
 

@@ -280,14 +280,16 @@ class CommandLineInterface:
                     break
 
             while True:
+                shard = input('Enter shard address:')
                 smart_contract_address = input('Enter smart contact address:')
-                if is_address(smart_contract_address):
+                if is_address(smart_contract_address) and (shard in self.shards_controller.get_shards()):
                     break
-                else:
+                if not(is_address(smart_contract_address)) and (shard in self.shards_controller.get_shards()):
                     print('Invalid smart contract address')
-
+                elif not(is_address(smart_contract_address)) and (shard not in self.shards_controller.get_shards()):
+                    print('Invalid smart contract address and shard address')
             try:
-                list_methods, contract, functions = self.shards_controller.smart_contract_methods_by_sourcecode(
+                list_methods, contract, functions = self.shards_controller.smart_contract_methods_by_sourcecode(shard,
                 smart_contract_address, file_path)
             except FileNotFoundError:
                 print('File not found')
