@@ -33,11 +33,5 @@ class OnChainController:
         return result
 
     def is_valid_address(self, shard, shard_address):
-        """
-
-        :param shard:
-        :param shard_address:
-        :return:
-        """
         result = self.on_chain.functions.isValidAddress(shard, shard_address).call()
         return result
