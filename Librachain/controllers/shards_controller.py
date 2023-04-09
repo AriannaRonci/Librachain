@@ -13,8 +13,12 @@ class ShardsController:
     """
     ShardsController manages the interaction between shards, user and On-Chain-Controller
     """
+
     def __init__(self):
-        pass
+        self.__shards = ['http://localhost:8545', 'http://localhost:8546', 'http://localhost:8547']
+
+    def get_shards(self):
+        return self.__shards
 
     def create_contract(self, smart_contract_path):
         """
@@ -36,9 +40,9 @@ class ShardsController:
                                               bytecode=contract_bytecode)
                 return my_contract, w3
         except FileNotFoundError:
-            print("File not found")
-        except:
-            print("Compiling error")
+            raise FileNotFoundError
+        except Exception:
+            raise Exception
 
     def deploy_smart_contract(self, smart_contract_path, gas_limit, gas_price, wallet):
         """
@@ -49,8 +53,8 @@ class ShardsController:
         :param wallet: wallet of the user
         :return: contract address if the try does not fail
         """
-        my_contract, w3 = self.create_contract(smart_contract_path)
         try:
+            my_contract, w3 = self.create_contract(smart_contract_path)
             tx_hash = my_contract.constructor().transact({'gasPrice': gas_price,
                                                           'gasLimit': gas_limit,
                                                           'from': wallet})
@@ -61,7 +65,9 @@ class ShardsController:
             return receipt['contractAddress']
         except ContractLogicError:
             return -1
-        except:
+        #except FileNotFoundError:
+        #    return -3
+        except Exception:
             return -2
 
     def estimate(self, smart_contract_path, gas_limit, gas_price, wallet):
@@ -85,9 +91,9 @@ class ShardsController:
         except ContractLogicError:
             return -1
         except:
-            print("Error Occurred")
+            return -2
 
-    def smart_contract_methods_by_sourcecode(self, smart_contract_address, path_source_code):
+    def smart_contract_methods_by_sourcecode(self, shard, smart_contract_address, path_source_code):
         """
         Retrieves smart contract methods
         :param smart_contract_address: address of the deployed smart contract
@@ -100,30 +106,29 @@ class ShardsController:
         try:
             with open(path_source_code, 'r') as file:
                 source_code = file.read()
-            compiled_contract = compile_source(source_code, output_values=['abi', 'bin'])
-            contract_id, contract_interface = compiled_contract.popitem()
-            abi = contract_interface['abi']
-            invoke_onchain = OnChainController()
-            w3 = Web3(HTTPProvider(invoke_onchain.get_shard(smart_contract_address)))
-            if w3 != 'contract not deployed':
-                contract = w3.eth.contract(address=smart_contract_address, abi=abi)
-                functions = contract.all_functions()
-                cli_functions = []
-                for i in range(0, len(functions)):
-                    function = str(functions[i]).replace('<Function', '').replace('>', '')
-                    cli_functions.append(function)
-                function_names = []
-                sep = '('
-                for i in range(0, len(cli_functions)):
-                    stripped = cli_functions[i].split(sep, 1)[0].replace(' ', '')
-                    function_names.append(stripped)
-                return cli_functions, contract, function_names
-        except FileNotFoundError:
-            print("File not found")
         except:
-            print("Error occurred")
+            raise Exception
+        compiled_contract = compile_source(source_code, output_values=['abi', 'bin'])
+        contract_id, contract_interface = compiled_contract.popitem()
+        abi = contract_interface['abi']
+        invoke_onchain = OnChainController()
+        valid_address = (invoke_onchain.is_valid_address(shard, smart_contract_address))
+        if valid_address:
+            w3 = Web3(Web3.HTTPProvider(shard))
+            contract = w3.eth.contract(address=smart_contract_address, abi=abi)
+            functions = contract.all_functions()
+            cli_functions = []
+            for i in range(0, len(functions)):
+                function = str(functions[i]).replace('<Function', '').replace('>', '')
+                cli_functions.append(function)
+            function_names = []
+            sep = '('
+            for i in range(0, len(cli_functions)):
+                stripped = cli_functions[i].split(sep, 1)[0].replace(' ', '')
+                function_names.append(stripped)
+            return cli_functions, contract, function_names
 
-    def call_function(self, function_name, attributes, contract):
+    def call_function(self, function_name, i, attributes, contract, my_wallet):
         """
         Calls a Smart Contract method
         :param function_name: name of the function to call
@@ -133,15 +138,20 @@ class ShardsController:
         """
         try:
             calling_function = getattr(contract.functions, function_name)
-            return calling_function(*attributes).call()
+            if contract.abi[i]['stateMutability'] == 'view':
+                return calling_function(*attributes).call()
+            else:
+                return calling_function(*attributes).transact({'from': my_wallet})
         except InvalidAddress:
-            print("The specified address is not valid.")
-        except web3.exceptions.ValidationError:
-            print('Wrong number of inputs')
-        except:
-            print("Error Occurred")
+            return -1
+        except web3.exceptions.ValidationError as e:
+            print(e)
+            return -2
+        except Exception as e:
+            print(e)
+            return -3
 
-    #not used
+    # not used
     def by_abi(self, smart_contract_address, abi):
         invoke_onchain = OnChainController()
         w3 = Web3(HTTPProvider(invoke_onchain.get_shard(smart_contract_address)))
