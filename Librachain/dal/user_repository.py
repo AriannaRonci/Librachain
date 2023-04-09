@@ -49,8 +49,6 @@ class UserRepository:
                 public_key TEXT NOT NULL,
                 private_key TEXT NOT NULL );
         """)
-        self.cursor.execute("DROP TABLE SmartContracts")
-        self.conn.commit()
         self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS SmartContracts(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
