@@ -40,6 +40,7 @@ class UserRepository:
     
     def _create_table_if_not_exists(self):
         """Creates the user table in the db if it doesn't exist already"""
+
         self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS Users (
                 id INTEGER PRIMARY KEY,
