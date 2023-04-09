@@ -48,13 +48,17 @@ class UserRepository:
                 public_key TEXT NOT NULL,
                 private_key TEXT NOT NULL );
         """)
+        self.cursor.execute("DROP TABLE SmartContracts")
+        self.conn.commit()
         self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS SmartContracts(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
-                address TEXT NOT NULL UNIQUE,
+                address TEXT NOT NULL,
+                shard INTEGER NOT NULL,
                 user_id INTEGER,
-                FOREIGN KEY (user_id) REFERENCES Users (id)
+                FOREIGN KEY (user_id) REFERENCES Users (id),
+                UNIQUE(address, shard)
         )
         """)
         self.conn.commit()
@@ -248,10 +252,19 @@ class UserRepository:
         """
         try:
             res = self.cursor.execute("SELECT * FROM SmartContracts WHERE user_id=?",(user_id,)).fetchall()
-            smart_contracts = [SmartContract(row[0],row[1],row[2], row[3]) for row in res]
+            smart_contracts = [SmartContract(row[1], row[2], row[3], row[4], row[0]) for row in res]
             return smart_contracts
         except Exception as ex:
             raise ex
+
+    def get_smart_contract_by_address(self, address, shard):
+        try:
+            row = self.cursor.execute("SELECT * FROM SmartContracts WHERE shard=? and address=?",(address, shard,)).fetchone()
+            smart_contracts = SmartContract(row[1], row[2], row[3], row[4], row[0])
+            return smart_contracts
+        except Exception as ex:
+            raise ex
+
 
     def insert_deployed_smart_contract(self, smart_contract: SmartContract):
         """Inserts smart contract entry in database.
@@ -267,10 +280,11 @@ class UserRepository:
         try:
             self.cursor.execute("""
                     INSERT INTO SmartContracts
-                    (name, address, user_id)
+                    (name, address, shard, user_id)
                     VALUES (?, ?, ?)""",
                     (smart_contract.get_name(),
                      smart_contract.get_address(), 
+                     smart_contract.get_shard(),
                      smart_contract.get_user_id())
             )
             self.conn.commit()

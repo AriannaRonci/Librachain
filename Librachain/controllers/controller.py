@@ -129,6 +129,17 @@ class Controller:
         """
         return self.user_repo.decrypt_private_key(encrypted_private_key, password)
 
-    def insert_smart_contract(self, name: str, address: str, user: User):
-        smart_contract = SmartContract(name, address, user.get_id())
-        self.user_repo.insert_deployed_smart_contract(smart_contract)
+    def insert_smart_contract(self, name: str, address: str, shard: int, user: User):
+        """Insert smart_contract in database.
+
+        WORK IN PROGRESS
+        """
+        smart_contract = SmartContract(name, address, shard, user.get_id())
+        result = self.user_repo.insert_deployed_smart_contract(smart_contract)
+        if result == 0:
+            try:
+                smart_contract = self.user_repo.get_smart_contract_by_address(address, shard)
+                self.session.get_user().add_smart_contract(smart_contract)
+            except:
+                return -1
+        return result
