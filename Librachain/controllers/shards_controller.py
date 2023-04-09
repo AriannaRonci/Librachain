@@ -138,15 +138,17 @@ class ShardsController:
         """
         try:
             calling_function = getattr(contract.functions, function_name)
-            if self.on_chain.abi[i]['stateMutability'] == 'view':
+            if contract.abi[i]['stateMutability'] == 'view':
                 return calling_function(*attributes).call()
             else:
                 return calling_function(*attributes).transact({'from': my_wallet})
         except InvalidAddress:
             return -1
-        except web3.exceptions.ValidationError:
+        except web3.exceptions.ValidationError as e:
+            print(e)
             return -2
-        except:
+        except Exception as e:
+            print(e)
             return -3
 
     # not used
