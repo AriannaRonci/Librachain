@@ -28,7 +28,7 @@ class User:
     def get_smart_contracts(self):
         return self.__deployed_smart_contracts
 
-    def add_smart_contract(self, smart_contract : SmartContract):
+    def add_smart_contract(self, smart_contract: SmartContract):
         self.__deployed_smart_contracts.append(smart_contract)
     
     def delete_smart_contract(self, sc_id: int):

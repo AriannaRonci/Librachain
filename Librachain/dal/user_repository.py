@@ -10,7 +10,6 @@ from config import config
 
 class UserRepository:
     """User Data Access Layer to access the database.
-
     Attributes:
         conn: Connection object representing the connection to the SQLite DB
         cursor: Cursor object to execute operations on the DB
@@ -22,7 +21,7 @@ class UserRepository:
 
     def __init__(self):
         """Initializes the class and the db Connection and Cursor object.
-        
+
         Connection object is created with the database present in the
         path contained in config.config["db_path"].
         The _create_table_if_not_exists method is called to ensure the
@@ -33,11 +32,11 @@ class UserRepository:
         self._create_table_if_not_exists()
 
         # Parameters for password hashing
-        self.n_param=2
-        self.r_param=16
-        self.p_param=1
-        self.dklen_param=64
-    
+        self.n_param = 2
+        self.r_param = 16
+        self.p_param = 1
+        self.dklen_param = 64
+
     def _create_table_if_not_exists(self):
         """Creates the user table in the db if it doesn't exist already"""
 
@@ -64,17 +63,14 @@ class UserRepository:
 
     def check_password(self, username, password):
         """Checks that the given credentials are valid.
-
-        Password hash recovered from the database and compared to 
+        Password hash recovered from the database and compared to
         supplied password digest. If a user with the supplied username
         exists in the database and the corresponding password hash
-        matches the digest of the supplied password than the credentials 
+        matches the digest of the supplied password than the credentials
         are valid.
-
         Args:
             ursername: username string
             password: password string
-
         Returns:
             A boolean that identifies the result:
             - True: supplied credentials are valid
@@ -84,7 +80,7 @@ class UserRepository:
         SELECT password_hash 
         FROM Users 
         WHERE username = ?""", (username,)
-        )
+                                  )
         c = res.fetchone()
         if c:
             stored_pw = c[0]
@@ -96,17 +92,15 @@ class UserRepository:
                 r=int(parameters[3]),
                 p=int(parameters[4]),
                 dklen=int(parameters[5])
-            ) 
+            )
             return hashed_password.hex() == parameters[0]
 
         return False
 
     def get_user_by_username(self, username):
         """Retrieves user with supplied username from database.
-
         Args:
             username: username string
-
         Returns:
             A User object if a match is found in the database, None otherwise.
         """
@@ -124,16 +118,13 @@ class UserRepository:
 
     def register_user(self, username, password, public_key, private_key):
         """Inserts a new User record in the database.
-
         The private key is encrypted using password as seed, and
         password is hashed upon insertion.
-
         Args:
             username: user's username string
             password: user's password string
             public_key: user's public key string
             private_key: user's private key string
-
         Returns:
             An integer the identifies the result:
                  0: insertion done correctly
@@ -142,14 +133,14 @@ class UserRepository:
         """
         try:
             encrypted_private_key = self.encrypt_private_key(
-                    private_key, password)
+                private_key, password)
             hashed_password = self.hash_password(password)
             self.cursor.execute("""
                 INSERT INTO Users
                 (username, password_hash, public_key, private_key)
                 VALUES (?, ?, ?, ?)""",
-                (username,hashed_password, public_key, encrypted_private_key)
-            )
+                                (username, hashed_password, public_key, encrypted_private_key)
+                                )
             self.conn.commit()
             return 0
         except sqlite3.IntegrityError:
@@ -159,17 +150,14 @@ class UserRepository:
 
     def hash_password(self, password: str):
         """Hashes the supplied password.
-
         The parameters used by scrypt algorithm are appended to the digest
         and returned.
-
         Args:
             password: supplied password string
-
         Returns:
             A string containing the hashed password and the parameters used
             to hash it.
-            
+
         """
         salt = os.urandom(10)
         digest = hashlib.scrypt(
@@ -184,14 +172,11 @@ class UserRepository:
 
     def encrypt_private_key(self, private_key: str, password: str):
         """Encrypts the supplied private key.
-
         The password is hashed with sha256 and used as key for the private key
         encryption.
-
         Args:
             private_key: private key string
             password: password string
-
         Returns:
             a string containing encrypted private key.
         """
@@ -199,19 +184,16 @@ class UserRepository:
         key = base64.urlsafe_b64encode(password_hash)
         cipher_suite = Fernet(key)
         encrypted_private_key = cipher_suite.encrypt(
-                private_key.encode('utf-8'))
+            private_key.encode('utf-8'))
         return encrypted_private_key
 
     def decrypt_private_key(self, encrypted_private_key, password):
         """Decrypts the supplied private key.
-
         The password is hashed with sha256 and used as key for the private key
         decryption.
-
         Args:
             encrypted_private_key: encrypt_private_key key string
             password: password string
-
         Returns:
             A string containing the decrypted private key.
         """
@@ -219,12 +201,11 @@ class UserRepository:
         key = base64.urlsafe_b64encode(password_hash)
         cipher_suite = Fernet(key)
         private_key = cipher_suite.decrypt(
-                encrypted_private_key.encode('utf-8'))
+            encrypted_private_key.encode('utf-8'))
         return private_key.decode('utf-8')
 
     def delete_user(self, user):
         """Deletes the supplied user from the database.
-
         Args:
             user: User object which database entry has to be deleted
         Returns:
@@ -233,7 +214,7 @@ class UserRepository:
                  -1: unknown database error
         """
         try:
-            self.cursor.execute("DELETE FROM Users WHERE id=?",(user.get_id(),))
+            self.cursor.execute("DELETE FROM Users WHERE id=?", (user.get_id(),))
             self.conn.commit()
             return 0
         except:
@@ -241,7 +222,6 @@ class UserRepository:
 
     def get_user_smart_contracts(self, user_id: int):
         """Retrives the list of smart contracts deployed by a user.
-
         Args:
             user_id: Integer, user's id
         Returns:
@@ -250,7 +230,7 @@ class UserRepository:
             Many types of possible exceptions, not yet specified
         """
         try:
-            res = self.cursor.execute("SELECT * FROM SmartContracts WHERE user_id=?",(user_id,)).fetchall()
+            res = self.cursor.execute("SELECT * FROM SmartContracts WHERE user_id=?", (user_id,)).fetchall()
             smart_contracts = [SmartContract(row[1], row[2], row[3], row[4], row[0]) for row in res]
             return smart_contracts
         except Exception as ex:
@@ -258,16 +238,15 @@ class UserRepository:
 
     def get_smart_contract_by_address(self, address, shard):
         try:
-            row = self.cursor.execute("SELECT * FROM SmartContracts WHERE shard=? and address=?",(address, shard,)).fetchone()
+            row = self.cursor.execute("SELECT * FROM SmartContracts WHERE shard=? and address=?",
+                                      (shard, address)).fetchone()
             smart_contracts = SmartContract(row[1], row[2], row[3], row[4], row[0])
             return smart_contracts
         except Exception as ex:
             raise ex
 
-
     def insert_deployed_smart_contract(self, smart_contract: SmartContract):
         """Inserts smart contract entry in database.
-
         Args:
             smart_contract:
         Returns:
@@ -280,22 +259,22 @@ class UserRepository:
             self.cursor.execute("""
                     INSERT INTO SmartContracts
                     (name, address, shard, user_id)
-                    VALUES (?, ?, ?)""",
-                    (smart_contract.get_name(),
-                     smart_contract.get_address(), 
-                     smart_contract.get_shard(),
-                     smart_contract.get_user_id())
-            )
+                    VALUES (?, ?, ?, ?)""",
+                                (smart_contract.get_name(),
+                                 smart_contract.get_address(),
+                                 smart_contract.get_shard(),
+                                 smart_contract.get_user_id())
+                                )
             self.conn.commit()
             return 0
         except sqlite3.OperationalError:
             return -1
         except Exception:
             return -2
-        
+
     def delete_deployed_smart_contract(self, smart_contract: SmartContract):
         try:
-            self.cursor.execute("DELETE FROM SmartContracts WHERE id=?",(smart_contract.get_id(),))
+            self.cursor.execute("DELETE FROM SmartContracts WHERE id=?", (smart_contract.get_id(),))
             self.conn.commit()
             return 0
         except sqlite3.OperationalError:
@@ -303,8 +282,8 @@ class UserRepository:
         except Exception:
             return -2
 
-    #def get_latest_timestamp(self):
+    # def get_latest_timestamp(self):
     #    pass
 
-    #def set_latest_timestamp(self):
+    # def set_latest_timestamp(self):
     #    pass

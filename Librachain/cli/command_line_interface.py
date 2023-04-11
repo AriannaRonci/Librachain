@@ -173,11 +173,7 @@ class CommandLineInterface:
                 self.invoke_method_menu()
             elif option == 3:
                 print('\nHandle option \'Option 3: Consult your Smart Contract\'\n')
-                smart_contract = self.session.get_user().get_smart_contracts()
-                for contract in smart_contract:
-                    print(f'Contract name: {str(contract.get_name())}')
-                    print(f'Contract address: {str(contract.get_address())}\n')
-                self.print_user_options()
+                self.print_smart_contract_deployed()
             elif option == 4:
                 print('\nHandle option \'Option 4: Logout\'\n')
                 self.session.set_user(None)
@@ -241,7 +237,7 @@ class CommandLineInterface:
                         else:
                             print('Deployement successful\n')
                             print(f'Contract deployed at address: {str(res)}.\n')
-                            self.controller.insert_smart_contract(smart_contract_name, res, self.session.get_user())
+                            self.controller.insert_smart_contract(smart_contract_name, res, shard, self.session.get_user())
                             self.print_user_options()
                             break
 
@@ -357,3 +353,13 @@ class CommandLineInterface:
                     p.append(web3.to_bytes(param))
 
         return p
+
+    def print_smart_contract_deployed(self):
+        smart_contract = self.session.get_user().get_smart_contracts()
+        if len(smart_contract) == 0:
+            print('No Smart Contracts deployed yet.\n')
+        for contract in smart_contract:
+            print(f'Contract name: {str(contract.get_name())}')
+            print(f'Contract address: {str(contract.get_address())}')
+            print(f'Shard address: {str(contract.get_shard())}\n')
+        self.print_user_options()
