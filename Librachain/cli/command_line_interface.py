@@ -32,8 +32,9 @@ class CommandLineInterface:
         self.user_options = {
             1: 'Deploy Smart Contract',
             2: 'Invoke Smart Contact\'s Method',
-            3: 'Consult your Smart Contract',
-            4: 'Logout'
+            3: 'Consult your Smart Contract in your local databese',
+            4: 'Delete Smart Contrat from your local database',
+            5: 'Logout'
         }
 
     def print_menu(self):
@@ -172,10 +173,14 @@ class CommandLineInterface:
                 print('\nHandle option \'Option 2: Invoke Smart Contract\' Method\'')
                 self.invoke_method_menu()
             elif option == 3:
-                print('\nHandle option \'Option 3: Consult your Smart Contract\'\n')
+                print('\nHandle option \'Option 3:Consult your Smart Contract in your local databese\'\n')
                 self.print_smart_contract_deployed()
+                self.print_user_options()
             elif option == 4:
-                print('\nHandle option \'Option 4: Logout\'\n')
+                print('\nHandle option \'Option 4: Delete Smart Contract from your local databese\'\n')
+                self.delete_smart_contract_deployed()
+            elif option == 5:
+                print('\nHandle option \'Option 5: Logout\'\n')
                 self.session.set_user(None)
                 self.print_menu()
             else:
@@ -358,8 +363,31 @@ class CommandLineInterface:
         smart_contract = self.session.get_user().get_smart_contracts()
         if len(smart_contract) == 0:
             print('No Smart Contracts deployed yet.\n')
-        for contract in smart_contract:
-            print(f'Contract name: {str(contract.get_name())}')
-            print(f'Contract address: {str(contract.get_address())}')
-            print(f'Shard address: {str(contract.get_shard())}\n')
-        self.print_user_options()
+        else:
+            n = 0
+            for contract in smart_contract:
+                print(f'{str(n)} --------------------------------------------')
+                print(f'Contract name: {str(contract.get_name())}')
+                print(f'Contract address: {str(contract.get_address())}')
+                print(f'Shard address: {str(contract.get_shard())}\n')
+
+    def delete_smart_contract_deployed(self):
+        smart_contract = self.session.get_user().get_smart_contracts()
+        if len(smart_contract) == 0:
+            print('No Smart Contracts deployed yet.\n')
+            return 0
+        else:
+            self.print_smart_contract_deployed()
+            while True:
+                try:
+                    choice = int(input('Which one do you want to delete from yor local database (press 0 to exit)? '))
+                except ValueError:
+                    print('Wrong input. Please enter a number ...\n')
+
+                if choice < 0 or choice >= len(smart_contract)+1:
+                    print('No option correspond to your choice. Retry.\n')
+                elif choice == 0:
+                    return 0
+                else:
+
+
