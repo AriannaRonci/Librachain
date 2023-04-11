@@ -130,7 +130,7 @@ class Controller:
         return self.user_repo.decrypt_private_key(encrypted_private_key, password)
 
     def insert_smart_contract(self, name: str, address: str, shard: int, user: User):
-        """Insert smart_contract in database.
+        """Insert smart_contract in database and model.
 
         WORK IN PROGRESS
         """
@@ -143,3 +143,15 @@ class Controller:
             except:
                 return -1
         return result
+    
+    def delete_smart_contract(self, smart_contract: SmartContract):
+        """Deletes smart contract in database and model.
+
+        WORK IN PROGRESS
+        """
+        try:
+            self.user_repo.delete_deployed_smart_contract(smart_contract)
+            self.session.get_user().delete_smart_contract(smart_contract.get_id())
+            return 0
+        except:
+            return 1
