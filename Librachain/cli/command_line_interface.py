@@ -397,6 +397,7 @@ class CommandLineInterface:
         while True:
             try:
                 choice = int(input('Which one do you want to delete from yor local database (press 0 to exit)? '))
+                break
             except ValueError:
                 print('Wrong input. Please enter a number ...\n')
 
