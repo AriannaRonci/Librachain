@@ -60,7 +60,8 @@ class ShardsController:
                                                           'from': wallet})
             receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
             invoke_onchain = OnChainController()
-            invoke_onchain.add_to_dictionary(self.balance_load().provider.endpoint_uri, receipt['contractAddress'],
+            shard = self.balance_load().provider.endpoint_uri
+            invoke_onchain.add_to_dictionary(shard, receipt['contractAddress'],
                                              wallet)
             return receipt['contractAddress'], self.balance_load().provider.endpoint_uri
         except ContractLogicError:
@@ -93,6 +94,7 @@ class ShardsController:
         except:
             return -2
 
+    #cambia
     def smart_contract_methods_by_sourcecode(self, shard, smart_contract_address, path_source_code):
         """
         Retrieves smart contract methods
@@ -130,11 +132,13 @@ class ShardsController:
 
     def call_function(self, function_name, i, attributes, contract, my_wallet):
         """
-        Calls a Smart Contract method
-        :param function_name: name of the function to call
-        :param attributes: attributes of the function to call
-        :param contract: contract object built by source code and address
-        :return: boolean true if the call() method is successful
+
+        :param function_name:
+        :param i:
+        :param attributes:
+        :param contract:
+        :param my_wallet:
+        :return:
         """
         try:
             calling_function = getattr(contract.functions, function_name)
