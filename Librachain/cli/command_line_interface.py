@@ -230,7 +230,7 @@ class CommandLineInterface:
                     response = input('')
                     if response == 'Y' or response == 'y':
                         res, shard = self.shards_controller.deploy_smart_contract(file_path, gas_limit, gas_price,
-                                                                           self.session.get_user().get_public_key())
+                                                                                  self.session.get_user().get_public_key())
                         if res == -1:
                             print('Your gas limit is too low\n')
                             self.print_user_options()
@@ -242,7 +242,8 @@ class CommandLineInterface:
                         else:
                             print('Deployement successful\n')
                             print(f'Contract deployed at address: {str(res)}.\n')
-                            self.controller.insert_smart_contract(smart_contract_name, res, shard, self.session.get_user())
+                            self.controller.insert_smart_contract(smart_contract_name, res, shard,
+                                                                  self.session.get_user())
                             self.print_user_options()
                             break
 
@@ -290,9 +291,10 @@ class CommandLineInterface:
                 elif not (is_address(smart_contract_address)) and (shard not in self.shards_controller.get_shards()):
                     print('Invalid smart contract address and shard address')
             try:
-                list_methods, contract, functions, web3 = self.shards_controller.smart_contract_methods_by_sourcecode(shard,
-                                                                                                                smart_contract_address,
-                                                                                                                file_path)
+                list_methods, contract, functions, web3 = self.shards_controller.smart_contract_methods_by_sourcecode(
+                    shard,
+                    smart_contract_address,
+                    file_path)
             except FileNotFoundError:
                 print('File not found')
                 self.print_user_options()
@@ -304,8 +306,9 @@ class CommandLineInterface:
             if choice == 0:
                 self.print_user_options()
             else:
-                parameters = self.print_parameters_methods(list_methods[choice-1], web3)
-                res = self.shards_controller.call_function(functions[choice-1], choice-1, parameters, contract, self.session.get_user().get_public_key())
+                parameters = self.print_parameters_methods(list_methods[choice - 1], web3)
+                res = self.shards_controller.call_function(functions[choice - 1], choice - 1, parameters, contract,
+                                                           self.session.get_user().get_public_key())
                 if res == -1:
                     print('The specified address is not valid.\n')
                 elif res == -2:
@@ -364,30 +367,55 @@ class CommandLineInterface:
         if len(smart_contract) == 0:
             print('No Smart Contracts deployed yet.\n')
         else:
-            n = 0
+            n = 1
             for contract in smart_contract:
-                print(f'{str(n)} --------------------------------------------')
+                print(f'{str(n)} --------------------------------------------------------------')
                 print(f'Contract name: {str(contract.get_name())}')
                 print(f'Contract address: {str(contract.get_address())}')
                 print(f'Shard address: {str(contract.get_shard())}\n')
+                n = n + 1
 
     def delete_smart_contract_deployed(self):
         smart_contract = self.session.get_user().get_smart_contracts()
         if len(smart_contract) == 0:
             print('No Smart Contracts deployed yet.\n')
-            return 0
+            self.print_user_options()
         else:
             self.print_smart_contract_deployed()
-            while True:
-                try:
-                    choice = int(input('Which one do you want to delete from yor local database (press 0 to exit)? '))
-                except ValueError:
-                    print('Wrong input. Please enter a number ...\n')
+            res = self.choose_smart_contract_to_delete(smart_contract)
+            if res == 0:
+                print('Successful delition.\n')
+                self.print_user_options()
+            elif res == -1:
+                print('Sorry, but something went wrong with the delition!\n')
+                self.print_user_options()
+            elif res == -2:
+                print('No Smart Contract delited.\n')
+                self.print_user_options()
 
-                if choice < 0 or choice >= len(smart_contract)+1:
-                    print('No option correspond to your choice. Retry.\n')
-                elif choice == 0:
-                    return 0
-                else:
+    def choose_smart_contract_to_delete(self, smart_contract):
+        while True:
+            try:
+                choice = int(input('Which one do you want to delete from yor local database (press 0 to exit)? '))
+            except ValueError:
+                print('Wrong input. Please enter a number ...\n')
 
-
+            if choice < 0 or choice >= len(smart_contract) + 1:
+                print('No option correspond to your choice. Retry.\n')
+            elif choice == 0:
+                return -2
+            else:
+                print('Smart Contract selected:')
+                print(f'Contract name: {str(smart_contract[choice - 1].get_name())}')
+                print(f'Contract address: {str(smart_contract[choice - 1].get_address())}')
+                print(f'Shard address: {str(smart_contract[choice - 1].get_shard())}\n')
+                print('Do you want proceed with the delition (Y/N)?')
+                while True:
+                    response = input('')
+                    if response == 'Y' or response == 'y':
+                        res = self.controller.delete_smart_contract(smart_contract[choice - 1])
+                        return res
+                    elif response == 'N' or response == 'n':
+                        return -2
+                    else:
+                        print('Wrong input.\n')

@@ -154,4 +154,4 @@ class Controller:
             self.session.get_user().delete_smart_contract(smart_contract.get_id())
             return 0
         except:
-            return 1
+            return -1

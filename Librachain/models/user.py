@@ -38,5 +38,5 @@ class User:
             sc_id: Integer, smart contract to delete id
         """
         self.__deployed_smart_contracts = list(filter(
-                lambda sc: sc.getId() != sc_id,
+                lambda sc: sc.get_id() != sc_id,
                 self.__deployed_smart_contracts))

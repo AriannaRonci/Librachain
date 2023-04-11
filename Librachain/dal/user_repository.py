@@ -274,7 +274,7 @@ class UserRepository:
 
     def delete_deployed_smart_contract(self, smart_contract: SmartContract):
         try:
-            self.cursor.execute("DELETE FROM SmartContracts WHERE id=?", (smart_contract.get_id(),))
+            self.cursor.execute("DELETE FROM SmartContracts WHERE id=?", (smart_contract.get_id()))
             self.conn.commit()
             return 0
         except sqlite3.OperationalError:
