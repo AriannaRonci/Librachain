@@ -228,7 +228,7 @@ class CommandLineInterface:
                 while True:
                     response = input('')
                     if response == 'Y' or response == 'y':
-                        res = self.shards_controller.deploy_smart_contract(file_path, gas_limit, gas_price,
+                        res, shard = self.shards_controller.deploy_smart_contract(file_path, gas_limit, gas_price,
                                                                            self.session.get_user().get_public_key())
                         if res == -1:
                             print('Your gas limit is too low\n')
@@ -289,7 +289,7 @@ class CommandLineInterface:
                 elif not (is_address(smart_contract_address)) and (shard not in self.shards_controller.get_shards()):
                     print('Invalid smart contract address and shard address')
             try:
-                list_methods, contract, functions = self.shards_controller.smart_contract_methods_by_sourcecode(shard,
+                list_methods, contract, functions, web3 = self.shards_controller.smart_contract_methods_by_sourcecode(shard,
                                                                                                                 smart_contract_address,
                                                                                                                 file_path)
             except FileNotFoundError:
@@ -303,7 +303,7 @@ class CommandLineInterface:
             if choice == 0:
                 self.print_user_options()
             else:
-                parameters = self.print_parameters_methods(list_methods[choice-1])
+                parameters = self.print_parameters_methods(list_methods[choice-1], web3)
                 res = self.shards_controller.call_function(functions[choice-1], choice-1, parameters, contract, self.session.get_user().get_public_key())
                 if res == -1:
                     print('The specified address is not valid.\n')
@@ -337,7 +337,7 @@ class CommandLineInterface:
             else:
                 return choice
 
-    def print_parameters_methods(self, method):
+    def print_parameters_methods(self, method, web3):
         parameters = method.replace(')', '').split('(')
         p = []
         n = 0
@@ -346,6 +346,14 @@ class CommandLineInterface:
             for i in parameters:
                 n = n + 1
                 param = input(f'Parameter {str(n)} (type {str(i)}): ')
-                # controlli sui tipi
+
+                if str(i).startswith('bool'):
+                    p.append(bool(param))
+                elif str(i).startswith('int') or str(i).startswith('uint'):
+                    p.append(web3.to_int(param))
+                elif str(i).startswith('fixed') or str(i).startswith('unfixed'):
+                    p.append(float(i))
+                elif str(i).startswith('bytes'):
+                    p.append(web3.to_bytes(param))
 
         return p

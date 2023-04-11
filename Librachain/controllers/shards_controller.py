@@ -62,7 +62,7 @@ class ShardsController:
             invoke_onchain = OnChainController()
             invoke_onchain.add_to_dictionary(self.balance_load().provider.endpoint_uri, receipt['contractAddress'],
                                              wallet)
-            return receipt['contractAddress']
+            return receipt['contractAddress'], self.balance_load().provider.endpoint_uri
         except ContractLogicError:
             return -1
         #except FileNotFoundError:
@@ -126,7 +126,7 @@ class ShardsController:
             for i in range(0, len(cli_functions)):
                 stripped = cli_functions[i].split(sep, 1)[0].replace(' ', '')
                 function_names.append(stripped)
-            return cli_functions, contract, function_names
+            return cli_functions, contract, function_names, web3
 
     def call_function(self, function_name, i, attributes, contract, my_wallet):
         """
