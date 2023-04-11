@@ -369,7 +369,7 @@ class CommandLineInterface:
         else:
             n = 1
             for contract in smart_contract:
-                print(f'{str(n)} --------------------------------------------------------------')
+                print(f'{str(n)} ---------------------------------------------------------------')
                 print(f'Contract name: {str(contract.get_name())}')
                 print(f'Contract address: {str(contract.get_address())}')
                 print(f'Shard address: {str(contract.get_shard())}\n')
