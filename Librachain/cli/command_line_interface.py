@@ -401,22 +401,22 @@ class CommandLineInterface:
             except ValueError:
                 print('Wrong input. Please enter a number ...\n')
 
-            if choice < 0 or choice >= len(smart_contract) + 1:
-                print('No option correspond to your choice. Retry.\n')
-            elif choice == 0:
-                return -2
-            else:
-                print('Smart Contract selected:')
-                print(f'Contract name: {str(smart_contract[choice - 1].get_name())}')
-                print(f'Contract address: {str(smart_contract[choice - 1].get_address())}')
-                print(f'Shard address: {str(smart_contract[choice - 1].get_shard())}\n')
-                print('Do you want proceed with the delition (Y/N)?')
-                while True:
-                    response = input('')
-                    if response == 'Y' or response == 'y':
-                        res = self.controller.delete_smart_contract(smart_contract[choice - 1])
-                        return res
-                    elif response == 'N' or response == 'n':
-                        return -2
-                    else:
-                        print('Wrong input.\n')
+        if choice < 0 or choice >= len(smart_contract) + 1:
+            print('No option correspond to your choice. Retry.\n')
+        elif choice == 0:
+            return -2
+        else:
+            print('Smart Contract selected:')
+            print(f'Contract name: {str(smart_contract[choice - 1].get_name())}')
+            print(f'Contract address: {str(smart_contract[choice - 1].get_address())}')
+            print(f'Shard address: {str(smart_contract[choice - 1].get_shard())}\n')
+            print('Do you want proceed with the delition (Y/N)?')
+            while True:
+                response = input('')
+                if response == 'Y' or response == 'y':
+                    res = self.controller.delete_smart_contract(smart_contract[choice - 1])
+                    return res
+                elif response == 'N' or response == 'n':
+                    return -2
+                else:
+                    print('Wrong input.\n')
