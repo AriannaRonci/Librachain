@@ -5,7 +5,7 @@ from solidity_parser import parser
 
 
 if __name__ == "__main__":
-
-    shards = ShardsController()
-    shards.balance_load()
-
+    session_obj = Session()
+    cli = CommandLineInterface(session_obj)
+    while True:
+        cli.print_menu()

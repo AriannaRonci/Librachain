@@ -307,16 +307,32 @@ class CommandLineInterface:
                 self.print_user_options()
             else:
                 parameters = self.print_parameters_methods(list_methods[choice - 1], web3)
-                res = self.shards_controller.call_function(functions[choice - 1], choice - 1, parameters, contract,
-                                                           self.session.get_user().get_public_key())
-                if res == -1:
-                    print('The specified address is not valid.\n')
-                elif res == -2:
-                    print('Function invocation failed due to no matching argument types.\n')
-                elif res == -3:
-                    print('Some error occurred.\n')
+                if parameters != -1:
+                    invoked_function = 'The function you wish to invoke is:'
+                    invoked_function += str(functions[choice-1]+'(')
+                    for i in range(0, len(parameters)):
+                        invoked_function += str(parameters[i])
+                        if i == len(parameters)-1:
+                            invoked_function += ')'
+                        else:
+                            invoked_function += ','
+                    print(invoked_function)
+                    answer = input('Would you like to continue? (yes/no)')
+                    if answer == 'yes':
+                        res = self.shards_controller.call_function(functions[choice - 1], choice - 1, parameters, contract,
+                                                               self.session.get_user().get_public_key())
+                        if res == -1:
+                            print('The specified address is not valid.\n')
+                        elif res == -2:
+                            print('Function invocation failed due to no matching argument types.\n')
+                        elif res == -3:
+                            print('Some error occurred.\n')
+                        else:
+                            print(f'Result: {str(res)}.\n')
+                            self.print_user_options()
                 else:
-                    print(f'Result: {str(res)}.\n')
+                    print("Execution reverted due to wrong parameters")
+                    self.print_user_options()
         else:
             print('\nIncorrect password.\n Sorry but you can\'t proceed with invocation of a method of a smart '
                   'contract.\n')
@@ -331,15 +347,15 @@ class CommandLineInterface:
         while True:
             try:
                 choice = int(input('Which of these methods do you want to invoke (press 0 to exit)? '))
+                break
             except ValueError:
                 print('Wrong input. Please enter a number ...\n')
-
-            if choice < 0 or choice > n:
-                print('No option correspond to your choice. Retry.\n')
-            elif choice == 0:
-                return 0
-            else:
-                return choice
+        if choice < 0 or choice > n:
+            print('No option correspond to your choice. Retry.\n')
+        elif choice == 0:
+            return 0
+        else:
+            return choice
 
     def print_parameters_methods(self, method, web3):
         parameters = method.replace(')', '').split('(')
@@ -348,19 +364,48 @@ class CommandLineInterface:
         parameters.pop(0)
         if len(parameters) > 0:
             for i in parameters:
-                n = n + 1
-                param = input(f'Parameter {str(n)} (type {str(i)}): ')
-
-                if str(i).startswith('bool'):
-                    p.append(bool(param))
-                elif str(i).startswith('int') or str(i).startswith('uint'):
-                    p.append(web3.to_int(param))
-                elif str(i).startswith('fixed') or str(i).startswith('unfixed'):
-                    p.append(float(i))
-                elif str(i).startswith('bytes'):
-                    p.append(web3.to_bytes(param))
-
-        return p
+                try:
+                    n = n + 1
+                    if not str(i).__contains__('['):
+                        param = input(f'Parameter {str(n)} (type {str(i)}): ')
+                        if str(i).startswith('bool'):
+                            if param == 'true' or param == 'True' or param == '1':
+                                p.append(True)
+                            elif param == 'false' or param == 'False' or param == '0':
+                                p.append(False)
+                        elif str(i).startswith('int') or str(i).startswith('uint'):
+                            p.append(web3.to_int(text=param))
+                        elif str(i).startswith('fixed') or str(i).startswith('unfixed'):
+                            p.append(float(i))
+                        elif str(i).startswith('bytes'):
+                            p.append(web3.to_bytes(text=param))
+                    else:
+                        list = self.retrieve_list_values()
+                        casted_list = []
+                        if str(i).startswith('bool'):
+                            for i in range(0, len(list)):
+                                if list[i] == 'true' or list[i] == 'True' or list[i] == '1':
+                                    casted_list.append(True)
+                                elif list[i] == 'false' or list[i] == 'False' or list[i] == '0':
+                                    casted_list.append(False)
+                            p.append(casted_list)
+                        elif str(i).startswith('int') or str(i).startswith('uint'):
+                            for i in range(0, len(list)):
+                                casted_list.append(web3.to_int(text=list[i]))
+                            p.append(casted_list)
+                        elif str(i).startswith('fixed') or str(i).startswith('unfixed'):
+                            for i in range(0, len(list)):
+                                casted_list.append(float(list[i]))
+                            p.append(casted_list)
+                        elif str(i).startswith('bytes'):
+                            for i in range(0, len(list)):
+                                casted_list.append(web3.to_bytes(text=list[i]))
+                            p.append(casted_list)
+                    return p
+                    if str(i).__contains__('mapping'):
+                        pass
+                except:
+                    return -1
 
     def print_smart_contract_deployed(self):
         smart_contract = self.session.get_user().get_smart_contracts()
@@ -420,3 +465,14 @@ class CommandLineInterface:
                     return -2
                 else:
                     print('Wrong input.\n')
+
+    def retrieve_list_values(self):
+        print('Choose list values, press enter to stop choosing values.')
+        list = []
+        while True:
+            list_value = input('Value: ')
+            if list_value != '':
+                list.append(list_value)
+            else:
+                break
+        return list

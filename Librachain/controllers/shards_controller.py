@@ -128,7 +128,7 @@ class ShardsController:
             for i in range(0, len(cli_functions)):
                 stripped = cli_functions[i].split(sep, 1)[0].replace(' ', '')
                 function_names.append(stripped)
-            return cli_functions, contract, function_names, web3
+            return cli_functions, contract, function_names, w3
 
     def call_function(self, function_name, i, attributes, contract, my_wallet):
         """
