@@ -142,14 +142,12 @@ class ShardsController:
                 return calling_function(*attributes).call()
             else:
                 return calling_function(*attributes).transact({'from': my_wallet})
-        except InvalidAddress:
-            return -1
-        except web3.exceptions.ValidationError as e:
-            print(e)
-            return -2
-        except Exception as e:
-            print(e)
-            return -3
+        except InvalidAddress as ia:
+            raise ia
+        except web3.exceptions.ValidationError as ve:
+            raise ve
+        except Exception as ex:
+            raise ex
 
     def balance_load(self):
         """

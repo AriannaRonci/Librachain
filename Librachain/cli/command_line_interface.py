@@ -1,8 +1,9 @@
 import os
 import re
 
+from colorama import Fore, Style
 from eth_utils import is_address, decode_hex
-from web3.exceptions import ContractLogicError
+from web3.exceptions import ContractLogicError, InvalidAddress
 
 from controllers.controller import Controller
 from controllers.shards_controller import ShardsController
@@ -306,13 +307,13 @@ class CommandLineInterface:
                 print('An unknown error occurred.\n')
                 self.print_user_options()
 
-            choice = self.print_smart_contract_methods(list_methods)
+            choice = self.print_smart_contract_methods(list_methods, contract)
             if choice == 0:
                 self.print_user_options()
             else:
                 parameters = self.print_parameters_methods(list_methods[choice - 1], web3)
                 if parameters != -1:
-                    invoked_function = 'The function you wish to invoke is:'
+                    invoked_function = ''
                     invoked_function += str(functions[choice-1]+'(')
                     for i in range(0, len(parameters)):
                         invoked_function += str(parameters[i])
@@ -320,20 +321,30 @@ class CommandLineInterface:
                             invoked_function += ')'
                         else:
                             invoked_function += ','
-                    print(invoked_function)
-                    answer = input('Would you like to continue? (yes/no)')
-                    if answer == 'yes':
-                        res = self.shards_controller.call_function(functions[choice - 1], choice - 1, parameters, contract,
-                                                               self.session.get_user().get_public_key())
-                        if res == -1:
+                    if contract.abi[choice - 1]['stateMutability'] == 'view':
+                        print('The function you wish to invoke is: ' + Fore.BLUE + str(invoked_function)
+                              + Style.RESET_ALL)
+                    else:
+                        print('The function you wish to invoke is: ' + Fore.RED + str(invoked_function)
+                              + Style.RESET_ALL)
+                    while True:
+                        answer = input('Would you like to continue? (Y/N)')
+                        try:
+                            if answer == 'Y' or answer == 'y':
+                                res = self.shards_controller.call_function(functions[choice - 1],
+                                                     choice - 1, parameters, contract,
+                                                     self.session.get_user().get_public_key())
+                                print(f'Result: {str(res)}.\n')
+                                self.print_user_options()
+                            if answer == 'N' or answer == 'n':
+                                print('Execution Reverted.')
+                                self.print_user_options()
+                        except InvalidAddress:
                             print('The specified address is not valid.\n')
-                        elif res == -2:
+                        except web3.exceptions.ValidationError:
                             print('Function invocation failed due to no matching argument types.\n')
-                        elif res == -3:
+                        except Exception:
                             print('An unknown error occurred.\n')
-                        else:
-                            print(f'Result: {str(res)}.\n')
-                            self.print_user_options()
                 else:
                     print("Execution reverted due to wrong parameters")
                     self.print_user_options()
@@ -342,11 +353,14 @@ class CommandLineInterface:
                   'contract.\n')
             self.print_user_options()
 
-    def print_smart_contract_methods(self, list_methods: list):
+    def print_smart_contract_methods(self, list_methods, contract):
         n = 0
         for i in list_methods:
             n = n + 1
-            print(f'{str(n)}) {str(i)}')
+            if contract.abi[n-1]['stateMutability'] == 'view':
+                print(Fore.BLUE + f'{str(n)}) {str(i)}{Style.RESET_ALL}')
+            else:
+                print(Fore.RED + f'{str(n)}) {str(i)}{Style.RESET_ALL}')
 
         while True:
             try:

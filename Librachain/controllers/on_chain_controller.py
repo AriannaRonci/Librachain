@@ -25,8 +25,11 @@ class OnChainController:
         return result
 
     def add_to_dictionary(self, shard_address, contract_address, my_wallet):
-        result = self.on_chain.functions.addToDictionary(shard_address, contract_address).transact({"from": my_wallet})
-        self.w3.eth.wait_for_transaction_receipt(result)
+        try:
+            result = self.on_chain.functions.addToDictionary(shard_address, contract_address).transact({"from": my_wallet})
+            self.w3.eth.wait_for_transaction_receipt(result)
+        except Exception as ex:
+            raise ex
 
     def get_balance(self, shard_address):
         result = self.on_chain.functions.getBalance(shard_address).call()
