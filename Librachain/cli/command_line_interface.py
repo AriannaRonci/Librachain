@@ -2,6 +2,8 @@ import os
 import re
 
 from eth_utils import is_address, decode_hex
+from web3.exceptions import ContractLogicError
+
 from controllers.controller import Controller
 from controllers.shards_controller import ShardsController
 from session.session import Session
@@ -126,7 +128,7 @@ class CommandLineInterface:
                 self.print_user_options()
             elif res == -1:
                 print('\nIncorrect username or password\n')
-                self.print_retry_exit_menu('login')
+                self.print_retry_exit_menu()
             elif res == -2:
                 print('You have reached the maximum number of login attempts')
                 return
@@ -135,7 +137,7 @@ class CommandLineInterface:
             print(f'Time left until next attempt: {int(self.session.get_time_left_for_unlock())} seconds\n')
             return
 
-    def print_retry_exit_menu(self, predecessor_method):
+    def print_retry_exit_menu(self):
         for key in self.wrong_input_options.keys():
             print(key, '--', self.wrong_input_options[key])
 
@@ -143,22 +145,17 @@ class CommandLineInterface:
             option = int(input('Enter your choice: '))
             if option == 1:
                 print('\nHandle option \'Option 1: Retry\'')
-                if predecessor_method == 'login':
-                    self.login_menu()
-                elif predecessor_method == 'deploy':
-                    self.read_smart_contract()
+                self.login_menu()
+
             elif option == 2:
                 print('\nHandle option \'Option 2: Exit\'\n')
-                if predecessor_method == 'login':
-                    self.print_menu()
-                elif predecessor_method == 'deploy':
-                    self.print_user_options()
+                self.print_menu()
             else:
                 print('Invalid option. Please enter a number between 1 and 2.\n')
-                self.print_retry_exit_menu(predecessor_method)
+                self.print_retry_exit_menu()
         except ValueError:
             print('Wrong input. Please enter a number ...\n')
-            self.print_retry_exit_menu(predecessor_method)
+            self.print_retry_exit_menu()
 
     def print_user_options(self):
         for key in self.user_options.keys():
@@ -167,20 +164,20 @@ class CommandLineInterface:
         try:
             option = int(input('Enter your choice: '))
             if option == 1:
-                print('\nHandle option \'Option 1: Deploy Smart Contract\'')
+                print('\nHandle option \'Option 1: Deploy Smart Contract.\'')
                 self.deploy_menu()
             elif option == 2:
-                print('\nHandle option \'Option 2: Invoke Smart Contract\' Method\'')
+                print('\nHandle option \'Option 2: Invoke Smart Contract\' Method.\'')
                 self.invoke_method_menu()
             elif option == 3:
-                print('\nHandle option \'Option 3:Consult your Smart Contract in your local databese\'\n')
+                print('\nHandle option \'Option 3:Consult your Smart Contract in your local databese.\'\n')
                 self.print_smart_contract_deployed()
                 self.print_user_options()
             elif option == 4:
-                print('\nHandle option \'Option 4: Delete Smart Contract from your local databese\'\n')
+                print('\nHandle option \'Option 4: Delete Smart Contract from your local databese.\'\n')
                 self.delete_smart_contract_deployed()
             elif option == 5:
-                print('\nHandle option \'Option 5: Logout\'\n')
+                print('\nHandle option \'Option 5: Logout.\'\n')
                 self.session.set_user(None)
                 self.print_menu()
             else:
@@ -221,16 +218,25 @@ class CommandLineInterface:
                 print('Your gas limit is too low.\n')
                 self.print_user_options()
             elif estemate_cost == -2:
-                print('Error Occurred.\n')
+                print('An unknown error occurred.\n')
                 self.print_user_options()
             else:
                 print(f'The estimated cost to deploy the smart contract is {str(estemate_cost)}.\n')
-                print('Do you want proceed with the deploy (Y/N)?')
                 while True:
+                    print('Do you want proceed with the deploy (Y/N)?')
                     response = input('')
                     if response == 'Y' or response == 'y':
-                        res, shard = self.shards_controller.deploy_smart_contract(file_path, gas_limit, gas_price,
+                        try:
+                            res, shard = self.shards_controller.deploy_smart_contract(file_path, gas_limit, gas_price,
                                                                                   self.session.get_user().get_public_key())
+                        except ContractLogicError:
+                            print('Your Smart Conract has genereted logic error.\n')
+                            self.print_user_options()
+                            return
+                        except Exception:
+                            print('An unknown error occurred.\n')
+                            self.print_user_options()
+                            return
                         if res == -1:
                             print('Your gas limit is too low\n')
                             self.print_user_options()
@@ -288,19 +294,16 @@ class CommandLineInterface:
                 if is_address(smart_contract_address) and (shard in self.shards_controller.get_shards()):
                     break
                 if not (is_address(smart_contract_address)) and (shard in self.shards_controller.get_shards()):
-                    print('Invalid smart contract address')
+                    print('Invalid smart contract address.\n')
                 elif not (is_address(smart_contract_address)) and (shard not in self.shards_controller.get_shards()):
-                    print('Invalid smart contract address and shard address')
+                    print('Invalid smart contract address and shard address.\n')
             try:
                 list_methods, contract, functions, web3 = self.shards_controller.smart_contract_methods_by_sourcecode(
                     shard,
                     smart_contract_address,
                     file_path)
-            except FileNotFoundError:
-                print('File not found')
-                self.print_user_options()
             except:
-                print('Error occurred')
+                print('An unknown error occurred.\n')
                 self.print_user_options()
 
             choice = self.print_smart_contract_methods(list_methods)
@@ -327,7 +330,7 @@ class CommandLineInterface:
                         elif res == -2:
                             print('Function invocation failed due to no matching argument types.\n')
                         elif res == -3:
-                            print('Some error occurred.\n')
+                            print('An unknown error occurred.\n')
                         else:
                             print(f'Result: {str(res)}.\n')
                             self.print_user_options()
@@ -351,6 +354,7 @@ class CommandLineInterface:
                 break
             except ValueError:
                 print('Wrong input. Please enter a number ...\n')
+
         if choice < 0 or choice > n:
             print('No option correspond to your choice. Retry.\n')
         elif choice == 0:
@@ -403,8 +407,6 @@ class CommandLineInterface:
                                 casted_list.append(web3.to_bytes(text=list[i]))
                             p.append(casted_list)
                     return p
-                    if str(i).__contains__('mapping'):
-                        pass
                 except:
                     return -1
 
