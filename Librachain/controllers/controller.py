@@ -155,3 +155,10 @@ class Controller:
             return 0
         except:
             return -1
+
+    def change_password(self, username, new_password, old_password):
+        if self.user_repo.check_password(username, old_password):
+            self.user_repo.change_password(username, new_password, old_password)
+
+    def check_password_obsolete(self, username):
+        return self.user_repo.is_password_obsolete(username)
