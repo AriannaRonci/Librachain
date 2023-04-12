@@ -21,22 +21,22 @@ class CommandLineInterface:
         self.session = session
 
         self.menu_options = {
-            1: 'Register',
-            2: 'Log in',
-            3: 'Exit',
+            1: 'Register.',
+            2: 'Log in.',
+            3: 'Exit.',
         }
 
         self.wrong_input_options = {
-            1: 'Retry',
-            2: 'Exit',
+            1: 'Retry.',
+            2: 'Exit.',
         }
 
         self.user_options = {
-            1: 'Deploy Smart Contract',
-            2: 'Invoke Smart Contact\'s Method',
-            3: 'Consult your Smart Contract in your local databese',
-            4: 'Delete Smart Contrat from your local database',
-            5: 'Logout'
+            1: 'Deploy Smart Contract.',
+            2: 'Invoke Smart Contact\'s Method.',
+            3: 'Consult your Smart Contract in your local databese.',
+            4: 'Delete Smart Contrat from your local database.',
+            5: 'Logout.'
         }
 
     def print_menu(self):
@@ -124,7 +124,7 @@ class CommandLineInterface:
             res = self.controller.login(username, password, public_key, private_key)
 
             if res == 0:
-                print('\nYou are login\n')
+                print('\nYou are logged in.\n')
                 self.print_user_options()
             elif res == -1:
                 print('\nIncorrect username or password\n')
