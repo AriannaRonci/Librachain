@@ -353,7 +353,7 @@ class CommandLineInterface:
                   'contract.\n')
             self.print_user_options()
 
-    def print_smart_contract_methods(self, list_methods, contract):
+    def print_smart_contract_methods(self, list_methods: list, contract):
         n = 0
         for i in list_methods:
             n = n + 1
