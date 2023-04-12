@@ -33,7 +33,7 @@ class CommandLineInterface:
 
         self.user_options = {
             1: 'Deploy Smart Contract.',
-            2: 'Invoke Smart Contact\'s Method.',
+            2: 'Invoke Smart Contract\'s Method.',
             3: 'Consult your Smart Contract in your local databese.',
             4: 'Delete Smart Contrat from your local database.',
             5: 'Logout.'
@@ -91,6 +91,7 @@ class CommandLineInterface:
                 check_password = getpass.getpass('Confirm Passoword: ')
 
                 if not re.fullmatch(r'(?=.*?\d)(?=.*?[A-Z])(?=.*?[a-z])[A-Za-z0-9@#$%^&+=]{10,255}', password):
+                    print(password)
                     print('Password must contains at least 10 symbols, at least one digit, at least one uppercase '
                           'letter, at least one lowercase letter.\n')
                 elif password != check_password:
@@ -116,16 +117,25 @@ class CommandLineInterface:
             self.session.reset_attempts()
 
         if self.session.get_time_left_for_unlock() <= 0 and self.controller.check_number_attempts():
-            public_key = input('Public Key: ')
-            private_key = input('Private Key: ')
+            #public_key = input('Public Key: ')
+            #private_key = input('Private Key: ')
             # private_key = getpass.getpass('Private Key: ')
             username = input('Username: ')
             password = getpass.getpass('Password: ')
-            res = self.controller.login(username, password, public_key, private_key)
+            #res = self.controller.login(username, password, public_key, private_key)
+            res = self.controller.login(username, password, 'public_key', 'private_key')
 
             if res == 0:
                 print('\nYou are logged in.\n')
-                self.print_user_options()
+                if self.controller.check_password(username, password):
+                    res= self.suggest_change_password(username)
+                    if res == 0:
+                        print('Password succesfully changed.\n')
+                        self.print_user_options()
+                    elif res == -1:
+                        print('Password not changed.\n')
+                        self.print_user_options()
+
             elif res == -1:
                 print('\nIncorrect username or password\n')
                 self.print_retry_exit_menu()
@@ -136,6 +146,34 @@ class CommandLineInterface:
             print('\nYou have reached the maximum number of attempts')
             print(f'Time left until next attempt: {int(self.session.get_time_left_for_unlock())} seconds\n')
             return
+
+    def suggest_change_password(self, username):
+        while True:
+            response = input('It\'s been 3 months since your password was last changed. We suggest you change it.\n'
+                  'Do you want to change your password (Y/N)?\n')
+            if response == 'Y' or response == 'y':
+                old_password = getpass.getpass('Old password: ')
+
+                while True:
+                    new_password = getpass.getpass('New password: ')
+                    check_password = getpass.getpass('Confirm new passoword: ')
+
+                    if not re.fullmatch(r'(?=.*?\d)(?=.*?[A-Z])(?=.*?[a-z])[A-Za-z0-9@#$%^&+=]{10,255}', new_password):
+                        print(new_password)
+                        print('Password must contains at least 10 symbols, at least one digit, at least one uppercase '
+                              'letter, at least one lowercase letter.\n')
+                    elif new_password != check_password:
+                        print('Password and confirm password do not match.\n')
+                    else:
+                        break
+
+                self.controller.change_password(username, new_password, old_password)
+                return 0
+            elif response == 'N' or response == 'n':
+                return -1
+            else:
+                print('Wrong input.\n')
+
 
     def print_retry_exit_menu(self):
         for key in self.wrong_input_options.keys():
@@ -246,7 +284,7 @@ class CommandLineInterface:
                             self.print_user_options()
                             break
                         else:
-                            print('Deployement successful\n')
+                            print('Deployement was successful\n')
                             print(f'Contract deployed at address: {str(res)}.\n')
                             print(f'Shard address: {str(shard)}.\n')
                             self.controller.insert_smart_contract(smart_contract_name, res, shard,
@@ -458,8 +496,8 @@ class CommandLineInterface:
             print(f'Contract name: {str(smart_contract[choice - 1].get_name())}')
             print(f'Contract address: {str(smart_contract[choice - 1].get_address())}')
             print(f'Shard address: {str(smart_contract[choice - 1].get_shard())}\n')
-            print('Do you want proceed with the delition (Y/N)?')
             while True:
+                print('Do you want proceed with the delition (Y/N)?')
                 response = input('')
                 if response == 'Y' or response == 'y':
                     res = self.controller.delete_smart_contract(smart_contract[choice - 1])
@@ -479,3 +517,4 @@ class CommandLineInterface:
             else:
                 break
         return list
+
