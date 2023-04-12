@@ -39,8 +39,6 @@ class ShardsController:
                 my_contract = w3.eth.contract(abi=contract_abi,
                                               bytecode=contract_bytecode)
                 return my_contract, w3
-        except FileNotFoundError:
-            raise FileNotFoundError
         except Exception:
             raise Exception
 
@@ -64,12 +62,10 @@ class ShardsController:
             invoke_onchain.add_to_dictionary(shard, receipt['contractAddress'],
                                              wallet)
             return receipt['contractAddress'], self.balance_load().provider.endpoint_uri
-        except ContractLogicError:
-            return -1
-        #except FileNotFoundError:
-        #    return -3
-        except Exception:
-            return -2
+        except ContractLogicError as cle:
+            raise cle
+        except Exception as ex:
+            raise ex
 
     def estimate(self, smart_contract_path, gas_limit, gas_price, wallet):
         """
@@ -108,27 +104,27 @@ class ShardsController:
         try:
             with open(path_source_code, 'r') as file:
                 source_code = file.read()
-        except:
-            raise Exception
-        compiled_contract = compile_source(source_code, output_values=['abi', 'bin'])
-        contract_id, contract_interface = compiled_contract.popitem()
-        abi = contract_interface['abi']
-        invoke_onchain = OnChainController()
-        valid_address = (invoke_onchain.is_valid_address(shard, smart_contract_address))
-        if valid_address:
-            w3 = Web3(Web3.HTTPProvider(shard))
-            contract = w3.eth.contract(address=smart_contract_address, abi=abi)
-            functions = contract.all_functions()
-            cli_functions = []
-            for i in range(0, len(functions)):
-                function = str(functions[i]).replace('<Function', '').replace('>', '')
-                cli_functions.append(function)
-            function_names = []
-            sep = '('
-            for i in range(0, len(cli_functions)):
-                stripped = cli_functions[i].split(sep, 1)[0].replace(' ', '')
-                function_names.append(stripped)
-            return cli_functions, contract, function_names, w3
+            compiled_contract = compile_source(source_code, output_values=['abi', 'bin'])
+            contract_id, contract_interface = compiled_contract.popitem()
+            abi = contract_interface['abi']
+            invoke_onchain = OnChainController()
+            valid_address = (invoke_onchain.is_valid_address(shard, smart_contract_address))
+            if valid_address:
+                w3 = Web3(Web3.HTTPProvider(shard))
+                contract = w3.eth.contract(address=smart_contract_address, abi=abi)
+                functions = contract.all_functions()
+                cli_functions = []
+                for i in range(0, len(functions)):
+                    function = str(functions[i]).replace('<Function', '').replace('>', '')
+                    cli_functions.append(function)
+                function_names = []
+                sep = '('
+                for i in range(0, len(cli_functions)):
+                    stripped = cli_functions[i].split(sep, 1)[0].replace(' ', '')
+                    function_names.append(stripped)
+                return cli_functions, contract, function_names, w3
+        except Exception as ex:
+            raise ex
 
     def call_function(self, function_name, i, attributes, contract, my_wallet):
         """
@@ -155,19 +151,6 @@ class ShardsController:
             print(e)
             return -3
 
-    # not used
-    def by_abi(self, smart_contract_address, abi):
-        invoke_onchain = OnChainController()
-        w3 = Web3(HTTPProvider(invoke_onchain.get_shard(smart_contract_address)))
-        if w3 != 'contract not deployed':
-            contract = w3.eth.contract(address=smart_contract_address, abi=abi)
-            functions = contract.all_functions()
-            cli_functions = []
-            for i in range(0, len(functions)):
-                function = str(functions[i]).replace('<Function', '').replace('>', '')
-                cli_functions.append(function)
-            return cli_functions, contract, functions
-
     def balance_load(self):
         """
         Balances the load of the blockchain
@@ -191,5 +174,5 @@ class ShardsController:
                 elif shards[shards_name[i]] < shards[shards_name[i - 1]]:
                     chosen_shard = shards_providers[i]
             return chosen_shard
-        except:
-            print("Error Occurred")
+        except Exception as ex:
+            raise ex
