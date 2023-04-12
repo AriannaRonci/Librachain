@@ -1,0 +1,7 @@
+Domande per Spal:
+- diverse osservazioni sul lock del login
+- forzare vs suggerire cambio password dopo tot mesi 
+- tempo di obsolescenza password
+- timestamp in chiaro è sicuro nel db
+- bloccare utente dopo molti deploy e invocazioni si/no?
+- chiave privata per transazioni
