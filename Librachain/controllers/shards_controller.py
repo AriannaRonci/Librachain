@@ -49,7 +49,9 @@ class ShardsController:
         :param gas_limit: gas limit of the smart contract to deploy
         :param gas_price: gas price of the smart contract to deploy
         :param wallet: wallet of the user
-        :return: contract address if the try does not fail
+        :return:
+            - contract address if the try does not fail
+            - name of the choosed shard
         """
         try:
             my_contract, w3 = self.create_contract(smart_contract_path)
@@ -89,17 +91,17 @@ class ShardsController:
             return -1
         except:
             return -2
-
-    #cambia
     def smart_contract_methods_by_sourcecode(self, shard, smart_contract_address, path_source_code):
         """
         Retrieves smart contract methods
+        :param shard: shard name
         :param smart_contract_address: address of the deployed smart contract
         :param path_source_code: path of the source code of the smart contract
         :return: if try does not fail
             - cli_functions: array of functions with params
             - contract: contract object built
-            - function_names: array of the name of the functions
+            - function_names: array of the name of the function
+            - w3 provider
         """
         try:
             with open(path_source_code, 'r') as file:
@@ -128,13 +130,13 @@ class ShardsController:
 
     def call_function(self, function_name, i, attributes, contract, my_wallet):
         """
-
-        :param function_name:
-        :param i:
-        :param attributes:
-        :param contract:
-        :param my_wallet:
-        :return:
+        calls or transacts the function chosen by the user
+        :param function_name: name of the chosen function
+        :param i: index of the chosen function
+        :param attributes: chosen attributes by the user
+        :param contract: built contract by souce code and address
+        :param my_wallet: wallet of the user
+        :return: return of the called function
         """
         try:
             calling_function = getattr(contract.functions, function_name)
