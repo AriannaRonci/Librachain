@@ -3,4 +3,3 @@ web3
 py-solc-x
 cryptography
 pyyaml
-solidity_parser
