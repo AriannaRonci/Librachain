@@ -5,3 +5,5 @@ Domande per Spal:
 - timestamp in chiaro è sicuro nel db
 - bloccare utente dopo molti deploy e invocazioni si/no?
 - chiave privata per transazioni
+- cosa si aspetta dai test statici e dinamici
+
