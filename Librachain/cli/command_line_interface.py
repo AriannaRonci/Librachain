@@ -66,11 +66,10 @@ class CommandLineInterface:
     def register_menu(self):
         print('Enter your wallet information.')
         public_key = input('Public Key: ')
-
         private_key = input('Private Key: ')
         # private_key = getpass.getpass('Private Key: ')
-        check_private_key = input('Confirm Private Key: ', )
-        # check_private_key = getpass.getpass('Confirm Private Key: ', )
+        check_private_key = input('Confirm Private Key: ')
+        # check_private_key = getpass.getpass('Confirm Private Key: ')
 
         try:
             priv_key_bytes = decode_hex(private_key)
@@ -88,16 +87,14 @@ class CommandLineInterface:
             username = input('Username: ')
 
             while True:
-                # password = getpass.getpass('Password: ')
-                # check_password = getpass.getpass('Confirm Passoword: ')
-                password = input('Password: ')
-                check_password = input('Confirm Password: ')
+                password = getpass.getpass('Password: ')
+                check_password = getpass.getpass('Confirm Passoword: ')
 
                 if not re.fullmatch(r'(?=.*?\d)(?=.*?[A-Z])(?=.*?[a-z])[A-Za-z0-9@#$%^&+=]{10,255}', password):
                     print('Password must contains at least 10 symbols, at least one digit, at least one uppercase '
-                          'letter, at least one lowercase letter\n')
+                          'letter, at least one lowercase letter.\n')
                 elif password != check_password:
-                    print('Password and confirm password do not match')
+                    print('Password and confirm password do not match.\n')
                 else:
                     break
 
@@ -105,7 +102,7 @@ class CommandLineInterface:
             if res == 0:
                 print('Registration was successful!\n')
             elif res == -1:
-                print('Username already present in the database')
+                print('Username already present in the database.\n')
             elif res == -2:
                 print('Sorry, but something went wrong!\n')
 
@@ -119,9 +116,12 @@ class CommandLineInterface:
             self.session.reset_attempts()
 
         if self.session.get_time_left_for_unlock() <= 0 and self.controller.check_number_attempts():
+            public_key = input('Public Key: ')
+            private_key = input('Private Key: ')
+            # private_key = getpass.getpass('Private Key: ')
             username = input('Username: ')
             password = getpass.getpass('Password: ')
-            res = self.controller.login(username, password)
+            res = self.controller.login(username, password, public_key, private_key)
 
             if res == 0:
                 print('\nYou are login\n')
