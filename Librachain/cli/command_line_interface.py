@@ -342,7 +342,7 @@ class CommandLineInterface:
                   'contract.\n')
             self.print_user_options()
 
-    def print_smart_contract_methods(self, list_methods):
+    def print_smart_contract_methods(self, list_methods: list):
         n = 0
         for i in list_methods:
             n = n + 1
@@ -362,7 +362,7 @@ class CommandLineInterface:
         else:
             return choice
 
-    def print_parameters_methods(self, method, web3):
+    def print_parameters_methods(self, method: str, web3: str):
         parameters = method.replace(')', '').split('(')
         p = []
         n = 0
@@ -441,7 +441,7 @@ class CommandLineInterface:
                 print('No Smart Contract delited.\n')
                 self.print_user_options()
 
-    def choose_smart_contract_to_delete(self, smart_contract):
+    def choose_smart_contract_to_delete(self, smart_contract: list):
         while True:
             try:
                 choice = int(input('Which one do you want to delete from yor local database (press 0 to exit)? '))
