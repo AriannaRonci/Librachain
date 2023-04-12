@@ -208,7 +208,7 @@ class UserRepository:
         key = base64.urlsafe_b64encode(password_hash)
         cipher_suite = Fernet(key)
         private_key = cipher_suite.decrypt(
-            encrypted_private_key.encode('utf-8'))
+            encrypted_private_key.decode('utf-8'))
         return private_key.decode('utf-8')
 
     def delete_user(self, user):
@@ -319,7 +319,7 @@ class UserRepository:
                     UPDATE Users
                     SET password_hash = ?, private_key = ?, password_edit_timestamp = ?
                     WHERE username = ?""",
-                    (password_hash, encrypted_private_key, username, str(int(time.time())))
+                    (password_hash, encrypted_private_key, str(time.time()), username)
                 )
                 self.conn.commit()
                 return 0

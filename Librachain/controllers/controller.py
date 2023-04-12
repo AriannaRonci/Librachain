@@ -14,7 +14,7 @@ class Controller:
             consecutive failed login attempts
         __locking_time: Integer, seconds the user should be locked after exceeding 
             the failed login attempts limit
-    """    
+    """
 
     def __init__(self, session: Session):
         """Initializes the class.
@@ -104,12 +104,12 @@ class Controller:
         FIX:
             -missing register check
         """
-        registering_result = self.user_repo.register_user(username, password, 
+        registering_result = self.user_repo.register_user(username, password,
                                                           public_key, private_key)
         if registering_result == 0:
             user = self.user_repo.get_user_by_username(username)
             self.session.set_user(user)
-        
+
         return registering_result
 
     def decrypt_private_key(self, encrypted_private_key: str, password: str):
@@ -143,7 +143,7 @@ class Controller:
             except:
                 return -1
         return result
-    
+
     def delete_smart_contract(self, smart_contract: SmartContract):
         """Deletes smart contract in database and model.
 

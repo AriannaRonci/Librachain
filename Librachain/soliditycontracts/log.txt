@@ -1,6 +1,6 @@
-account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Storage_list.sol;  http://localhost:8545 contract address: 0x5017A545b09ab9a30499DE7F431DF0855bCb7275
-account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Storage_list.sol;  http://localhost:8546 contract address: 0xb09bCc172050fBd4562da8b229Cf3E45Dc3045A6
-account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Storage_list.sol;  http://localhost:8547 contract address: 0xb09bCc172050fBd4562da8b229Cf3E45Dc3045A6
-account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Owner.sol;  http://localhost:8545 contract address: 0x86072CbFF48dA3C1F01824a6761A03F105BCC697
-account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Owner.sol;  http://localhost:8546 contract address: 0xFC628dd79137395F3C9744e33b1c5DE554D94882
-account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Owner.sol;  http://localhost:8547 contract address: 0xFC628dd79137395F3C9744e33b1c5DE554D94882
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Storage.sol;  http://localhost:8545 contract address: 0xD86C8F0327494034F60e25074420BcCF560D5610
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Storage.sol;  http://localhost:8546 contract address: 0xA94B7f0465E98609391C623d0560C5720a3f2D33
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Storage.sol;  http://localhost:8547 contract address: 0xA94B7f0465E98609391C623d0560C5720a3f2D33
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Owner.sol;  http://localhost:8545 contract address: 0x4bf749ec68270027C5910220CEAB30Cc284c7BA2
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Owner.sol;  http://localhost:8546 contract address: 0x6eD79Aa1c71FD7BdBC515EfdA3Bd4e26394435cC
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Owner.sol;  http://localhost:8547 contract address: 0x6eD79Aa1c71FD7BdBC515EfdA3Bd4e26394435cC
