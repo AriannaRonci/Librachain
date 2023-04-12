@@ -1,4 +1,5 @@
 import os
+import time
 import sqlite3
 import base64
 import hashlib
@@ -37,6 +38,9 @@ class UserRepository:
         self.p_param = 1
         self.dklen_param = 64
 
+        # 3 months in seconds
+        self.pw_obsolescence_time = 60*60*24*30
+
     def _create_table_if_not_exists(self):
         """Creates the user table in the db if it doesn't exist already"""
 
@@ -46,7 +50,9 @@ class UserRepository:
                 username TEXT NOT NULL UNIQUE,
                 password_hash TEXT NOT NULL,
                 public_key TEXT NOT NULL,
-                private_key TEXT NOT NULL );
+                private_key TEXT NOT NULL,
+                password_edit_timestamp TEXT NOT NULL
+            )
         """)
         self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS SmartContracts(
@@ -57,7 +63,7 @@ class UserRepository:
                 user_id INTEGER,
                 FOREIGN KEY (user_id) REFERENCES Users (id),
                 UNIQUE(address, shard)
-        )
+            )
         """)
         self.conn.commit()
 
@@ -111,7 +117,8 @@ class UserRepository:
         if res is not None:
             user_attr = res.fetchone()
             deployed_smart_contracts = self.get_user_smart_contracts(user_attr[0])
-            user = User(user_attr[0], user_attr[1], user_attr[2], user_attr[3], user_attr[4], deployed_smart_contracts)
+            user = User(user_attr[0], user_attr[1], user_attr[2],
+                        user_attr[3],user_attr[4], deployed_smart_contracts)
             return user
 
         return None
@@ -137,9 +144,9 @@ class UserRepository:
             hashed_password = self.hash_password(password)
             self.cursor.execute("""
                 INSERT INTO Users
-                (username, password_hash, public_key, private_key)
-                VALUES (?, ?, ?, ?)""",
-                                (username, hashed_password, public_key, encrypted_private_key)
+                (username, password_hash, public_key, private_key, password_edit_timestamp)
+                VALUES (?, ?, ?, ?, ?)""",
+                (username, hashed_password, public_key, encrypted_private_key, str(time.time()))
                                 )
             self.conn.commit()
             return 0
@@ -281,6 +288,58 @@ class UserRepository:
             return -1
         except Exception:
             return -2
+
+    def change_password(self, username, new_password, old_password):
+        """Change user password in db.
+
+        The private key ciphertext is recalculated again using the new password.
+        Record's password_edit_timestamp is updated to current timestamp.
+
+        Args:
+            username: 
+            new_password:
+            old_password:
+        Returns:
+             0: succesfully changed password
+            -1: user entry not found in db
+        Raises:
+            The exception raised by the db when runnin the query
+
+        TODO: missing args
+        """
+
+        user = self.get_user_by_username(username)
+        if user is not None:
+            password_hash = self.hash_password(new_password)
+            private_key = self.decrypt_private_key(user.get_private_key(), old_password)
+            encrypted_private_key = self.encrypt_private_key(private_key, new_password)
+
+            try:
+                self.cursor.execute("""
+                    UPDATE Users
+                    SET password_hash = ?, private_key = ?, password_edit_timestamp = ?
+                    WHERE username = ?""",
+                    (password_hash, encrypted_private_key, username, str(time.time()))
+                )
+                self.conn.commit()
+                return 0
+            except Exception as ex:
+                raise ex
+        else:
+            return -1
+
+    def is_password_obsolete(self, username):
+        try:
+            password_edit_timestamp = int(self.cursor.execute("""
+                SELECT password_edit_timestamp FROM Users
+                WHERE username = ?""", (username,)).fetchone()[0])
+
+            if time.time() - password_edit_timestamp >= self.pw_obsolescence_time:
+                return True
+            return False
+        except Exception as ex:
+            raise ex
+
 
     # def get_latest_timestamp(self):
     #    pass
