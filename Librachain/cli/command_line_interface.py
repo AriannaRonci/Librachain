@@ -242,6 +242,7 @@ class CommandLineInterface:
                         else:
                             print('Deployement successful\n')
                             print(f'Contract deployed at address: {str(res)}.\n')
+                            print(f'Shard address: {str(shard)}.\n')
                             self.controller.insert_smart_contract(smart_contract_name, res, shard,
                                                                   self.session.get_user())
                             self.print_user_options()
