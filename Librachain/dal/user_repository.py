@@ -281,7 +281,7 @@ class UserRepository:
 
     def delete_deployed_smart_contract(self, smart_contract: SmartContract):
         try:
-            self.cursor.execute("DELETE FROM SmartContracts WHERE id=?", (smart_contract.get_id()))
+            self.cursor.execute("DELETE FROM SmartContracts WHERE id=?", (smart_contract.get_id(),))
             self.conn.commit()
             return 0
         except sqlite3.OperationalError:
@@ -319,7 +319,7 @@ class UserRepository:
                     UPDATE Users
                     SET password_hash = ?, private_key = ?, password_edit_timestamp = ?
                     WHERE username = ?""",
-                    (password_hash, encrypted_private_key, username, str(time.time()))
+                    (password_hash, encrypted_private_key, username, str(int(time.time())))
                 )
                 self.conn.commit()
                 return 0
@@ -334,12 +334,22 @@ class UserRepository:
                 SELECT password_edit_timestamp FROM Users
                 WHERE username = ?""", (username,)).fetchone()[0])
 
-            if time.time() - password_edit_timestamp >= self.pw_obsolescence_time:
+            if int(time.time()) - password_edit_timestamp >= self.pw_obsolescence_time:
                 return True
             return False
         except Exception as ex:
             raise ex
 
+    def check_keys(self, username, password, public_key, private_key):
+        user = self.get_user_by_username(username)
+        if (
+            user is not None and self.check_password(username, password) and
+            user.get_public_key() == public_key and
+            user.get_private_key() == self.encrypt_private_key(private_key, password)
+        ):
+            return True
+        else:
+            return False
 
     # def get_latest_timestamp(self):
     #    pass

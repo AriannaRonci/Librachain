@@ -46,7 +46,7 @@ class Controller:
                 -1: wrong credentials
                 -2: number of login attempts exceeded
         """
-        if self.check_number_attempts() and self.user_repo.check_password(username, password):
+        if (self.check_number_attempts() and self.user_repo.check_keys(username, password, public_key, private_key)):
             user = self.user_repo.get_user_by_username(username)
             self.session.set_user(user)
             return 0
@@ -161,4 +161,7 @@ class Controller:
             self.user_repo.change_password(username, new_password, old_password)
 
     def check_password_obsolete(self, username):
-        return self.user_repo.is_password_obsolete(username)
+        try:
+            return self.user_repo.is_password_obsolete(username)
+        except Exception as ex:
+            raise ex
