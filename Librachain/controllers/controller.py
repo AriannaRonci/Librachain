@@ -27,7 +27,7 @@ class Controller:
         self.__max_login_attempts = 5
         self.__locking_time = 300
 
-    def login(self, username: str, password: str):
+    def login(self, username: str, password: str, public_key: str, private_key: str):
         """Handles login logic. 
 
         Calls the user_repository methods to check if supplied credentials are 

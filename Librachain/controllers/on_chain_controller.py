@@ -33,5 +33,8 @@ class OnChainController:
         return result
 
     def is_valid_address(self, shard, shard_address):
-        result = self.on_chain.functions.isValidAddress(shard, shard_address).call()
-        return result
+        try:
+            result = self.on_chain.functions.isValidAddress(shard, shard_address).call()
+            return result
+        except Exception as ex:
+            raise ex
