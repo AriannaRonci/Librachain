@@ -309,28 +309,34 @@ class CommandLineInterface:
             else:
                 parameters = self.print_parameters_methods(list_methods[choice - 1], web3)
                 if parameters != -1:
-                    invoked_function = 'The function you wish to invoke is:'
-                    invoked_function += str(functions[choice-1]+'(')
+                    invoked_function = 'The function you wish to invoke is: '
+                    invoked_function += str(functions[choice - 1] + '(')
                     for i in range(0, len(parameters)):
                         invoked_function += str(parameters[i])
-                        if i == len(parameters)-1:
+                        if i == len(parameters) - 1:
                             invoked_function += ')'
                         else:
                             invoked_function += ','
                     print(invoked_function)
-                    answer = input('Would you like to continue? (yes/no)')
-                    if answer == 'yes':
-                        res = self.shards_controller.call_function(functions[choice - 1], choice - 1, parameters, contract,
-                                                               self.session.get_user().get_public_key())
-                        if res == -1:
-                            print('The specified address is not valid.\n')
-                        elif res == -2:
-                            print('Function invocation failed due to no matching argument types.\n')
-                        elif res == -3:
-                            print('Some error occurred.\n')
-                        else:
-                            print(f'Result: {str(res)}.\n')
+                    while True:
+                        answer = input('Would you like to continue? (Y/N)')
+                        if answer == 'y' or answer == 'Y':
+                            res = self.shards_controller.call_function(functions[choice - 1], choice - 1, parameters,
+                                                                   contract, self.session.get_user().get_public_key())
+                            if res == -1:
+                                print('The specified address is not valid.\n')
+                            elif res == -2:
+                                print('Function invocation failed due to no matching argument types.\n')
+                            elif res == -3:
+                                print('Some error occurred.\n')
+                            else:
+                                print(f'Result: {str(res)}.\n')
+                                self.print_user_options()
+                            break
+                        elif answer == 'n' or answer == 'N':
+                            print("Execution reverted")
                             self.print_user_options()
+                            break
                 else:
                     print("Execution reverted due to wrong parameters")
                     self.print_user_options()
@@ -403,8 +409,6 @@ class CommandLineInterface:
                                 casted_list.append(web3.to_bytes(text=list[i]))
                             p.append(casted_list)
                     return p
-                    if str(i).__contains__('mapping'):
-                        pass
                 except:
                     return -1
 
