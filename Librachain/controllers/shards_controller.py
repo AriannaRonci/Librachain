@@ -42,7 +42,7 @@ class ShardsController:
         except Exception:
             raise Exception
 
-    def deploy_smart_contract(self, smart_contract_path, gas_limit, gas_price, wallet):
+    def deploy_smart_contract(self, smart_contract_path, gas_limit, gas_price, wallet): #private_key
         """
         Deployes a smart contract
         :param smart_contract_path: path of the source code of the smart contract
@@ -55,6 +55,13 @@ class ShardsController:
         """
         try:
             my_contract, w3 = self.create_contract(smart_contract_path)
+            """
+            tx = my_contract.constructor().build_transaction({'gasPrice': gas_price,
+                                                              'gasLimit': gas_limit,
+                                                              'from': wallet})
+            signed_tx = w3.account.sign_transaction(tx, private_key=private_key)
+            receipt = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
+            """
             tx_hash = my_contract.constructor().transact({'gasPrice': gas_price,
                                                           'gasLimit': gas_limit,
                                                           'from': wallet})

@@ -4,3 +4,4 @@ Domande per Spal:
 - tempo di obsolescenza password
 - timestamp in chiaro è sicuro nel db
 - bloccare utente dopo molti deploy e invocazioni si/no?
+- chiave privata per transazioni
