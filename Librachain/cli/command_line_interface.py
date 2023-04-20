@@ -2,7 +2,7 @@ import os
 import re
 
 from colorama import Fore, Style
-from eth_utils import is_address, decode_hex
+from eth_utils import is_address, decode_hex, ValidationError
 from web3.exceptions import ContractLogicError, InvalidAddress
 
 from controllers.controller import Controller
@@ -118,8 +118,8 @@ class CommandLineInterface:
             self.session.reset_attempts()
 
         if self.session.get_time_left_for_unlock() <= 0 and self.controller.check_number_attempts():
-            #public_key = input('Public Key: ')
-            #private_key = input('Private Key: ')
+            public_key = input('Public Key: ')
+            private_key = input('Private Key: ')
             # private_key = getpass.getpass('Private Key: ')
             username = input('Username: ')
             password = getpass.getpass('Password: ')
@@ -128,15 +128,16 @@ class CommandLineInterface:
 
             if res == 0:
                 print('\nYou are logged in.\n')
-                if self.controller.check_password(username, password):
-                    if self.controller.check_password_obsolete(username):
-                        res= self.suggest_change_password(username)
-                        if res == 0:
-                            print('Password succesfully changed.\n')
-                            self.print_user_options()
-                        elif res == -1:
-                            print('Password not changed.\n')
-                            self.print_user_options()
+                self.print_user_options()
+                return
+                #if self.controller.check_password_obsolete(username):
+                    #res= self.suggest_change_password(username)
+                    #if res == 0:
+                        #print('Password succesfully changed.\n')
+                        #self.print_user_options()
+                   #elif res == -1:
+                        #print('Password not changed.\n')
+                        #self.print_user_options()
 
             elif res == -1:
                 print('\nIncorrect username or password\n')
@@ -329,14 +330,19 @@ class CommandLineInterface:
                     break
 
             while True:
-                shard = input('Enter shard address:')
                 smart_contract_address = input('Enter smart contact address:')
-                if is_address(smart_contract_address) and (shard in self.shards_controller.get_shards()):
+                if is_address(smart_contract_address):
                     break
-                if not (is_address(smart_contract_address)) and (shard in self.shards_controller.get_shards()):
-                    print('Invalid smart contract address.\n')
-                elif not (is_address(smart_contract_address)) and (shard not in self.shards_controller.get_shards()):
-                    print('Invalid smart contract address and shard address.\n')
+                elif not (is_address(smart_contract_address)):
+                    print('Invalid smart contract address. Retry.\n')
+
+            while True:
+                shard = input('Enter shard address:')
+                if shard in self.shards_controller.get_shards():
+                    break
+                elif shard not in self.shards_controller.get_shards():
+                    print('Invalid shard address. Retry.\n')
+
             try:
                 list_methods, contract, functions, web3 = self.shards_controller.smart_contract_methods_by_sourcecode(
                     shard,
@@ -354,12 +360,16 @@ class CommandLineInterface:
                 if parameters != -1:
                     invoked_function = ''
                     invoked_function += str(functions[choice-1]+'(')
-                    for i in range(0, len(parameters)):
-                        invoked_function += str(parameters[i])
-                        if i == len(parameters)-1:
-                            invoked_function += ')'
-                        else:
-                            invoked_function += ','
+                    if len(parameters) == 0:
+                        invoked_function += ')'
+                    else:
+                        for i in range(0, len(parameters)):
+                            invoked_function += str(parameters[i])
+                            if i == len(parameters)-1:
+                                invoked_function += ')'
+                            else:
+                                invoked_function += ','
+
                     if contract.abi[choice - 1]['stateMutability'] == 'view':
                         print('The function you wish to invoke is: ' + Fore.BLUE + str(invoked_function)
                               + Style.RESET_ALL)
@@ -376,11 +386,11 @@ class CommandLineInterface:
                                 print(f'Result: {str(res)}.\n')
                                 self.print_user_options()
                             if answer == 'N' or answer == 'n':
-                                print('Execution Reverted.')
+                                print('Execution Reverted.\n')
                                 self.print_user_options()
                         except InvalidAddress:
                             print('The specified address is not valid.\n')
-                        except web3.exceptions.ValidationError:
+                        except ValidationError:
                             print('Function invocation failed due to no matching argument types.\n')
                         except Exception:
                             print('An unknown error occurred.\n')
@@ -404,23 +414,21 @@ class CommandLineInterface:
         while True:
             try:
                 choice = int(input('Which of these methods do you want to invoke (press 0 to exit)? '))
-                break
+                if choice < 0 or choice > n:
+                    print('No option correspond to your choice. Retry.\n')
+                elif choice == 0:
+                    return 0
+                else:
+                    return choice
             except ValueError:
-                print('Wrong input. Please enter a number ...\n')
-
-        if choice < 0 or choice > n:
-            print('No option correspond to your choice. Retry.\n')
-        elif choice == 0:
-            return 0
-        else:
-            return choice
+                print(f'Wrong input. Please enter a number between 1 and {str(n)}.\n')
 
     def print_parameters_methods(self, method: str, web3: str):
         parameters = method.replace(')', '').split('(')
         p = []
         n = 0
         parameters.pop(0)
-        if len(parameters) > 0:
+        if parameters != ['']:
             for i in parameters:
                 try:
                     n = n + 1
@@ -462,6 +470,8 @@ class CommandLineInterface:
                     return p
                 except:
                     return -1
+        else:
+            return p
 
     def print_smart_contract_deployed(self):
         smart_contract = self.session.get_user().get_smart_contracts()

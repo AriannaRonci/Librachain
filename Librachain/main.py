@@ -1,3 +1,5 @@
+from colorama import Fore, Style
+
 from cli.command_line_interface import CommandLineInterface
 from session.session import Session
 
