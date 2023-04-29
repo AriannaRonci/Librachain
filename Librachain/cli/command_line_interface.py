@@ -394,7 +394,7 @@ class CommandLineInterface:
                         except Exception:
                             print('An unknown error occurred.\n')
                 else:
-                    print("Execution reverted due to wrong parameters")
+                    print("Execution reverted due to wrong parameters.\n")
                     self.print_user_options()
         else:
             print('\nIncorrect password.\n Sorry but you can\'t proceed with invocation of a method of a smart '
