@@ -46,7 +46,8 @@ class Controller:
                 -1: wrong credentials
                 -2: number of login attempts exceeded
         """
-        if (self.check_number_attempts() and self.user_repo.check_keys(username, password, public_key, private_key)):
+        #NOT YET IN PRODUCTION: and self.user_repo.check_keys(username, password, public_key, private_key)):
+        if self.check_number_attempts():
             user = self.user_repo.get_user_by_username(username)
             self.session.set_user(user)
             return 0
