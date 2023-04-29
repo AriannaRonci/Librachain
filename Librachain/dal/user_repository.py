@@ -146,8 +146,14 @@ class UserRepository:
                 INSERT INTO Users
                 (username, password_hash, public_key, private_key, password_edit_timestamp)
                 VALUES (?, ?, ?, ?, ?)""",
-                (username, hashed_password, public_key, encrypted_private_key, str(time.time()))
-                                )
+                (
+                    username,
+                    hashed_password,
+                    public_key,
+                    encrypted_private_key,
+                    self.fernet_encrypt(str(time.time()), password)
+                )   
+            )
             self.conn.commit()
             return 0
         except sqlite3.IntegrityError:
@@ -177,6 +183,20 @@ class UserRepository:
         password_hash = f"{digest.hex()}${salt.hex()}${self.n_param}${self.r_param}${self.p_param}${self.dklen_param}"
         return password_hash
 
+    def fernet_encrypt(self, plaintext: str, password: str):
+        password_hash = hashlib.sha256(password.encode('utf-8')).digest()
+        key = base64.urlsafe_b64encode(password_hash)
+        cipher_suite = Fernet(key)
+        ciphertext = cipher_suite.encrypt(plaintext.encode('utf-8'))
+        return ciphertext 
+
+    def fernet_decrypt(self, ciphertext, password: str):
+        password_hash = hashlib.sha256(password.encode('utf-8')).digest()
+        key = base64.urlsafe_b64encode(password_hash)
+        cipher_suite = Fernet(key)
+        plaintext = cipher_suite.decrypt(ciphertext.decode('utf-8'))
+        return plaintext.decode('utf-8')
+
     def encrypt_private_key(self, private_key: str, password: str):
         """Encrypts the supplied private key.
         The password is hashed with sha256 and used as key for the private key
@@ -187,12 +207,7 @@ class UserRepository:
         Returns:
             a string containing encrypted private key.
         """
-        password_hash = hashlib.sha256(password.encode('utf-8')).digest()
-        key = base64.urlsafe_b64encode(password_hash)
-        cipher_suite = Fernet(key)
-        encrypted_private_key = cipher_suite.encrypt(
-            private_key.encode('utf-8'))
-        return encrypted_private_key
+        return self.fernet_encrypt(private_key, password)
 
     def decrypt_private_key(self, encrypted_private_key, password):
         """Decrypts the supplied private key.
@@ -204,12 +219,7 @@ class UserRepository:
         Returns:
             A string containing the decrypted private key.
         """
-        password_hash = hashlib.sha256(password.encode('utf-8')).digest()
-        key = base64.urlsafe_b64encode(password_hash)
-        cipher_suite = Fernet(key)
-        private_key = cipher_suite.decrypt(
-            encrypted_private_key.decode('utf-8'))
-        return private_key.decode('utf-8')
+        return self.fernet_decrypt(encrypted_private_key, password)
 
     def delete_user(self, user):
         """Deletes the supplied user from the database.
@@ -328,12 +338,14 @@ class UserRepository:
         else:
             return -1
 
-    def is_password_obsolete(self, username):
-        try:
-            password_edit_timestamp = int(self.cursor.execute("""
-                SELECT password_edit_timestamp FROM Users
-                WHERE username = ?""", (username,)).fetchone()[0])
 
+    def is_password_obsolete(self, username, password):
+        try:
+            password_edit_timestamp = self.cursor.execute("""
+                SELECT password_edit_timestamp FROM Users
+                WHERE username = ?""", (username,)).fetchone()[0]
+
+            password_edit_timestamp = float(self.fernet_decrypt(password_edit_timestamp, password))
             if int(time.time()) - password_edit_timestamp >= self.pw_obsolescence_time:
                 return True
             return False
@@ -350,9 +362,3 @@ class UserRepository:
             return True
         else:
             return False
-
-    # def get_latest_timestamp(self):
-    #    pass
-
-    # def set_latest_timestamp(self):
-    #    pass
