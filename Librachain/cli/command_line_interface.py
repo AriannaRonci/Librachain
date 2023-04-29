@@ -237,28 +237,8 @@ class CommandLineInterface:
                 if file_path:
                     break
 
-            smart_contract_name = input('Smart Contract Name: ')
-
-            while True:
-                try:
-                    gas_limit = int(input('Gas limit: '))
-                    break
-                except ValueError:
-                    print('Wrong input. Please enter a number ...\n')
-
-            while True:
-                try:
-                    gas_price = int(input('Gas price: '))
-                    break
-                except ValueError:
-                    print('Wrong input. Please enter a number ...\n')
-
-            estemate_cost = self.shards_controller.estimate(file_path, gas_limit, gas_price,
-                                                            self.session.get_user().get_public_key())
+            estemate_cost = self.shards_controller.estimate(file_path, self.session.get_user().get_public_key())
             if estemate_cost == -1:
-                print('Your gas limit is too low.\n')
-                self.print_user_options()
-            elif estemate_cost == -2:
                 print('An unknown error occurred.\n')
                 self.print_user_options()
             else:
@@ -266,12 +246,29 @@ class CommandLineInterface:
                 while True:
                     print('Do you want proceed with the deploy (Y/N)?')
                     response = input('')
+
                     if response == 'Y' or response == 'y':
+                        smart_contract_name = input('Smart Contract Name: ')
+
+                        while True:
+                            try:
+                                gas_limit = int(input('Gas limit: '))
+                                break
+                            except ValueError:
+                                print('Wrong input. Please enter a number ...\n')
+
+                        while True:
+                            try:
+                                gas_price = int(input('Gas price: '))
+                                break
+                            except ValueError:
+                                print('Wrong input. Please enter a number ...\n')
+
                         try:
                             res, shard = self.shards_controller.deploy_smart_contract(file_path, gas_limit, gas_price,
                                                                                   self.session.get_user().get_public_key())
                         except ContractLogicError:
-                            print('Your Smart Conract has genereted logic error.\n')
+                            print('Your Smart Contract has genereted logic error.\n')
                             self.print_user_options()
                             return
                         except Exception:
