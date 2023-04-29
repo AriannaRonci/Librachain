@@ -58,7 +58,7 @@ class ShardsController:
             my_contract, w3 = self.create_contract(smart_contract_path)
             tx = my_contract.constructor().build_transaction({
                                                      'gasPrice': int(gas_price),
-                                                     'gasLimit': int(gas_limit),
+                                                     'gas': int(gas_limit),
                                                      'from': wallet,
                                                      'nonce': w3.eth.get_transaction_count(wallet)
                                                      })
@@ -82,21 +82,19 @@ class ShardsController:
         except Exception as ex:
             raise ex
 
-    def estimate(self, smart_contract_path, gas_limit, gas_price, wallet):
+    def estimate(self, smart_contract_path, gas_limit, gas_price):
         """
         Estimates the gas used for a certain transaction
         :param smart_contract_path: path of the source code of the smart contract
         :param gas_limit: gas limit of the transaction
         :param gas_price: gas price of the transaction
-        :param wallet: wallet of the user
         :return: the amount of gas estimated if the try does not fail
         """
         my_contract, w3 = self.create_contract(smart_contract_path)
         try:
             tx = my_contract.constructor().build_transaction({
                 'gasPrice': gas_price,
-                'gasLimit': gas_limit,
-                'from': wallet
+                'gas': gas_limit
             })
             gas = w3.eth.estimate_gas(tx)
             return gas
