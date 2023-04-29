@@ -3,8 +3,11 @@ import web3.exceptions
 from web3 import Web3, HTTPProvider
 from web3.exceptions import ContractLogicError, InvalidAddress
 
+
 from controllers.on_chain_controller import OnChainController
 from solcx import compile_source
+
+from dal.user_repository import UserRepository
 
 solcx.install_solc('0.6.0')
 
@@ -14,8 +17,10 @@ class ShardsController:
     ShardsController manages the interaction between shards, user and On-Chain-Controller
     """
 
-    def __init__(self):
+    def __init__(self, session):
         self.__shards = ['http://localhost:8545', 'http://localhost:8546', 'http://localhost:8547']
+        self.session = session
+        self.user_repo = UserRepository()
 
     def get_shards(self):
         return self.__shards
@@ -42,7 +47,7 @@ class ShardsController:
         except Exception:
             raise Exception
 
-    def deploy_smart_contract(self, smart_contract_path, gas_limit, gas_price, wallet, private_key):
+    def deploy_smart_contract(self, smart_contract_path, gas_limit, gas_price, wallet, password):
         """
         Deployes a smart contract
         :param private_key: private key of user
@@ -63,6 +68,7 @@ class ShardsController:
                                                      'nonce': w3.eth.get_transaction_count(wallet)
                                                      })
             #print(w3.eth.estimateGas(tx))
+            private_key = self.user_repo.decrypt_private_key(self.session.get_user().get_private_key(), password)
             signed_tx = w3.eth.account.sign_transaction(tx, private_key=private_key)
             raw_tx = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
             """
@@ -74,8 +80,7 @@ class ShardsController:
             receipt = w3.eth.wait_for_transaction_receipt(raw_tx)
             invoke_onchain = OnChainController()
             shard = self.balance_load().provider.endpoint_uri
-            invoke_onchain.add_to_dictionary(shard, receipt['contractAddress'],
-                                             wallet)
+            invoke_onchain.add_to_dictionary(shard, receipt['contractAddress'], wallet)
             return receipt['contractAddress'], self.balance_load().provider.endpoint_uri
         except ContractLogicError as cle:
             raise cle
@@ -140,9 +145,11 @@ class ShardsController:
         except Exception as ex:
             raise ex
 
-    def call_function(self, function_name, i, attributes, contract, my_wallet):
+    def call_function(self, web3, function_name, i, attributes, contract, my_wallet, password):
         """
         calls or transacts the function chosen by the user
+        :param password:
+        :param web3:
         :param function_name: name of the chosen function
         :param i: index of the chosen function
         :param attributes: chosen attributes by the user
@@ -155,11 +162,14 @@ class ShardsController:
             if contract.abi[i]['stateMutability'] == 'view':
                 return calling_function(*attributes).call()
             else:
-                return calling_function(*attributes).transact({'from': my_wallet})
-            """
-            signed_tx = w3.eth.account.sign_transaction(tx, private_key=private_key)
-            raw_tx = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
-            """
+                tx = calling_function(*attributes).build_transaction({
+                                                     'from': my_wallet,
+                                                     'nonce': web3.eth.get_transaction_count(my_wallet)
+                })
+                private_key = self.user_repo.decrypt_private_key(self.session.get_user().get_private_key(), password)
+                signed_tx = web3.eth.account.sign_transaction(tx, private_key=private_key)
+                return web3.eth.send_raw_transaction(signed_tx.rawTransaction)
+
         except InvalidAddress as ia:
             raise ia
         except web3.exceptions.ValidationError as ve:
