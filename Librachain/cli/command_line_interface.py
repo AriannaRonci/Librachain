@@ -128,17 +128,17 @@ class CommandLineInterface:
 
             if res == 0:
                 print('\nYou are logged in.\n')
-                self.print_user_options()
-                return
-                # if self.controller.check_password_obsolete(username):
-                # res= self.suggest_change_password(username)
-                # if res == 0:
-                # print('Password succesfully changed.\n')
-                # self.print_user_options()
-                # elif res == -1:
-                # print('Password not changed.\n')
-                # self.print_user_options()
 
+                if self.controller.check_password_obsolete(username):
+                    res = self.suggest_change_password(username)
+                    if res == 0:
+                        print('Password succesfully changed.\n')
+                        self.print_user_options()
+                    elif res == -1:
+                        print('Password not changed.\n')
+                        self.print_user_options()
+                else:
+                    self.print_user_options()
             elif res == -1:
                 print('\nIncorrect username or password\n')
                 self.print_retry_exit_menu()

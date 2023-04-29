@@ -39,7 +39,7 @@ class UserRepository:
         self.dklen_param = 64
 
         # 3 months in seconds
-        self.pw_obsolescence_time = 60*60*24*30
+        self.pw_obsolescence_time = 60#60*60*24*30
 
     def _create_table_if_not_exists(self):
         """Creates the user table in the db if it doesn't exist already"""
@@ -330,7 +330,7 @@ class UserRepository:
 
     def is_password_obsolete(self, username):
         try:
-            password_edit_timestamp = int(self.cursor.execute("""
+            password_edit_timestamp = float(self.cursor.execute("""
                 SELECT password_edit_timestamp FROM Users
                 WHERE username = ?""", (username,)).fetchone()[0])
 
