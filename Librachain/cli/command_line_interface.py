@@ -58,11 +58,11 @@ class CommandLineInterface:
                 exit()
             else:
                 print('Invalid option. Please enter a number between 1 and 4.\n')
-                self.print_menu()
+                return
 
         except ValueError:
             print('Wrong input. Please enter a number ...\n')
-            self.print_menu()
+            return
 
     def register_menu(self):
         print('Enter your wallet information.')
@@ -78,7 +78,7 @@ class CommandLineInterface:
             pk = priv_key.public_key.to_checksum_address()
         except Exception:
             print('Sorry, but the specified public key and private key do not match any account.\n')
-            self.print_menu()
+            return
 
         if is_address(public_key) and (public_key == pk) and (private_key == check_private_key):
 
@@ -110,7 +110,7 @@ class CommandLineInterface:
 
         else:
             print('Sorry, but the specified public key and private key do not match any account.\n')
-            self.print_menu()
+            return
 
     def login_menu(self):
 
@@ -140,7 +140,7 @@ class CommandLineInterface:
                 else:
                     self.print_user_options()
             elif res == -1:
-                print('\nIncorrect username or password\n')
+                print('\nWrong credentials\n')
                 self.print_retry_exit_menu()
             elif res == -2:
                 print('You have reached the maximum number of login attempts')
@@ -189,7 +189,7 @@ class CommandLineInterface:
 
             elif option == 2:
                 print('\nHandle option \'Option 2: Exit\'\n')
-                self.print_menu()
+                return
             else:
                 print('Invalid option. Please enter a number between 1 and 2.\n')
                 self.print_retry_exit_menu()
@@ -219,7 +219,7 @@ class CommandLineInterface:
             elif option == 5:
                 print('\nHandle option \'Option 5: Logout.\'\n')
                 self.session.set_user(None)
-                self.print_menu()
+                return
             else:
                 print('Invalid option. Please enter a number between 1 and 4.\n')
         except ValueError:
