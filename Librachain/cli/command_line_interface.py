@@ -253,8 +253,7 @@ class CommandLineInterface:
                 except ValueError:
                     print('Wrong input. Please enter a number ...\n')
 
-            estemate_cost = self.shards_controller.estimate(file_path, gas_limit, gas_price,
-                                                            self.session.get_user().get_public_key())
+            estemate_cost = self.shards_controller.estimate(file_path, gas_limit, gas_price)
             if estemate_cost == -1:
                 print('Your gas limit is too low.\n')
                 self.print_user_options()
@@ -395,7 +394,7 @@ class CommandLineInterface:
                         except Exception:
                             print('An unknown error occurred.\n')
                 else:
-                    print("Execution reverted due to wrong parameters")
+                    print("Execution reverted due to wrong parameters.\n")
                     self.print_user_options()
         else:
             print('\nIncorrect password.\n Sorry but you can\'t proceed with invocation of a method of a smart '

@@ -42,9 +42,10 @@ class ShardsController:
         except Exception:
             raise Exception
 
-    def deploy_smart_contract(self, smart_contract_path, gas_limit, gas_price, wallet): #private_key
+    def deploy_smart_contract(self, smart_contract_path, gas_limit, gas_price, wallet, private_key):
         """
         Deployes a smart contract
+        :param private_key: private key of user
         :param smart_contract_path: path of the source code of the smart contract
         :param gas_limit: gas limit of the smart contract to deploy
         :param gas_price: gas price of the smart contract to deploy
@@ -55,17 +56,22 @@ class ShardsController:
         """
         try:
             my_contract, w3 = self.create_contract(smart_contract_path)
-            """
-            tx = my_contract.constructor().build_transaction({'gasPrice': gas_price,
-                                                              'gasLimit': gas_limit,
-                                                              'from': wallet})
-            signed_tx = w3.account.sign_transaction(tx, private_key=private_key)
-            receipt = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
+            tx = my_contract.constructor().build_transaction({
+                                                     'gasPrice': int(gas_price),
+                                                     'gas': int(gas_limit),
+                                                     'from': wallet,
+                                                     'nonce': w3.eth.get_transaction_count(wallet)
+                                                     })
+            #print(w3.eth.estimateGas(tx))
+            signed_tx = w3.eth.account.sign_transaction(tx, private_key=private_key)
+            raw_tx = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
             """
             tx_hash = my_contract.constructor().transact({'gasPrice': gas_price,
                                                           'gasLimit': gas_limit,
                                                           'from': wallet})
             receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+            """
+            receipt = w3.eth.wait_for_transaction_receipt(raw_tx)
             invoke_onchain = OnChainController()
             shard = self.balance_load().provider.endpoint_uri
             invoke_onchain.add_to_dictionary(shard, receipt['contractAddress'],
@@ -76,21 +82,19 @@ class ShardsController:
         except Exception as ex:
             raise ex
 
-    def estimate(self, smart_contract_path, gas_limit, gas_price, wallet):
+    def estimate(self, smart_contract_path, gas_limit, gas_price):
         """
         Estimates the gas used for a certain transaction
         :param smart_contract_path: path of the source code of the smart contract
         :param gas_limit: gas limit of the transaction
         :param gas_price: gas price of the transaction
-        :param wallet: wallet of the user
         :return: the amount of gas estimated if the try does not fail
         """
         my_contract, w3 = self.create_contract(smart_contract_path)
         try:
             tx = my_contract.constructor().build_transaction({
                 'gasPrice': gas_price,
-                'gasLimit': gas_limit,
-                'from': wallet
+                'gas': gas_limit
             })
             gas = w3.eth.estimate_gas(tx)
             return gas
@@ -98,6 +102,7 @@ class ShardsController:
             return -1
         except:
             return -2
+
     def smart_contract_methods_by_sourcecode(self, shard, smart_contract_address, path_source_code):
         """
         Retrieves smart contract methods
@@ -151,6 +156,10 @@ class ShardsController:
                 return calling_function(*attributes).call()
             else:
                 return calling_function(*attributes).transact({'from': my_wallet})
+            """
+            signed_tx = w3.eth.account.sign_transaction(tx, private_key=private_key)
+            raw_tx = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
+            """
         except InvalidAddress as ia:
             raise ia
         except web3.exceptions.ValidationError as ve:
