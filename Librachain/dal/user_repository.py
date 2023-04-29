@@ -114,8 +114,8 @@ class UserRepository:
             SELECT *
             FROM Users 
             WHERE username=?""", (username,))
-        if res is not None:
-            user_attr = res.fetchone()
+        user_attr = res.fetchone()
+        if user_attr is not None:
             deployed_smart_contracts = self.get_user_smart_contracts(user_attr[0])
             user = User(user_attr[0], user_attr[1], user_attr[2],
                         user_attr[3],user_attr[4], deployed_smart_contracts)
@@ -345,7 +345,7 @@ class UserRepository:
         if (
             user is not None and self.check_password(username, password) and
             user.get_public_key() == public_key and
-            user.get_private_key() == self.encrypt_private_key(private_key, password)
+            private_key == self.decrypt_private_key(user.get_private_key(), password)
         ):
             return True
         else:

@@ -124,7 +124,7 @@ class CommandLineInterface:
             username = input('Username: ')
             password = getpass.getpass('Password: ')
             #res = self.controller.login(username, password, public_key, private_key)
-            res = self.controller.login(username, password, 'public_key', 'private_key')
+            res = self.controller.login(username, password, public_key, private_key)
 
             if res == 0:
                 print('\nYou are logged in.\n')
