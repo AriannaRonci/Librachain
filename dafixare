@@ -1,0 +1,3 @@
+- se si sceglie invio o registrazione e si digitano tutti spazi viene generato un errore
+- se si scelgie una password non forte il programma si blocca
+

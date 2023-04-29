@@ -18,7 +18,7 @@ class CommandLineInterface:
     def __init__(self, session: Session):
 
         self.controller = Controller(session)
-        self.shards_controller = ShardsController()
+        self.shards_controller = ShardsController(session)
         self.session = session
 
         self.menu_options = {
@@ -123,21 +123,21 @@ class CommandLineInterface:
             # private_key = getpass.getpass('Private Key: ')
             username = input('Username: ')
             password = getpass.getpass('Password: ')
-            #res = self.controller.login(username, password, public_key, private_key)
+            # res = self.controller.login(username, password, public_key, private_key)
             res = self.controller.login(username, password, public_key, private_key)
 
             if res == 0:
                 print('\nYou are logged in.\n')
                 self.print_user_options()
                 return
-                #if self.controller.check_password_obsolete(username):
-                    #res= self.suggest_change_password(username)
-                    #if res == 0:
-                        #print('Password succesfully changed.\n')
-                        #self.print_user_options()
-                   #elif res == -1:
-                        #print('Password not changed.\n')
-                        #self.print_user_options()
+                # if self.controller.check_password_obsolete(username):
+                # res= self.suggest_change_password(username)
+                # if res == 0:
+                # print('Password succesfully changed.\n')
+                # self.print_user_options()
+                # elif res == -1:
+                # print('Password not changed.\n')
+                # self.print_user_options()
 
             elif res == -1:
                 print('\nIncorrect username or password\n')
@@ -153,7 +153,7 @@ class CommandLineInterface:
     def suggest_change_password(self, username):
         while True:
             response = input('It\'s been 3 months since your password was last changed. We suggest you change it.\n'
-                  'Do you want to change your password (Y/N)?\n')
+                             'Do you want to change your password (Y/N)?\n')
             if response == 'Y' or response == 'y':
                 old_password = getpass.getpass('Old password: ')
 
@@ -176,7 +176,6 @@ class CommandLineInterface:
                 return -1
             else:
                 print('Wrong input.\n')
-
 
     def print_retry_exit_menu(self):
         for key in self.wrong_input_options.keys():
@@ -268,7 +267,8 @@ class CommandLineInterface:
                     if response == 'Y' or response == 'y':
                         try:
                             res, shard = self.shards_controller.deploy_smart_contract(file_path, gas_limit, gas_price,
-                                                                                  self.session.get_user().get_public_key())
+                                                                                      self.session.get_user().get_public_key(),
+                                                                                      password)
                         except ContractLogicError:
                             print('Your Smart Conract has genereted logic error.\n')
                             self.print_user_options()
@@ -358,13 +358,13 @@ class CommandLineInterface:
                 parameters = self.print_parameters_methods(list_methods[choice - 1], web3)
                 if parameters != -1:
                     invoked_function = ''
-                    invoked_function += str(functions[choice-1]+'(')
+                    invoked_function += str(functions[choice - 1] + '(')
                     if len(parameters) == 0:
                         invoked_function += ')'
                     else:
                         for i in range(0, len(parameters)):
                             invoked_function += str(parameters[i])
-                            if i == len(parameters)-1:
+                            if i == len(parameters) - 1:
                                 invoked_function += ')'
                             else:
                                 invoked_function += ','
@@ -379,9 +379,10 @@ class CommandLineInterface:
                         answer = input('Would you like to continue? (Y/N)')
                         try:
                             if answer == 'Y' or answer == 'y':
-                                res = self.shards_controller.call_function(functions[choice - 1],
-                                                     choice - 1, parameters, contract,
-                                                     self.session.get_user().get_public_key())
+                                res = self.shards_controller.call_function(web3, functions[choice - 1],
+                                                                           choice - 1, parameters, contract,
+                                                                           self.session.get_user().get_public_key(),
+                                                                           password)
                                 print(f'Result: {str(res)}.\n')
                                 self.print_user_options()
                             if answer == 'N' or answer == 'n':
@@ -405,7 +406,7 @@ class CommandLineInterface:
         n = 0
         for i in list_methods:
             n = n + 1
-            if contract.abi[n-1]['stateMutability'] == 'view':
+            if contract.abi[n - 1]['stateMutability'] == 'view':
                 print(Fore.BLUE + f'{str(n)}) {str(i)}{Style.RESET_ALL}')
             else:
                 print(Fore.RED + f'{str(n)}) {str(i)}{Style.RESET_ALL}')
@@ -541,4 +542,3 @@ class CommandLineInterface:
             else:
                 break
         return list
-

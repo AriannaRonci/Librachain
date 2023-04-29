@@ -24,7 +24,7 @@ account3 = shard3.eth.accounts[0]
 accounts = [account1, account2, account3]
 
 contract1 = 'soliditycontracts/Ballot.sol'
-contract2 = 'soliditycontracts/Storage_list.sol'
+contract2 = 'soliditycontracts/Storage.sol'
 contract3 = 'soliditycontracts/ERC20.sol'
 contract4 = 'soliditycontracts/Owner.sol'
 
