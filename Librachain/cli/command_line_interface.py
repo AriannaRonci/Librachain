@@ -52,12 +52,14 @@ class CommandLineInterface:
                 self.register_menu()
             elif option == 2:
                 print('\nHandle option \'Option 2: Log in\'')
-                self.login_menu()
+                res = self.login_menu()
+                if res == 0:
+                    self.print_user_options()
             elif option == 3:
                 print('\nHandle option \'Option 3: Exit\'')
                 exit()
             else:
-                print('Invalid option. Please enter a number between 1 and 4.\n')
+                print('Invalid option. Please enter a number between 1 and 3.\n')
                 return
 
         except ValueError:
@@ -123,7 +125,6 @@ class CommandLineInterface:
             # private_key = getpass.getpass('Private Key: ')
             username = input('Username: ')
             password = getpass.getpass('Password: ')
-            # res = self.controller.login(username, password, public_key, private_key)
             res = self.controller.login(username, password, public_key, private_key)
 
             if res == 0:
@@ -131,23 +132,21 @@ class CommandLineInterface:
                 if self.controller.check_password_obsolete(username, password):
                     res = self.suggest_change_password(username)
                     if res == 0:
-                        print('Password succesfully changed.\n')
-                        self.print_user_options()
+                        print('Password successfully changed.\n')
                     elif res == -1:
                         print('Password not changed.\n')
-                        self.print_user_options()
-                else:
-                    self.print_user_options()
+                return 0
+
             elif res == -1:
                 print('\nWrong credentials\n')
                 self.print_retry_exit_menu()
             elif res == -2:
                 print('You have reached the maximum number of login attempts')
-                return
+                return -1
         else:
             print('\nYou have reached the maximum number of attempts')
             print(f'Time left until next attempt: {int(self.session.get_time_left_for_unlock())} seconds\n')
-            return
+            return -2
 
     def suggest_change_password(self, username):
         while True:
@@ -184,7 +183,9 @@ class CommandLineInterface:
             option = int(input('Enter your choice: '))
             if option == 1:
                 print('\nHandle option \'Option 1: Retry\'')
-                self.login_menu()
+                res = self.login_menu()
+                if res == 0:
+                    self.print_user_options()
 
             elif option == 2:
                 print('\nHandle option \'Option 2: Exit\'\n')
@@ -197,33 +198,32 @@ class CommandLineInterface:
             self.print_retry_exit_menu()
 
     def print_user_options(self):
-        for key in self.user_options.keys():
-            print(key, '--', self.user_options[key])
-
-        try:
-            option = int(input('Enter your choice: '))
-            if option == 1:
-                print('\nHandle option \'Option 1: Deploy Smart Contract.\'')
-                self.deploy_menu()
-            elif option == 2:
-                print('\nHandle option \'Option 2: Invoke Smart Contract\' Method.\'')
-                self.invoke_method_menu()
-            elif option == 3:
-                print('\nHandle option \'Option 3:Consult your Smart Contract in your local databese.\'\n')
-                self.print_smart_contract_deployed()
-                self.print_user_options()
-            elif option == 4:
-                print('\nHandle option \'Option 4: Delete Smart Contract from your local databese.\'\n')
-                self.delete_smart_contract_deployed()
-            elif option == 5:
-                print('\nHandle option \'Option 5: Logout.\'\n')
-                self.session.set_user(None)
-                return
-            else:
-                print('Invalid option. Please enter a number between 1 and 4.\n')
-        except ValueError:
-            print('Wrong input. Please enter a number ...\n')
-            self.print_user_options()
+        while True:
+            for key in self.user_options.keys():
+                print(key, '--', self.user_options[key])
+            try:
+                option = int(input('Enter your choice: '))
+                if option == 1:
+                    print('\nHandle option \'Option 1: Deploy Smart Contract.\'')
+                    self.deploy_menu()
+                elif option == 2:
+                    print('\nHandle option \'Option 2: Invoke Smart Contract\' Method.\'')
+                    self.invoke_method_menu()
+                elif option == 3:
+                    print(
+                        '\nHandle option \'Option 3: Consult your Smart Contract in your local databese.\'\n')
+                    self.print_smart_contract_deployed()
+                elif option == 4:
+                    print('\nHandle option \'Option 4: Delete Smart Contract from your local databese.\'\n')
+                    self.delete_smart_contract_deployed()
+                elif option == 5:
+                    print('\nHandle option \'Option 5: Logout.\'\n')
+                    self.session.set_user(None)
+                    return
+                else:
+                    print('Invalid option. Please enter a number between 1 and 5.\n')
+            except ValueError:
+                print('Wrong input. Please enter a number ...\n')
 
     def deploy_menu(self):
         print('Before proceeding with the deployment of Smart Contract it is necessary to enter the password.')
@@ -254,10 +254,10 @@ class CommandLineInterface:
             estemate_cost = self.shards_controller.estimate(file_path, gas_limit, gas_price)
             if estemate_cost == -1:
                 print('Your gas limit is too low.\n')
-                self.print_user_options()
+                return
             elif estemate_cost == -2:
                 print('An unknown error occurred.\n')
-                self.print_user_options()
+                return
             else:
                 print(f'The estimated cost to deploy the smart contract is {str(estemate_cost)}.\n')
                 while True:
@@ -270,39 +270,32 @@ class CommandLineInterface:
                                                                                       password)
                         except ContractLogicError:
                             print('Your Smart Contract has genereted logic error.\n')
-                            self.print_user_options()
                             return
                         except Exception:
                             print('An unknown error occurred.\n')
-                            self.print_user_options()
                             return
                         if res == -1:
                             print('Your gas limit is too low\n')
-                            self.print_user_options()
-                            break
+                            return
                         elif res == -2:
                             print('Deployement failed\n')
-                            self.print_user_options()
-                            break
+                            return
                         else:
                             print('Deployement was successful\n')
                             print(f'Contract deployed at address: {str(res)}.\n')
                             print(f'Shard address: {str(shard)}.\n')
                             self.controller.insert_smart_contract(smart_contract_name, res, shard,
                                                                   self.session.get_user())
-                            self.print_user_options()
-                            break
+                            return
 
                     elif response == 'N' or response == 'n':
                         print('Transaction cancelled\n')
-                        self.print_user_options()
-                        break
+                        return
                     else:
                         print('Wrong input.\n')
 
         else:
-            print('\nIncorrect password.\n Sorry but you can\'t proceed with the deployment of Smart Contract.\n')
-            self.print_user_options()
+            print('\nIncorrect password.\nSorry but you can\'t proceed with the deployment of Smart Contract.\n')
 
     def read_smart_contract(self):
         file_path = input('Enter the path of your file: ')
@@ -348,12 +341,10 @@ class CommandLineInterface:
                     file_path)
             except:
                 print('An unknown error occurred.\n')
-                self.print_user_options()
+                return
 
             choice = self.print_smart_contract_methods(list_methods, contract)
-            if choice == 0:
-                self.print_user_options()
-            else:
+            if choice != 0:
                 parameters = self.print_parameters_methods(list_methods[choice - 1], web3)
                 if parameters != -1:
                     invoked_function = ''
@@ -384,9 +375,8 @@ class CommandLineInterface:
                                                                                self.session.get_user().get_public_key(),
                                                                                password, None, None, None)
                                     print(f'Result: {str(res)}.\n')
-                                    self.print_user_options()
+                                    return
                                 else:
-
                                     while True:
                                         try:
                                             gas_limit = int(input('Gas limit (in Gwei): '))
@@ -407,7 +397,7 @@ class CommandLineInterface:
                                                                                                smart_contract_address)
                                     print('The estimated cost of your transaction is: ' + str(estimate_cost) + '\n')
 
-                                    while(True):
+                                    while True:
                                         asw = input('Would you like to continue? (Y/N)')
                                         try:
                                             if asw == 'Y' or asw == 'y':
@@ -417,18 +407,18 @@ class CommandLineInterface:
                                                                                            contract,
                                                                                            self.session.get_user().get_public_key(),
                                                                                            password, gas_price,
-                                                                                           gas_limit, smart_contract_address)
+                                                                                           gas_limit,
+                                                                                           smart_contract_address)
                                                 print(f'Result: {str(res)}.\n')
-                                                self.print_user_options()
+                                                return
                                             if asw == 'N' or asw == 'n':
                                                 print('Execution Reverted.\n')
-                                                self.print_user_options()
+                                                return
                                         except InvalidAddress:
                                             print('The specified address is not valid.\n')
                                         except ValidationError:
                                             print('Function invocation failed due to no matching argument types.\n')
-                                        except Exception as ex:
-                                            print(ex)
+                                        except Exception:
                                             print('An unknown error occurred.\n')
                             if answer == 'N' or answer == 'n':
                                 print('Execution Reverted.\n')
@@ -437,17 +427,13 @@ class CommandLineInterface:
                             print('The specified address is not valid.\n')
                         except ValidationError:
                             print('Function invocation failed due to no matching argument types.\n')
-                        except Exception as ex:
+                        except Exception:
                             print('An unknown error occurred.\n')
-                            print(ex)
-
                 else:
                     print("Execution reverted due to wrong parameters.\n")
-                    self.print_user_options()
         else:
-            print('\nIncorrect password.\n Sorry but you can\'t proceed with invocation of a method of a smart '
+            print('\nIncorrect password.\nSorry but you can\'t proceed with invocation of a method of a smart '
                   'contract.\n')
-            self.print_user_options()
 
     def print_smart_contract_methods(self, list_methods: list, contract):
         n = 0
@@ -546,55 +532,52 @@ class CommandLineInterface:
         smart_contract = self.session.get_user().get_smart_contracts()
         if len(smart_contract) == 0:
             print('No Smart Contracts deployed yet.\n')
-            self.print_user_options()
         else:
             self.print_smart_contract_deployed()
             res = self.choose_smart_contract_to_delete(smart_contract)
             if res == 0:
                 print('Successful delition.\n')
-                self.print_user_options()
             elif res == -1:
                 print('Sorry, but something went wrong with the delition!\n')
-                self.print_user_options()
             elif res == -2:
                 print('No Smart Contract delited.\n')
-                self.print_user_options()
 
     def choose_smart_contract_to_delete(self, smart_contract: list):
         while True:
             try:
                 choice = int(input('Which one do you want to delete from yor local database (press 0 to exit)? '))
-                break
             except ValueError:
                 print('Wrong input. Please enter a number ...\n')
 
-        if choice < 0 or choice >= len(smart_contract) + 1:
-            print('No option correspond to your choice. Retry.\n')
-        elif choice == 0:
-            return -2
-        else:
-            print('Smart Contract selected:')
-            print(f'Contract name: {str(smart_contract[choice - 1].get_name())}')
-            print(f'Contract address: {str(smart_contract[choice - 1].get_address())}')
-            print(f'Shard address: {str(smart_contract[choice - 1].get_shard())}\n')
-            while True:
-                print('Do you want proceed with the delition (Y/N)?')
-                response = input('')
-                if response == 'Y' or response == 'y':
-                    res = self.controller.delete_smart_contract(smart_contract[choice - 1])
-                    return res
-                elif response == 'N' or response == 'n':
-                    return -2
-                else:
-                    print('Wrong input.\n')
+            if choice < 0 or choice >= len(smart_contract) + 1:
+                print('No option correspond to your choice. Retry.\n')
+            elif choice == 0:
+                return -2
+            elif choice > 0 or choice <= len(smart_contract) + 1:
+                print('Smart Contract selected:')
+                print(f'Contract name: {str(smart_contract[choice - 1].get_name())}')
+                print(f'Contract address: {str(smart_contract[choice - 1].get_address())}')
+                print(f'Shard address: {str(smart_contract[choice - 1].get_shard())}\n')
+                break
+
+        while True:
+            print('Do you want proceed with the delition (Y/N)?')
+            response = input('')
+            if response == 'Y' or response == 'y':
+                res = self.controller.delete_smart_contract(smart_contract[choice - 1])
+                return res
+            elif response == 'N' or response == 'n':
+                return -2
+            else:
+                print('Wrong input.\n')
 
     def retrieve_list_values(self):
         print('Choose list values, press enter to stop choosing values.')
-        list = []
+        l = []
         while True:
             list_value = input('Value: ')
             if list_value != '':
-                list.append(list_value)
+                l.append(list_value)
             else:
                 break
-        return list
+        return l
