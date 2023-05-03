@@ -177,6 +177,7 @@ class ShardsController:
                 sent_tx = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
                 receipt = w3.eth.wait_for_transaction_receipt(sent_tx)
 
+                event = []
                 for i in range(0, len(contract.events._events)-1):
                     event_name = str(contract.events._events[i]['name'])
                     calling_event = getattr(contract.events, event_name)()

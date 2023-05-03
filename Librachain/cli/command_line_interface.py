@@ -414,10 +414,10 @@ class CommandLineInterface:
                                                                                            password, gas_price,
                                                                                            gas_limit, view)
                                                 print(f'Result: {str(res)}.\n')
-                                                print('Events from smart contract:\n' + Fore.LIGHTYELLOW_EX + "\n".join("{0} {1}".format(k+": ", v) for k, v in events.items())
-                                                      + Style.RESET_ALL)
+                                                if events != []:
+                                                    print('Events from smart contract:\n' + Fore.LIGHTYELLOW_EX + "\n".join("{0} {1}".format(k+": ", v) for k, v in events.items())
+                                                        + Style.RESET_ALL)
                                                 print("\n")
-                                                self.print_user_options()
                                                 return
                                             if asw == 'N' or asw == 'n':
                                                 print('Execution Reverted.\n')
