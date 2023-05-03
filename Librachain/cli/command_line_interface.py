@@ -310,6 +310,7 @@ class CommandLineInterface:
             return file_path
 
     def invoke_method_menu(self):
+        view = 0
         print('Before proceeding with the invocation of a method of a smart contract it is necessary to enter the '
               'password.')
         password = getpass.getpass('Password: ')
@@ -358,22 +359,26 @@ class CommandLineInterface:
                                 invoked_function += ')'
                             else:
                                 invoked_function += ','
+                    for i in contract.abi:
 
-                    if contract.abi[choice - 1]['stateMutability'] == 'view':
-                        print('\nThe function you wish to invoke is: ' + Fore.BLUE + str(invoked_function)
-                              + Style.RESET_ALL)
-                    else:
-                        print('\nThe function you wish to invoke is: ' + Fore.RED + str(invoked_function)
-                              + Style.RESET_ALL)
+                        if str(functions[choice-1].split('(')[0]).replace(" ", "") == str(i['name']).replace(" ", ""):
+                            if i['stateMutability'] == 'view':
+                                print('\nThe function you wish to invoke is: ' + Fore.BLUE + str(invoked_function)
+                                      + Style.RESET_ALL)
+                                view = 1
+                            else:
+                                print('\nThe function you wish to invoke is: ' + Fore.RED + str(invoked_function)
+                                      + Style.RESET_ALL)
+                                view = 0
                     while True:
                         answer = input('Would you like to continue? (Y/N)')
                         try:
                             if answer == 'Y' or answer == 'y':
-                                if contract.abi[choice - 1]['stateMutability'] == 'view':
+                                if view == 1:
                                     res = self.shards_controller.call_function(web3, functions[choice - 1],
                                                                                choice - 1, parameters, contract,
                                                                                self.session.get_user().get_public_key(),
-                                                                               password, None, None, None)
+                                                                               password, None, None, view)
                                     print(f'Result: {str(res)}.\n')
                                     return
                                 else:
@@ -401,15 +406,18 @@ class CommandLineInterface:
                                         asw = input('Would you like to continue? (Y/N)')
                                         try:
                                             if asw == 'Y' or asw == 'y':
-                                                res = self.shards_controller.call_function(web3,
+                                                res, events = self.shards_controller.call_function(web3,
                                                                                            functions[choice - 1],
                                                                                            choice - 1, parameters,
                                                                                            contract,
                                                                                            self.session.get_user().get_public_key(),
                                                                                            password, gas_price,
-                                                                                           gas_limit,
-                                                                                           smart_contract_address)
+                                                                                           gas_limit, view)
                                                 print(f'Result: {str(res)}.\n')
+                                                print('Events from smart contract:\n' + Fore.LIGHTYELLOW_EX + "\n".join("{0} {1}".format(k+": ", v) for k, v in events.items())
+                                                      + Style.RESET_ALL)
+                                                print("\n")
+                                                self.print_user_options()
                                                 return
                                             if asw == 'N' or asw == 'n':
                                                 print('Execution Reverted.\n')
@@ -437,12 +445,16 @@ class CommandLineInterface:
 
     def print_smart_contract_methods(self, list_methods: list, contract):
         n = 0
+
         for i in list_methods:
-            n = n + 1
-            if contract.abi[n - 1]['stateMutability'] == 'view':
-                print(Fore.BLUE + f'{str(n)}) {str(i)}{Style.RESET_ALL}')
-            else:
-                print(Fore.RED + f'{str(n)}) {str(i)}{Style.RESET_ALL}')
+            for j in contract.abi:
+                if str(i.split('(')[0]).replace(" ", "") == str(j['name']).replace(" ", ""):
+                    if 'stateMutability' in j:
+                        n = n+1
+                        if j['stateMutability'] == 'view':
+                            print(Fore.BLUE + f'{str(n)}) {str(i)}{Style.RESET_ALL}')
+                        else:
+                            print(Fore.RED + f'{str(n)}) {str(i)}{Style.RESET_ALL}')
 
         while True:
             try:

@@ -2,7 +2,7 @@ import solcx
 import web3.exceptions
 from web3 import Web3, HTTPProvider
 from web3.exceptions import ContractLogicError, InvalidAddress
-
+from web3.logs import DISCARD
 
 from controllers.on_chain_controller import OnChainController
 from solcx import compile_source
@@ -146,7 +146,7 @@ class ShardsController:
         except Exception as ex:
             raise ex
 
-    def call_function(self, w3, function_name, i, attributes, contract, my_wallet, password, gas_price, gas_limit, contract_address):
+    def call_function(self, w3, function_name, i, attributes, contract, my_wallet, password, gas_price, gas_limit, view):
         """
         calls or transacts the function chosen by the user
         :param gas_limit:
@@ -162,7 +162,7 @@ class ShardsController:
         """
         try:
             calling_function = getattr(contract.functions, function_name)
-            if contract.abi[i]['stateMutability'] == 'view':
+            if view == 1:
                 return calling_function(*attributes).call()
             else:
                 tx = calling_function(*attributes).build_transaction({
@@ -174,8 +174,15 @@ class ShardsController:
                 })
                 private_key = self.user_repo.decrypt_private_key(self.session.get_user().get_private_key(), password)
                 signed_tx = w3.eth.account.sign_transaction(tx, private_key=private_key)
-                return w3.eth.send_raw_transaction(signed_tx.rawTransaction)
+                sent_tx = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
+                receipt = w3.eth.wait_for_transaction_receipt(sent_tx)
 
+                for i in range(0, len(contract.events._events)-1):
+                    event_name = str(contract.events._events[i]['name'])
+                    calling_event = getattr(contract.events, event_name)()
+                    event = calling_event.process_receipt(receipt, errors=DISCARD)[0]['args']
+
+                return receipt, event
         except InvalidAddress as ia:
             raise ia
         except web3.exceptions.ValidationError as ve:

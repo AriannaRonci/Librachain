@@ -5,6 +5,10 @@ account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontract
 account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Owner.sol;  http://localhost:8546 contract address: 0xC89Ce4735882C9F0f0FE26686c53074E09B0D550
 account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Owner.sol;  http://localhost:8547 contract address: 0x254dffcd3277C0b1660F6d42EFbB754edaBAbC2B
 
+0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1
+0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+Chiaragi
+2001chiarA
 /Users/chiaragobbi/Desktop/Università/magistrale/primo anno/primo semestre/software security and block chain/progetto/swsb-project/Librachain/soliditycontracts/Events.sol
 0xe78A0F7E598Cc8b0Bb87894B0F60dD2a88d6a8Ab
 http://localhost:8547
