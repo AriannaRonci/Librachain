@@ -246,7 +246,7 @@ class CommandLineInterface:
 
             while True:
                 try:
-                    gas_price = int(input('Gas price: (in Gwei)'))
+                    gas_price = int(input('Gas price (in Gwei): '))
                     break
                 except ValueError:
                     print('Wrong input. Please enter a number ...\n')

@@ -80,7 +80,7 @@ class ShardsController:
             receipt = w3.eth.wait_for_transaction_receipt(raw_tx)
             invoke_onchain = OnChainController()
             shard = self.balance_load().provider.endpoint_uri
-            invoke_onchain.add_to_dictionary(shard, receipt['contractAddress'], wallet)
+            invoke_onchain.add_to_dictionary(shard, receipt['contractAddress'], wallet, private_key)
             return receipt['contractAddress'], self.balance_load().provider.endpoint_uri
         except ContractLogicError as cle:
             raise cle
