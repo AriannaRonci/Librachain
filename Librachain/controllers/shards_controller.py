@@ -126,11 +126,12 @@ class ShardsController:
             compiled_contract = compile_source(source_code, output_values=['abi', 'bin'])
             contract_id, contract_interface = compiled_contract.popitem()
             abi = contract_interface['abi']
+            bytecode = contract_interface['bin']
             invoke_onchain = OnChainController()
-            valid_address = (invoke_onchain.is_valid_address(shard, smart_contract_address))
+            valid_address = invoke_onchain.is_valid_address(shard, smart_contract_address)
             if valid_address:
                 w3 = Web3(Web3.HTTPProvider(shard))
-                contract = w3.eth.contract(address=smart_contract_address, abi=abi)
+                contract = w3.eth.contract(address=smart_contract_address, abi=abi, bytecode=bytecode)
                 functions = contract.all_functions()
                 cli_functions = []
                 for i in range(0, len(functions)):
@@ -145,11 +146,13 @@ class ShardsController:
         except Exception as ex:
             raise ex
 
-    def call_function(self, web3, function_name, i, attributes, contract, my_wallet, password):
+    def call_function(self, w3, function_name, i, attributes, contract, my_wallet, password, gas_price, gas_limit, contract_address):
         """
         calls or transacts the function chosen by the user
+        :param gas_limit:
+        :param gas_price:
         :param password:
-        :param web3:
+        :param w3:
         :param function_name: name of the chosen function
         :param i: index of the chosen function
         :param attributes: chosen attributes by the user
@@ -163,12 +166,15 @@ class ShardsController:
                 return calling_function(*attributes).call()
             else:
                 tx = calling_function(*attributes).build_transaction({
+                                                     'gasPrice': int(gas_price),
+                                                     'gas': int(gas_limit),
                                                      'from': my_wallet,
-                                                     'nonce': web3.eth.get_transaction_count(my_wallet)
+                                                     'nonce': w3.eth.get_transaction_count(my_wallet),
+                                                     #'address': contract_address
                 })
                 private_key = self.user_repo.decrypt_private_key(self.session.get_user().get_private_key(), password)
-                signed_tx = web3.eth.account.sign_transaction(tx, private_key=private_key)
-                return web3.eth.send_raw_transaction(signed_tx.rawTransaction)
+                signed_tx = w3.eth.account.sign_transaction(tx, private_key=private_key)
+                return w3.eth.send_raw_transaction(signed_tx.rawTransaction)
 
         except InvalidAddress as ia:
             raise ia
@@ -177,6 +183,19 @@ class ShardsController:
         except Exception as ex:
             raise ex
 
+    def estimate_methodcall(self, w3, function_name, attributes, contract, gas_price, gas_limit, contract_address):
+        try:
+            calling_function = getattr(contract.functions, function_name)
+            tx = calling_function(*attributes).build_transaction({
+                'gasPrice': gas_price,
+                'gas': gas_limit,
+                'address': contract_address
+            })
+            gas = w3.eth.estimate_gas(tx)
+            return gas
+        except Exception as ex:
+            print(ex)
+            raise ex
     def balance_load(self):
         """
         Balances the load of the blockchain

@@ -128,17 +128,16 @@ class CommandLineInterface:
 
             if res == 0:
                 print('\nYou are logged in.\n')
-
-                if self.controller.check_password_obsolete(username):
-                    res = self.suggest_change_password(username)
-                    if res == 0:
-                        print('Password succesfully changed.\n')
-                        self.print_user_options()
-                    elif res == -1:
-                        print('Password not changed.\n')
-                        self.print_user_options()
-                else:
-                    self.print_user_options()
+                #if self.controller.check_password_obsolete(username):
+                #    res = self.suggest_change_password(username)
+                #    if res == 0:
+                #        print('Password succesfully changed.\n')
+                #        self.print_user_options()
+                #    elif res == -1:
+                #        print('Password not changed.\n')
+                #        self.print_user_options()
+                #else:
+                self.print_user_options()
             elif res == -1:
                 print('\nWrong credentials\n')
                 self.print_retry_exit_menu()
@@ -240,14 +239,14 @@ class CommandLineInterface:
 
             while True:
                 try:
-                    gas_limit = int(input('Gas limit: '))
+                    gas_limit = int(input('Gas limit (in Gwei): '))
                     break
                 except ValueError:
                     print('Wrong input. Please enter a number ...\n')
 
             while True:
                 try:
-                    gas_price = int(input('Gas price: '))
+                    gas_price = int(input('Gas price: (in Gwei)'))
                     break
                 except ValueError:
                     print('Wrong input. Please enter a number ...\n')
@@ -270,7 +269,7 @@ class CommandLineInterface:
                                                                                       self.session.get_user().get_public_key(),
                                                                                       password)
                         except ContractLogicError:
-                            print('Your Smart Conract has genereted logic error.\n')
+                            print('Your Smart Contract has genereted logic error.\n')
                             self.print_user_options()
                             return
                         except Exception:
@@ -370,30 +369,78 @@ class CommandLineInterface:
                                 invoked_function += ','
 
                     if contract.abi[choice - 1]['stateMutability'] == 'view':
-                        print('The function you wish to invoke is: ' + Fore.BLUE + str(invoked_function)
+                        print('\nThe function you wish to invoke is: ' + Fore.BLUE + str(invoked_function)
                               + Style.RESET_ALL)
                     else:
-                        print('The function you wish to invoke is: ' + Fore.RED + str(invoked_function)
+                        print('\nThe function you wish to invoke is: ' + Fore.RED + str(invoked_function)
                               + Style.RESET_ALL)
                     while True:
                         answer = input('Would you like to continue? (Y/N)')
                         try:
                             if answer == 'Y' or answer == 'y':
-                                res = self.shards_controller.call_function(web3, functions[choice - 1],
-                                                                           choice - 1, parameters, contract,
-                                                                           self.session.get_user().get_public_key(),
-                                                                           password)
-                                print(f'Result: {str(res)}.\n')
-                                self.print_user_options()
+                                if contract.abi[choice - 1]['stateMutability'] == 'view':
+                                    res = self.shards_controller.call_function(web3, functions[choice - 1],
+                                                                               choice - 1, parameters, contract,
+                                                                               self.session.get_user().get_public_key(),
+                                                                               password, None, None, None)
+                                    print(f'Result: {str(res)}.\n')
+                                    self.print_user_options()
+                                else:
+
+                                    while True:
+                                        try:
+                                            gas_limit = int(input('Gas limit (in Gwei): '))
+                                            break
+                                        except ValueError:
+                                            print('Wrong input. Please enter a number ...\n')
+                                    while True:
+                                        try:
+                                            gas_price = int(input('Gas price (in Gwei): '))
+                                            break
+                                        except ValueError:
+                                            print('Wrong input. Please enter a number ...\n')
+
+                                    estimate_cost = self.shards_controller.estimate_methodcall(web3,
+                                                                                               functions[choice - 1],
+                                                                                               parameters, contract,
+                                                                                               gas_limit, gas_price,
+                                                                                               smart_contract_address)
+                                    print('The estimated cost of your transaction is: ' + str(estimate_cost) + '\n')
+
+                                    while(True):
+                                        asw = input('Would you like to continue? (Y/N)')
+                                        try:
+                                            if asw == 'Y' or asw == 'y':
+                                                res = self.shards_controller.call_function(web3,
+                                                                                           functions[choice - 1],
+                                                                                           choice - 1, parameters,
+                                                                                           contract,
+                                                                                           self.session.get_user().get_public_key(),
+                                                                                           password, gas_price,
+                                                                                           gas_limit, smart_contract_address)
+                                                print(f'Result: {str(res)}.\n')
+                                                self.print_user_options()
+                                            if asw == 'N' or asw == 'n':
+                                                print('Execution Reverted.\n')
+                                                self.print_user_options()
+                                        except InvalidAddress:
+                                            print('The specified address is not valid.\n')
+                                        except ValidationError:
+                                            print('Function invocation failed due to no matching argument types.\n')
+                                        except Exception as ex:
+                                            print(ex)
+                                            print('An unknown error occurred.\n')
                             if answer == 'N' or answer == 'n':
                                 print('Execution Reverted.\n')
-                                self.print_user_options()
+                                return
                         except InvalidAddress:
                             print('The specified address is not valid.\n')
                         except ValidationError:
                             print('Function invocation failed due to no matching argument types.\n')
-                        except Exception:
+                        except Exception as ex:
                             print('An unknown error occurred.\n')
+                            print(ex)
+
                 else:
                     print("Execution reverted due to wrong parameters.\n")
                     self.print_user_options()
@@ -425,26 +472,30 @@ class CommandLineInterface:
 
     def print_parameters_methods(self, method: str, web3: str):
         parameters = method.replace(')', '').split('(')
-        p = []
         n = 0
+        attributes = []
         parameters.pop(0)
-        if parameters != ['']:
-            for i in parameters:
+        p = parameters[0].split(',')
+        if p != ['']:
+            for i in p:
                 try:
                     n = n + 1
                     if not str(i).__contains__('['):
                         param = input(f'Parameter {str(n)} (type {str(i)}): ')
                         if str(i).startswith('bool'):
                             if param == 'true' or param == 'True' or param == '1':
-                                p.append(True)
+                                attributes.append(True)
                             elif param == 'false' or param == 'False' or param == '0':
-                                p.append(False)
+                                attributes.append(False)
                         elif str(i).startswith('int') or str(i).startswith('uint'):
-                            p.append(web3.to_int(text=param))
+                            attributes.append(web3.to_int(text=param))
                         elif str(i).startswith('fixed') or str(i).startswith('unfixed'):
-                            p.append(float(i))
+                            attributes.append(float(i))
                         elif str(i).startswith('bytes'):
-                            p.append(web3.to_bytes(text=param))
+                            attributes.append(web3.to_bytes(text=param))
+                        elif str(i).startswith('string') or str(i).startswith('address'):
+                            attributes.append(param)
+
                     else:
                         list = self.retrieve_list_values()
                         casted_list = []
@@ -454,24 +505,29 @@ class CommandLineInterface:
                                     casted_list.append(True)
                                 elif list[i] == 'false' or list[i] == 'False' or list[i] == '0':
                                     casted_list.append(False)
-                            p.append(casted_list)
+                            attributes.append(casted_list)
                         elif str(i).startswith('int') or str(i).startswith('uint'):
                             for i in range(0, len(list)):
                                 casted_list.append(web3.to_int(text=list[i]))
-                            p.append(casted_list)
+                            attributes.append(casted_list)
                         elif str(i).startswith('fixed') or str(i).startswith('unfixed'):
                             for i in range(0, len(list)):
                                 casted_list.append(float(list[i]))
-                            p.append(casted_list)
+                            attributes.append(casted_list)
                         elif str(i).startswith('bytes'):
                             for i in range(0, len(list)):
                                 casted_list.append(web3.to_bytes(text=list[i]))
-                            p.append(casted_list)
-                    return p
+                            attributes.append(casted_list)
+                        elif str(i).startswith('string') or str(i).startswith('address'):
+                            for i in range(0, len(list)):
+                                casted_list.append(list[i])
+                            attributes.append(casted_list)
+
                 except:
                     return -1
+            return attributes
         else:
-            return p
+            return attributes
 
     def print_smart_contract_deployed(self):
         smart_contract = self.session.get_user().get_smart_contracts()
