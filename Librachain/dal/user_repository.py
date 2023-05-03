@@ -329,7 +329,10 @@ class UserRepository:
                     UPDATE Users
                     SET password_hash = ?, private_key = ?, password_edit_timestamp = ?
                     WHERE username = ?""",
-                    (password_hash, encrypted_private_key, str(time.time()), username)
+                    (password_hash,
+                     encrypted_private_key,
+                     self.fernet_encrypt(str(time.time()), new_password),
+                     username)
                 )
                 self.conn.commit()
                 return 0

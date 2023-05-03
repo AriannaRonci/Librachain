@@ -35,7 +35,7 @@ class OnChainController:
             signed_tx = self.w3.eth.account.sign_transaction(tx, private_key=private_key)
             sent_tx = self.w3.eth.send_raw_transaction(signed_tx.rawTransaction)
             receipt = self.w3.eth.wait_for_transaction_receipt(sent_tx)
-            added_to_dict = self.on_chain.events.AddedToDict().processReceipt(receipt)[0]['args']
+            added_to_dict = self.on_chain.events.AddedToDict().process_receipt(receipt)[0]['args']
             return added_to_dict['result']
         except Exception as ex:
             raise ex

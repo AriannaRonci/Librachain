@@ -161,8 +161,8 @@ class Controller:
         if self.user_repo.check_password(username, old_password):
             self.user_repo.change_password(username, new_password, old_password)
 
-    def check_password_obsolete(self, username):
+    def check_password_obsolete(self, username, password):
         try:
-            return self.user_repo.is_password_obsolete(username)
+            return self.user_repo.is_password_obsolete(username, password)
         except Exception as ex:
             raise ex
