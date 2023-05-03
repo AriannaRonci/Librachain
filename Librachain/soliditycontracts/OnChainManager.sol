@@ -4,12 +4,13 @@ pragma solidity >=0.4.22 <0.9.0;
 contract OnChainManager {
     mapping(string => address[]) public shardsMapping;
     mapping (string => int) public shardsBalance;
+    event AddedToDict(bool result);
 
     //add element to dictionary
-    function addToDictionary(string memory shardAddress, address contractAddress) public returns (bool){
+    function addToDictionary(string memory shardAddress, address contractAddress) public{
         shardsMapping[shardAddress].push(contractAddress);
         shardsBalance[shardAddress]++;
-        return true;
+        emit AddedToDict(true);
     }
 
     //get list of contract addresses of a given shard
