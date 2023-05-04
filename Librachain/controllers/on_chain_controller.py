@@ -26,7 +26,7 @@ class OnChainController:
 
     def add_to_dictionary(self, shard_address, contract_address, my_wallet, private_key):
         """
-        
+
         :param shard_address:
         :param contract_address:
         :param my_wallet:

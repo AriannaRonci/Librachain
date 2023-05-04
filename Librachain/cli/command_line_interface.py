@@ -413,7 +413,7 @@ class CommandLineInterface:
                                                                                            self.session.get_user().get_public_key(),
                                                                                            password, gas_price,
                                                                                            gas_limit, view)
-                                                print(f'Function called correctly, the function hash is:' + str(res['transactionHash']) + '.\n')
+                                                print(f'Function called correctly, the transaction hash is:' + str(res['transactionHash']) + '.\n')
                                                 if events != []:
                                                     print('Events from smart contract:\n' + Fore.LIGHTYELLOW_EX + "\n".join("{0} {1}".format(k+": ", v) for k, v in events.items())
                                                         + Style.RESET_ALL)
