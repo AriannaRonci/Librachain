@@ -400,7 +400,7 @@ class CommandLineInterface:
                                                                                                parameters, contract,
                                                                                                gas_limit, gas_price,
                                                                                                smart_contract_address)
-                                    print('The estimated cost of your transaction is: ' + str(estimate_cost) + '\n')
+                                    print('The estimated cost of your transaction is: ' +str(estimate_cost)+ '\n')
 
                                     while True:
                                         asw = input('Would you like to continue? (Y/N)')

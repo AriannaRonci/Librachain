@@ -192,6 +192,17 @@ class ShardsController:
             raise ex
 
     def estimate_methodcall(self, w3, function_name, attributes, contract, gas_price, gas_limit, contract_address):
+        """
+
+        :param w3:
+        :param function_name:
+        :param attributes:
+        :param contract:
+        :param gas_price:
+        :param gas_limit:
+        :param contract_address:
+        :return:
+        """
         try:
             calling_function = getattr(contract.functions, function_name)
             tx = calling_function(*attributes).build_transaction({

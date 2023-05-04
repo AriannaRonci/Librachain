@@ -25,6 +25,14 @@ class OnChainController:
         return result
 
     def add_to_dictionary(self, shard_address, contract_address, my_wallet, private_key):
+        """
+        
+        :param shard_address:
+        :param contract_address:
+        :param my_wallet:
+        :param private_key:
+        :return:
+        """
         try:
             tx = self.on_chain.functions.addToDictionary(shard_address, contract_address).build_transaction(
                 {'from': my_wallet,
