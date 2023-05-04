@@ -181,7 +181,7 @@ class ShardsController:
                 for i in range(0, len(contract.events._events)-1):
                     event_name = str(contract.events._events[i]['name'])
                     calling_event = getattr(contract.events, event_name)()
-                    event = calling_event.process_receipt(receipt, errors=DISCARD)[0]['args']
+                    event = calling_event.process_receipt(receipt,errors=DISCARD)[0]['args']
 
                 return receipt, event
         except InvalidAddress as ia:
