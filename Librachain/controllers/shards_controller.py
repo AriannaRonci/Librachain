@@ -128,23 +128,24 @@ class ShardsController:
             abi = contract_interface['abi']
             bytecode = contract_interface['bin']
             invoke_onchain = OnChainController()
-            valid_address = invoke_onchain.is_valid_address(shard, smart_contract_address)
-            if valid_address:
-                w3 = Web3(Web3.HTTPProvider(shard))
-                contract = w3.eth.contract(address=smart_contract_address, abi=abi, bytecode=bytecode)
-                functions = contract.all_functions()
-                cli_functions = []
-                for i in range(0, len(functions)):
-                    function = str(functions[i]).replace('<Function', '').replace('>', '')
-                    cli_functions.append(function)
-                function_names = []
-                sep = '('
-                for i in range(0, len(cli_functions)):
-                    stripped = cli_functions[i].split(sep, 1)[0].replace(' ', '')
-                    function_names.append(stripped)
-                return cli_functions, contract, function_names, w3
+            #valid_address = invoke_onchain.is_valid_address(shard, smart_contract_address)
+            #if valid_address:
+            w3 = Web3(Web3.HTTPProvider(shard))
+            contract = w3.eth.contract(address=smart_contract_address, abi=abi, bytecode=bytecode)
+            functions = contract.all_functions()
+            cli_functions = []
+            for i in range(0, len(functions)):
+                function = str(functions[i]).replace('<Function', '').replace('>', '')
+                cli_functions.append(function)
+            function_names = []
+            sep = '('
+            for i in range(0, len(cli_functions)):
+                stripped = cli_functions[i].split(sep, 1)[0].replace(' ', '')
+                function_names.append(stripped)
+            return cli_functions, contract, function_names, w3
         except Exception as ex:
             raise ex
+            print(ex)
 
     def call_function(self, w3, function_name, i, attributes, contract, my_wallet, password, gas_price, gas_limit, view):
         """
@@ -181,13 +182,15 @@ class ShardsController:
                 for i in range(0, len(contract.events._events)-1):
                     event_name = str(contract.events._events[i]['name'])
                     calling_event = getattr(contract.events, event_name)()
-                    event = calling_event.process_receipt(receipt,errors=DISCARD)[0]['args']
+                    event = calling_event.process_receipt(receipt, errors=DISCARD)[0]['args']
 
                 return receipt, event
         except InvalidAddress as ia:
             raise ia
         except web3.exceptions.ValidationError as ve:
             raise ve
+        except ContractLogicError as cle:
+            raise cle
         except Exception as ex:
             raise ex
 

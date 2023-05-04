@@ -52,9 +52,3 @@ class OnChainController:
         result = self.on_chain.functions.getBalance(shard_address).call()
         return result
 
-    def is_valid_address(self, shard, shard_address):
-        try:
-            result = self.on_chain.functions.isValidAddress(shard, shard_address).call()
-            return result
-        except Exception as ex:
-            raise ex

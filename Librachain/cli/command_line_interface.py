@@ -322,7 +322,9 @@ class CommandLineInterface:
         if res:
             while True:
                 file_path = self.read_smart_contract()
-                if file_path:
+                if file_path == '0':
+                    return
+                elif file_path:
                     break
 
             while True:
@@ -443,6 +445,10 @@ class CommandLineInterface:
                             return
                         except ValidationError:
                             print('Function invocation failed due to no matching argument types.\n')
+                            return
+                        except ContractLogicError:
+                            print('The smart contract address or the shard address specified do not match'
+                                  'any contract deployed on the blockchain.\n')
                             return
                         except Exception:
                             print('An unknown error occurred.\n')
