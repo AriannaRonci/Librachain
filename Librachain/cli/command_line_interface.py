@@ -232,7 +232,9 @@ class CommandLineInterface:
         if res:
             while True:
                 file_path = self.read_smart_contract()
-                if file_path:
+                if file_path == '0':
+                    return
+                elif file_path:
                     break
 
             smart_contract_name = input('Smart Contract Name: ')
@@ -298,8 +300,10 @@ class CommandLineInterface:
             print('\nIncorrect password.\nSorry but you can\'t proceed with the deployment of Smart Contract.\n')
 
     def read_smart_contract(self):
-        file_path = input('Enter the path of your file: ')
-        if not os.path.exists(file_path) or not os.path.isfile(file_path):
+        file_path = input('Enter the path of your file (press 0 to go back): ')
+        if file_path == '0':
+            return file_path
+        elif not os.path.exists(file_path) or not os.path.isfile(file_path):
             print(f'I did not find the file at {str(file_path)}.\n')
             return False
         elif not file_path.endswith('.sol'):
@@ -424,19 +428,25 @@ class CommandLineInterface:
                                                 return
                                         except InvalidAddress:
                                             print('The specified address is not valid.\n')
+                                            return
                                         except ValidationError:
                                             print('Function invocation failed due to no matching argument types.\n')
+                                            return
                                         except Exception:
                                             print('An unknown error occurred.\n')
+                                            return
                             if answer == 'N' or answer == 'n':
                                 print('Execution Reverted.\n')
                                 return
                         except InvalidAddress:
                             print('The specified address is not valid.\n')
+                            return
                         except ValidationError:
                             print('Function invocation failed due to no matching argument types.\n')
+                            return
                         except Exception:
                             print('An unknown error occurred.\n')
+                            return
                 else:
                     print("Execution reverted due to wrong parameters.\n")
         else:
