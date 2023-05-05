@@ -469,7 +469,7 @@ class CommandLineInterface:
                             print('Function invocation failed due to no matching argument types.\n')
                             return
                         except ContractLogicError:
-                            print('The smart contract address or the shard address specified do not match'
+                            print('The smart contract address or the shard address specified do not match '
                                   'any contract deployed on the blockchain.\n')
                             return
                         except Exception:
