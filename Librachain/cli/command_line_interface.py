@@ -432,7 +432,7 @@ class CommandLineInterface:
                                         asw = input('Would you like to continue? (Y/N)')
                                         try:
                                             if asw == 'Y' or asw == 'y':
-                                                res, events = self.shards_controller.call_function(web3,
+                                                res, events, event_names = self.shards_controller.call_function(web3,
                                                                                            functions[choice - 1],
                                                                                            choice - 1, parameters,
                                                                                            contract,
@@ -440,9 +440,11 @@ class CommandLineInterface:
                                                                                            password, gas_price,
                                                                                            gas_limit, view)
                                                 print(f'Function called correctly, the transaction hash is:' + str(res['transactionHash']) + '.\n')
+                                                print('Events from smart contract')
                                                 if events != []:
-                                                    print('Events from smart contract:\n' + Fore.LIGHTYELLOW_EX + "\n".join("{0} {1}".format(k+": ", v) for k, v in events.items())
-                                                        + Style.RESET_ALL)
+                                                    for i in range(0, len(events)):
+                                                        print(Fore.LIGHTYELLOW_EX + "Event: "+event_names[i]+"\n" + "\n".join("{0} {1}".format("- "+k+": ", v) for k, v in events[i].items())
+                                                            + Style.RESET_ALL)
                                                     print("\n")
                                                 return
                                             if asw == 'N' or asw == 'n':

@@ -190,12 +190,15 @@ class ShardsController:
                 receipt = w3.eth.wait_for_transaction_receipt(sent_tx)
 
                 event = []
-                for i in range(0, len(contract.events._events)-1):
-                    event_name = str(contract.events._events[i]['name'])
-                    calling_event = getattr(contract.events, event_name)()
-                    event = calling_event.process_receipt(receipt, errors=DISCARD)[0]['args']
+                event_names = []
 
-                return receipt, event
+                for i in range(0, len(contract.events._events)):
+                    event_name = str(contract.events._events[i]['name'])
+                    event_names.append(event_name)
+                    calling_event = getattr(contract.events, event_name)()
+                    event.append(calling_event.process_receipt(receipt, errors=DISCARD)[0]['args'])
+
+                return receipt, event, event_names
         except InvalidAddress as ia:
             raise ia
         except web3.exceptions.ValidationError as ve:
