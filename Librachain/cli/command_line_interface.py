@@ -37,7 +37,8 @@ class CommandLineInterface:
             2: 'Invoke Smart Contract\'s Method.',
             3: 'Consult your Smart Contract in your local databese.',
             4: 'Delete Smart Contrat from your local database.',
-            5: 'Logout.'
+            5: 'Change password.',
+            6: 'Logout.'
         }
 
     def print_menu(self):
@@ -148,6 +149,32 @@ class CommandLineInterface:
             print(f'Time left until next attempt: {int(self.session.get_time_left_for_unlock())} seconds\n')
             return -2
 
+    def change_password(self, username):
+        while True:
+            response = input('Do you want to change your password (Y/N)?\n')
+            if response == 'Y' or response == 'y':
+                old_password = getpass.getpass('Old password: ')
+
+                while True:
+                    new_password = getpass.getpass('New password: ')
+                    check_password = getpass.getpass('Confirm new passoword: ')
+
+                    if not re.fullmatch(r'(?=.*?\d)(?=.*?[A-Z])(?=.*?[a-z])[A-Za-z0-9@#$%^&+=]{10,255}', new_password):
+                        print(new_password)
+                        print('Password must contains at least 10 symbols, at least one digit, at least one uppercase '
+                              'letter, at least one lowercase letter.\n')
+                    elif new_password != check_password:
+                        print('Password and confirm password do not match.\n')
+                    else:
+                        break
+
+                self.controller.change_password(username, new_password, old_password)
+                return 0
+            elif response == 'N' or response == 'n':
+                return -1
+            else:
+                print('Wrong input.\n')
+
     def suggest_change_password(self, username):
         while True:
             response = input('It\'s been 3 months since your password was last changed. We suggest you change it.\n'
@@ -217,7 +244,14 @@ class CommandLineInterface:
                     print('\nHandle option \'Option 4: Delete Smart Contract from your local databese.\'\n')
                     self.delete_smart_contract_deployed()
                 elif option == 5:
-                    print('\nHandle option \'Option 5: Logout.\'\n')
+                    print('\nHandle option \'Option 5: Change password\'\n')
+                    res = self.change_password(self.session.get_user().get_username())
+                    if res == 0:
+                        print('Password successfully changed.\n')
+                    elif res == -1:
+                        print('Password not changed.\n')
+                elif option == 6:
+                    print('\nHandle option \'Option 6: Logout.\'\n')
                     self.session.set_user(None)
                     return
                 else:
