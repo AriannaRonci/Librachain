@@ -1,0 +1,2 @@
+You can set the application parameters through this file:
+- Number of shards: 3

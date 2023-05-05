@@ -18,7 +18,7 @@ class CommandLineInterface:
     def __init__(self, session: Session):
 
         self.controller = Controller(session)
-        self.shards_controller = ShardsController(session)
+        self.shards_controller = ShardsController(session, self.get_application_parameters())
         self.session = session
 
         self.menu_options = {
@@ -39,6 +39,14 @@ class CommandLineInterface:
             4: 'Delete Smart Contrat from your local database.',
             5: 'Logout.'
         }
+
+    def get_application_parameters(self):
+        with open('set_parameters.txt', 'r') as f:
+            for line in f:
+                line_to_read = '- Number of shards:'
+                if line.startswith(line_to_read):
+                    num_of_shards = line.split(line_to_read, 1)[1]
+            return int(num_of_shards)
 
     def print_menu(self):
         for key in self.menu_options.keys():

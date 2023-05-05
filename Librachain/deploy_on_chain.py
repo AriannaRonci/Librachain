@@ -5,7 +5,7 @@ from solcx import compile_standard, compile_source
 solcx.install_solc('0.6.0')
 
 # Set up the web3 provider
-web3 = Web3(HTTPProvider('http://localhost:8548'))
+web3 = Web3(HTTPProvider('http://localhost:8545'))
 
 # Set up the contract and account information
 contract_name = 'OnChain'

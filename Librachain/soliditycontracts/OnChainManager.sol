@@ -22,8 +22,4 @@ contract OnChainManager {
     function getBalance(string memory shardAddress) public view returns (int){
         return shardsBalance[shardAddress];
     }
-
-    function compareStrings(address a, address b) public pure returns (bool) {
-        return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))));
-    }
 }

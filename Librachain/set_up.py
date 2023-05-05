@@ -4,24 +4,44 @@ from web3 import Web3, HTTPProvider
 from solcx import compile_standard, compile_source
 
 solcx.install_solc('0.6.0')
-import json
+
+with open('set_parameters.txt', 'r') as f:
+    for line in f:
+        line_to_read = '- Number of shards:'
+        if line.startswith(line_to_read):
+            num_of_shards = line.split(line_to_read, 1)[1]
+
+base_shard = 'http://localhost:'
+base_address = 8546
+base_name = 'shard'
+shard_names = []
+shard_addresses = []
+shards = []
+for i in range(1, int(num_of_shards)+1):
+    shard_addresses.append(base_shard + str(base_address))
+    base_address = base_address+1
+    shard_names.append(base_name + str(i))
+    shards.append(Web3(HTTPProvider(shard_addresses[i-1])))
 
 # Set up the web3 provider
-shard1 = Web3(HTTPProvider('http://localhost:8545'))
-shard2 = Web3(HTTPProvider('http://localhost:8546'))
-shard3 = Web3(HTTPProvider('http://localhost:8547'))
+#shard1 = Web3(HTTPProvider('http://localhost:8545'))
+#shard2 = Web3(HTTPProvider('http://localhost:8546'))
+#shard3 = Web3(HTTPProvider('http://localhost:8547'))
 
-shard_names = ["http://localhost:8545", "http://localhost:8546", "http://localhost:8547"]
 
-shards = [shard1, shard2, shard3]
+#shards = [shard1, shard2, shard3]
 
 # Set up the contract and account information
 contract_name = 'OnChain'
-account1 = shard1.eth.accounts[0]
-account2 = shard2.eth.accounts[0]
-account3 = shard3.eth.accounts[0]
+accounts = []
+for i in range(1, int(num_of_shards)+1):
+    accounts.append(shards[i-1].eth.accounts[0])
 
-accounts = [account1, account2, account3]
+#account1 = shard1.eth.accounts[0]
+#account2 = shard2.eth.accounts[0]
+#account3 = shard3.eth.accounts[0]
+
+#accounts = [account1, account2, account3]
 
 contract1 = 'soliditycontracts/Ballot.sol'
 contract2 = 'soliditycontracts/Storage.sol'
@@ -37,7 +57,7 @@ with open('soliditycontracts/OnChainManager.sol', 'r') as file:
 compiled_onchain = compile_source(on_chain_source_code, output_values=['abi', 'bin'])
 onchain_id, onchain_interface = compiled_onchain.popitem()
 onchain_abi = onchain_interface['abi']
-onchain_w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:8548"))
+onchain_w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:8545"))
 onchain_address = onchain_address
 on_chain = onchain_w3.eth.contract(address=onchain_address, abi=onchain_abi)
 
@@ -49,7 +69,7 @@ for i in range(0, 2):
     contract_abi = contract_interface['abi']
     contract_bytecode = contract_interface['bin']
 
-    for j in range(0, 3):
+    for j in range(0, int(num_of_shards)-1):
         MyContract = shards[j].eth.contract(abi=contract_abi, bytecode=contract_bytecode)
         tx_hash = MyContract.constructor().transact({'from': accounts[j]})
         receipt = shards[j].eth.wait_for_transaction_receipt(tx_hash)

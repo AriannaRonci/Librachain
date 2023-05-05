@@ -16,7 +16,7 @@ class OnChainController:
         compiled_contract = compile_source(on_chain_source_code, output_values=['abi', 'bin'])
         contract_id, contract_interface = compiled_contract.popitem()
         self.abi = contract_interface['abi']
-        self.w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:8548"))
+        self.w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:8545"))
         self.address = contract_address
         self.on_chain = self.w3.eth.contract(address=self.address, abi=self.abi)
 

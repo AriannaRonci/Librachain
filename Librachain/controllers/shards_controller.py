@@ -17,13 +17,25 @@ class ShardsController:
     ShardsController manages the interaction between shards, user and On-Chain-Controller
     """
 
-    def __init__(self, session):
-        self.__shards = ['http://localhost:8545', 'http://localhost:8546', 'http://localhost:8547']
+    def __init__(self, session, num_shards):
+        self.__num_shards = num_shards
+        self.__shard_names, self.__shards = self.define_shards()
         self.session = session
         self.user_repo = UserRepository()
 
     def get_shards(self):
         return self.__shards
+
+    def define_shards(self):
+        base_shard = 'http://localhost:'
+        base_address = 8545
+        base_name = 'shard'
+        shard_names = []
+        shards = []
+        for i in range(1, self.__num_shards+1):
+            shards.append(base_shard + str(base_address+1))
+            shard_names.append(base_name + str(i))
+        return shard_names, shards
 
     def create_contract(self, smart_contract_path):
         """
@@ -67,7 +79,6 @@ class ShardsController:
                                                      'from': wallet,
                                                      'nonce': w3.eth.get_transaction_count(wallet)
                                                      })
-            #print(w3.eth.estimateGas(tx))
             private_key = self.user_repo.decrypt_private_key(self.session.get_user().get_private_key(), password)
             signed_tx = w3.eth.account.sign_transaction(tx, private_key=private_key)
             raw_tx = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
@@ -127,7 +138,7 @@ class ShardsController:
             contract_id, contract_interface = compiled_contract.popitem()
             abi = contract_interface['abi']
             bytecode = contract_interface['bin']
-            invoke_onchain = OnChainController()
+            #invoke_onchain = OnChainController()
             #valid_address = invoke_onchain.is_valid_address(shard, smart_contract_address)
             #if valid_address:
             w3 = Web3(Web3.HTTPProvider(shard))
@@ -224,21 +235,27 @@ class ShardsController:
         :return: calculated provider to make next transaction is the
                  try does not fail
         """
+        shards_providers = []
+        shards = {}
         try:
-            shard1 = Web3(HTTPProvider('http://localhost:8545'))
-            shard2 = Web3(HTTPProvider('http://localhost:8546'))
-            shard3 = Web3(HTTPProvider('http://localhost:8547'))
-            shards_providers = [shard1, shard2, shard3]
-            shards_name = ['shard1', 'shard2', 'shard3']
-            shards = {
-                shards_name[0]: shard1.eth.block_number,
-                shards_name[1]: shard2.eth.block_number,
-                shards_name[2]: shard3.eth.block_number
-            }
+            for i in range(1, self.__num_shards+1):
+                shards_providers.append(Web3(HTTPProvider(self.__shards[i-1])))
+                shards.update({self.__shard_names[i-1]: shards_providers[i-1].eth.block_number})
+            #shard1 = Web3(HTTPProvider('http://localhost:8545'))
+            #shard2 = Web3(HTTPProvider('http://localhost:8546'))
+            #shard3 = Web3(HTTPProvider('http://localhost:8547'))
+            #shards_providers = [shard1, shard2, shard3]
+            #shards_name = ['shard1', 'shard2', 'shard3']
+
+            #shards = {
+            #    shards_name[0]: shard1.eth.block_number,
+            #    shards_name[1]: shard2.eth.block_number,
+            #    shards_name[2]: shard3.eth.block_number
+            #}
             for i in range(0, len(shards)):
                 if i == 0:
                     chosen_shard = shards_providers[i]
-                elif shards[shards_name[i]] < shards[shards_name[i - 1]]:
+                elif shards[self.__shard_names[i]] < shards[self.__shard_names[i - 1]]:
                     chosen_shard = shards_providers[i]
             return chosen_shard
         except Exception as ex:
