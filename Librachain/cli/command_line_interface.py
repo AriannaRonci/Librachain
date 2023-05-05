@@ -35,9 +35,10 @@ class CommandLineInterface:
         self.user_options = {
             1: 'Deploy Smart Contract.',
             2: 'Invoke Smart Contract\'s Method.',
-            3: 'Consult your Smart Contract in your local databese.',
-            4: 'Delete Smart Contrat from your local database.',
-            5: 'Logout.'
+            3: 'Consult your Smart Contract in your local database.',
+            4: 'Delete Smart Contract from your local database.',
+            5: 'Change password.',
+            6: 'Logout.'
         }
 
     def get_application_parameters(self):
@@ -99,7 +100,7 @@ class CommandLineInterface:
 
             while True:
                 password = getpass.getpass('Password: ')
-                check_password = getpass.getpass('Confirm Passoword: ')
+                check_password = getpass.getpass('Confirm Password: ')
 
                 if not re.fullmatch(r'(?=.*?\d)(?=.*?[A-Z])(?=.*?[a-z])[A-Za-z0-9@#$%^&+=]{10,255}', password):
                     print(password)
@@ -156,16 +157,15 @@ class CommandLineInterface:
             print(f'Time left until next attempt: {int(self.session.get_time_left_for_unlock())} seconds\n')
             return -2
 
-    def suggest_change_password(self, username):
+    def change_password(self, username):
         while True:
-            response = input('It\'s been 3 months since your password was last changed. We suggest you change it.\n'
-                             'Do you want to change your password (Y/N)?\n')
+            response = input('Do you want to change your password (Y/N)?\n')
             if response == 'Y' or response == 'y':
                 old_password = getpass.getpass('Old password: ')
 
                 while True:
                     new_password = getpass.getpass('New password: ')
-                    check_password = getpass.getpass('Confirm new passoword: ')
+                    check_password = getpass.getpass('Confirm new password: ')
 
                     if not re.fullmatch(r'(?=.*?\d)(?=.*?[A-Z])(?=.*?[a-z])[A-Za-z0-9@#$%^&+=]{10,255}', new_password):
                         print(new_password)
@@ -176,12 +176,17 @@ class CommandLineInterface:
                     else:
                         break
 
-                self.controller.change_password(username, new_password, old_password)
-                return 0
+                if not self.controller.check_password(username, old_password):
+                    print("Submitted incorrect old password")
+
             elif response == 'N' or response == 'n':
                 return -1
             else:
                 print('Wrong input.\n')
+
+    def suggest_change_password(self, username):
+            print('It\'s been 3 months since your password was last changed. We suggest you change it.\n')
+            self.change_password(username)
 
     def print_retry_exit_menu(self):
         for key in self.wrong_input_options.keys():
@@ -219,13 +224,20 @@ class CommandLineInterface:
                     self.invoke_method_menu()
                 elif option == 3:
                     print(
-                        '\nHandle option \'Option 3: Consult your Smart Contract in your local databese.\'\n')
+                        '\nHandle option \'Option 3: Consult your Smart Contract in your local database.\'\n')
                     self.print_smart_contract_deployed()
                 elif option == 4:
-                    print('\nHandle option \'Option 4: Delete Smart Contract from your local databese.\'\n')
+                    print('\nHandle option \'Option 4: Delete Smart Contract from your local database.\'\n')
                     self.delete_smart_contract_deployed()
                 elif option == 5:
-                    print('\nHandle option \'Option 5: Logout.\'\n')
+                    print('\nHandle option \'Option 5: Change password\'\n')
+                    res = self.change_password(self.session.get_user().get_username())
+                    if res == 0:
+                        print('Password successfully changed.\n')
+                    elif res == -1:
+                        print('Password not changed.\n')
+                elif option == 6:
+                    print('\nHandle option \'Option 6: Logout.\'\n')
                     self.session.set_user(None)
                     return
                 else:
@@ -261,15 +273,15 @@ class CommandLineInterface:
                 except ValueError:
                     print('Wrong input. Please enter a number ...\n')
 
-            estemate_cost = self.shards_controller.estimate(file_path, gas_limit, gas_price)
-            if estemate_cost == -1:
+            estimate_cost = self.shards_controller.estimate(file_path, gas_limit, gas_price)
+            if estimate_cost == -1:
                 print('Your gas limit is too low.\n')
                 return
-            elif estemate_cost == -2:
+            elif estimate_cost == -2:
                 print('An unknown error occurred.\n')
                 return
             else:
-                print(f'The estimated cost to deploy the smart contract is {str(estemate_cost)}.\n')
+                print(f'The estimated cost to deploy the smart contract is {str(estimate_cost)}.\n')
                 while True:
                     print('Do you want proceed with the deploy (Y/N)?')
                     response = input('')
@@ -279,7 +291,7 @@ class CommandLineInterface:
                                                                                       self.session.get_user().get_public_key(),
                                                                                       password)
                         except ContractLogicError:
-                            print('Your Smart Contract has genereted logic error.\n')
+                            print('Your Smart Contract has generated logic error.\n')
                             return
                         except Exception:
                             print('An unknown error occurred.\n')
@@ -288,10 +300,10 @@ class CommandLineInterface:
                             print('Your gas limit is too low\n')
                             return
                         elif res == -2:
-                            print('Deployement failed\n')
+                            print('Deployment failed\n')
                             return
                         else:
-                            print('Deployement was successful\n')
+                            print('Deployment was successful\n')
                             print(f'Contract deployed at address: {str(res)}.\n')
                             print(f'Shard address: {str(shard)}.\n')
                             self.controller.insert_smart_contract(smart_contract_name, res, shard,
@@ -572,16 +584,16 @@ class CommandLineInterface:
             self.print_smart_contract_deployed()
             res = self.choose_smart_contract_to_delete(smart_contract)
             if res == 0:
-                print('Successful delition.\n')
+                print('Successful deletion.\n')
             elif res == -1:
-                print('Sorry, but something went wrong with the delition!\n')
+                print('Sorry, but something went wrong with the deletion!\n')
             elif res == -2:
-                print('No Smart Contract delited.\n')
+                print('No Smart Contract deleted.\n')
 
     def choose_smart_contract_to_delete(self, smart_contract: list):
         while True:
             try:
-                choice = int(input('Which one do you want to delete from yor local database (press 0 to exit)? '))
+                choice = int(input('Which one do you want to delete from your local database (press 0 to exit)? '))
             except ValueError:
                 print('Wrong input. Please enter a number ...\n')
 
@@ -597,7 +609,7 @@ class CommandLineInterface:
                 break
 
         while True:
-            print('Do you want proceed with the delition (Y/N)?')
+            print('Do you want proceed with the deletion (Y/N)?')
             response = input('')
             if response == 'Y' or response == 'y':
                 res = self.controller.delete_smart_contract(smart_contract[choice - 1])
