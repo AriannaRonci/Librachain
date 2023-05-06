@@ -47,7 +47,16 @@ class CommandLineInterface:
                 line_to_read = '- Number of shards:'
                 if line.startswith(line_to_read):
                     num_of_shards = line.split(line_to_read, 1)[1]
-            return int(num_of_shards)
+                    try:
+                        int(num_of_shards)
+                    except:
+                        return 3
+                    if int(num_of_shards) > 8:
+                        return 8
+                    elif int(num_of_shards) < 0:
+                        return 1
+                    else:
+                        return int(num_of_shards)
 
     def print_menu(self):
         for key in self.menu_options.keys():
