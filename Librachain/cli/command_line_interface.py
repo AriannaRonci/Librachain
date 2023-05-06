@@ -53,7 +53,7 @@ class CommandLineInterface:
                         return 3
                     if int(num_of_shards) > 8:
                         return 8
-                    elif int(num_of_shards) < 0:
+                    elif int(num_of_shards) <= 0:
                         return 1
                     else:
                         return int(num_of_shards)
