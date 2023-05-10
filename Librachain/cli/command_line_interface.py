@@ -87,20 +87,26 @@ class CommandLineInterface:
     def register_menu(self):
         print('Enter your wallet information.')
         public_key = input('Public Key: ')
-        private_key = input('Private Key: ')
-        # private_key = getpass.getpass('Private Key: ')
-        check_private_key = input('Confirm Private Key: ')
-        # check_private_key = getpass.getpass('Confirm Private Key: ')
+
+        while True:
+            private_key = input('Private Key: ')
+            # private_key = getpass.getpass('Private Key: ')
+            check_private_key = input('Confirm Private Key: ')
+            # check_private_key = getpass.getpass('Confirm Private Key: ')
+            if private_key == check_private_key:
+                break
+            else:
+                print('Private key and confirm private key do not match. Retry.\n')
 
         try:
             priv_key_bytes = decode_hex(private_key)
             priv_key = keys.PrivateKey(priv_key_bytes)
             pk = priv_key.public_key.to_checksum_address()
         except Exception:
-            print('Sorry, but the specified public key and private key do not match any account.\n')
+            print('Sorry, but the specified public key and private key do not match any wallet.\n')
             return
 
-        if is_address(public_key) and (public_key == pk) and (private_key == check_private_key):
+        if is_address(public_key) and (public_key == pk):
 
             print('Enter your personal account information.')
             print('(in this way every time you log in or want to perform a transaction it will not be necessary\n'
