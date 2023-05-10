@@ -47,7 +47,16 @@ class CommandLineInterface:
                 line_to_read = '- Number of shards:'
                 if line.startswith(line_to_read):
                     num_of_shards = line.split(line_to_read, 1)[1]
-            return int(num_of_shards)
+                    try:
+                        int(num_of_shards)
+                    except:
+                        return 3
+                    if int(num_of_shards) > 8:
+                        return 8
+                    elif int(num_of_shards) <= 0:
+                        return 1
+                    else:
+                        return int(num_of_shards)
 
     def print_menu(self):
         for key in self.menu_options.keys():
@@ -367,8 +376,15 @@ class CommandLineInterface:
                     smart_contract_address,
                     file_path)
             except:
-                print('An unknown error occurred.\n')
-                return
+                if self.shards_controller.smart_contract_methods_by_sourcecode(shard,
+                                                                               smart_contract_address,
+                                                                               file_path) == -1:
+                    print('The smart contract address or the shard address specified do not match '
+                                  'any contract deployed on the blockchain.\n')
+                    return
+                else:
+                    print('An unknown error occurred.\n')
+                    return
 
             choice = self.print_smart_contract_methods(list_methods, contract)
             if choice != 0:
@@ -402,7 +418,7 @@ class CommandLineInterface:
                             if answer == 'Y' or answer == 'y':
                                 if view == 1:
                                     res = self.shards_controller.call_function(web3, functions[choice - 1],
-                                                                               choice - 1, parameters, contract,
+                                                                               parameters, contract,
                                                                                self.session.get_user().get_public_key(),
                                                                                password, None, None, view)
                                     print(f'Result: {str(res)}.\n')
@@ -426,23 +442,24 @@ class CommandLineInterface:
                                                                                                parameters, contract,
                                                                                                gas_limit, gas_price,
                                                                                                smart_contract_address)
-                                    print('The estimated cost of your transaction is: ' +str(estimate_cost)+ '\n')
+                                    print('The estimated cost of your transaction is: ' + str(estimate_cost) + '\n')
 
                                     while True:
                                         asw = input('Would you like to continue? (Y/N)')
                                         try:
                                             if asw == 'Y' or asw == 'y':
-                                                res, events = self.shards_controller.call_function(web3,
-                                                                                           functions[choice - 1],
-                                                                                           choice - 1, parameters,
+                                                res, events, event_names = self.shards_controller.call_function(web3,
+                                                                                           functions[choice - 1], parameters,
                                                                                            contract,
                                                                                            self.session.get_user().get_public_key(),
                                                                                            password, gas_price,
                                                                                            gas_limit, view)
                                                 print(f'Function called correctly, the transaction hash is:' + str(res['transactionHash']) + '.\n')
+                                                print('Events from smart contract')
                                                 if events != []:
-                                                    print('Events from smart contract:\n' + Fore.LIGHTYELLOW_EX + "\n".join("{0} {1}".format(k+": ", v) for k, v in events.items())
-                                                        + Style.RESET_ALL)
+                                                    for i in range(0, len(events)):
+                                                        print(Fore.LIGHTYELLOW_EX + "Event: "+event_names[i]+"\n" + "\n".join("{0} {1}".format("- "+k+": ", v) for k, v in events[i].items())
+                                                            + Style.RESET_ALL)
                                                     print("\n")
                                                 return
                                             if asw == 'N' or asw == 'n':
@@ -467,7 +484,7 @@ class CommandLineInterface:
                             print('Function invocation failed due to no matching argument types.\n')
                             return
                         except ContractLogicError:
-                            print('The smart contract address or the shard address specified do not match'
+                            print('The smart contract address or the shard address specified do not match '
                                   'any contract deployed on the blockchain.\n')
                             return
                         except Exception:

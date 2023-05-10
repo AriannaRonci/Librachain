@@ -24,7 +24,7 @@ class OnChainController:
         result = self.on_chain.functions.getAddressList(shard_address).call()
         return result
 
-    def add_to_dictionary(self, shard_address, contract_address, my_wallet, private_key):
+    def add_to_dictionary(self, shard_port, contract_address, my_wallet, private_key):
         """
 
         :param shard_address:
@@ -34,8 +34,9 @@ class OnChainController:
         :return:
         """
         try:
-            tx = self.on_chain.functions.addToDictionary(shard_address, contract_address).build_transaction(
-                {'from': my_wallet,
+            tx = self.on_chain.functions.addToDictionary(shard_port, contract_address).build_transaction(
+                {
+                 'from': my_wallet,
                  'gasPrice': self.w3.eth.gas_price,
                  'nonce': self.w3.eth.get_transaction_count(my_wallet)
                  }
@@ -48,7 +49,7 @@ class OnChainController:
         except Exception as ex:
             raise ex
 
-    def get_balance(self, shard_address):
-        result = self.on_chain.functions.getBalance(shard_address).call()
+    def is_valid_address(self, shard_port, contract_address):
+        result = self.on_chain.functions.isValidAddress(shard_port, contract_address).call()
         return result
 

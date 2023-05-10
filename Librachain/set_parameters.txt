@@ -1,2 +1,4 @@
 You can set the application parameters through this file:
+
+#the number of shards cannot be negative or higher than 8
 - Number of shards: 3
