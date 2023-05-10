@@ -22,6 +22,7 @@ class ShardsController:
         self.__shard_names, self.__shards = self.define_shards()
         self.session = session
         self.user_repo = UserRepository()
+        self.invoke_onchain = OnChainController()
 
     def get_shards(self):
         return self.__shards
@@ -33,7 +34,8 @@ class ShardsController:
         shard_names = []
         shards = []
         for i in range(1, self.__num_shards+1):
-            shards.append(base_shard + str(base_address+1))
+            base_address = base_address+1
+            shards.append(base_shard + str(base_address))
             shard_names.append(base_name + str(i))
         return shard_names, shards
 
@@ -89,9 +91,8 @@ class ShardsController:
             receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
             """
             receipt = w3.eth.wait_for_transaction_receipt(raw_tx)
-            invoke_onchain = OnChainController()
             shard = self.balance_load().provider.endpoint_uri
-            invoke_onchain.add_to_dictionary(shard, receipt['contractAddress'], wallet, private_key)
+            self.invoke_onchain.add_to_dictionary(int(shard.split('http://localhost:')[1]), receipt['contractAddress'], wallet, private_key)
             return receipt['contractAddress'], self.balance_load().provider.endpoint_uri
         except ContractLogicError as cle:
             raise cle
@@ -138,27 +139,27 @@ class ShardsController:
             contract_id, contract_interface = compiled_contract.popitem()
             abi = contract_interface['abi']
             bytecode = contract_interface['bin']
-            #invoke_onchain = OnChainController()
-            #valid_address = invoke_onchain.is_valid_address(shard, smart_contract_address)
-            #if valid_address:
-            w3 = Web3(Web3.HTTPProvider(shard))
-            contract = w3.eth.contract(address=smart_contract_address, abi=abi, bytecode=bytecode)
-            functions = contract.all_functions()
-            cli_functions = []
-            for i in range(0, len(functions)):
-                function = str(functions[i]).replace('<Function', '').replace('>', '')
-                cli_functions.append(function)
-            function_names = []
-            sep = '('
-            for i in range(0, len(cli_functions)):
-                stripped = cli_functions[i].split(sep, 1)[0].replace(' ', '')
-                function_names.append(stripped)
-            return cli_functions, contract, function_names, w3
+            valid_address = self.invoke_onchain.is_valid_address(int(shard.split('http://localhost:')[1]), smart_contract_address)
+            if valid_address:
+                w3 = Web3(Web3.HTTPProvider(shard))
+                contract = w3.eth.contract(address=smart_contract_address, abi=abi, bytecode=bytecode)
+                functions = contract.all_functions()
+                cli_functions = []
+                for i in range(0, len(functions)):
+                    function = str(functions[i]).replace('<Function', '').replace('>', '')
+                    cli_functions.append(function)
+                function_names = []
+                sep = '('
+                for i in range(0, len(cli_functions)):
+                    stripped = cli_functions[i].split(sep, 1)[0].replace(' ', '')
+                    function_names.append(stripped)
+                return cli_functions, contract, function_names, w3
+            else:
+                return -1
         except Exception as ex:
             raise ex
-            print(ex)
 
-    def call_function(self, w3, function_name, i, attributes, contract, my_wallet, password, gas_price, gas_limit, view):
+    def call_function(self, w3, function_name, attributes, contract, my_wallet, password, gas_price, gas_limit, view):
         """
         calls or transacts the function chosen by the user
         :param gas_limit:

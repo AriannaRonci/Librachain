@@ -376,8 +376,15 @@ class CommandLineInterface:
                     smart_contract_address,
                     file_path)
             except:
-                print('An unknown error occurred.\n')
-                return
+                if self.shards_controller.smart_contract_methods_by_sourcecode(shard,
+                                                                               smart_contract_address,
+                                                                               file_path) == -1:
+                    print('The smart contract address or the shard address specified do not match '
+                                  'any contract deployed on the blockchain.\n')
+                    return
+                else:
+                    print('An unknown error occurred.\n')
+                    return
 
             choice = self.print_smart_contract_methods(list_methods, contract)
             if choice != 0:
@@ -411,7 +418,7 @@ class CommandLineInterface:
                             if answer == 'Y' or answer == 'y':
                                 if view == 1:
                                     res = self.shards_controller.call_function(web3, functions[choice - 1],
-                                                                               choice - 1, parameters, contract,
+                                                                               parameters, contract,
                                                                                self.session.get_user().get_public_key(),
                                                                                password, None, None, view)
                                     print(f'Result: {str(res)}.\n')
@@ -435,15 +442,14 @@ class CommandLineInterface:
                                                                                                parameters, contract,
                                                                                                gas_limit, gas_price,
                                                                                                smart_contract_address)
-                                    print('The estimated cost of your transaction is: ' +str(estimate_cost)+ '\n')
+                                    print('The estimated cost of your transaction is: ' + str(estimate_cost) + '\n')
 
                                     while True:
                                         asw = input('Would you like to continue? (Y/N)')
                                         try:
                                             if asw == 'Y' or asw == 'y':
                                                 res, events, event_names = self.shards_controller.call_function(web3,
-                                                                                           functions[choice - 1],
-                                                                                           choice - 1, parameters,
+                                                                                           functions[choice - 1], parameters,
                                                                                            contract,
                                                                                            self.session.get_user().get_public_key(),
                                                                                            password, gas_price,

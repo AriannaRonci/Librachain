@@ -12,3 +12,5 @@ if __name__ == "__main__":
     cli = CommandLineInterface(session_obj)
     while True:
         cli.print_menu()
+
+
