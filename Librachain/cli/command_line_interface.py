@@ -118,7 +118,6 @@ class CommandLineInterface:
                 check_password = getpass.getpass('Confirm Password: ')
 
                 if not re.fullmatch(r'(?=.*?\d)(?=.*?[A-Z])(?=.*?[a-z])[A-Za-z0-9@#$%^&+=]{10,255}', password):
-                    print(password)
                     print('Password must contains at least 10 symbols, at least one digit, at least one uppercase '
                           'letter, at least one lowercase letter.\n')
                 elif password != check_password:
@@ -174,7 +173,7 @@ class CommandLineInterface:
 
     def change_password(self, username):
         while True:
-            response = input('Do you want to change your password (Y/N)?\n')
+            response = input('Do you want to change your password (Y/N)?')
             if response == 'Y' or response == 'y':
                 old_password = getpass.getpass('Old password: ')
 
@@ -183,7 +182,6 @@ class CommandLineInterface:
                     check_password = getpass.getpass('Confirm new password: ')
 
                     if not re.fullmatch(r'(?=.*?\d)(?=.*?[A-Z])(?=.*?[a-z])[A-Za-z0-9@#$%^&+=]{10,255}', new_password):
-                        print(new_password)
                         print('Password must contains at least 10 symbols, at least one digit, at least one uppercase '
                               'letter, at least one lowercase letter.\n')
                     elif new_password != check_password:
@@ -192,7 +190,10 @@ class CommandLineInterface:
                         break
 
                 if not self.controller.check_password(username, old_password):
-                    print("Submitted incorrect old password")
+                    print('Submitted incorrect old password.\n')
+                else:
+                    self.controller.change_password(username, new_password, old_password)
+                return
 
             elif response == 'N' or response == 'n':
                 return -1
@@ -298,8 +299,7 @@ class CommandLineInterface:
             else:
                 print(f'The estimated cost to deploy the smart contract is {str(estimate_cost)}.\n')
                 while True:
-                    print('Do you want proceed with the deploy (Y/N)?')
-                    response = input('')
+                    response = input('Do you want proceed with the deploy (Y/N)?')
                     if response == 'Y' or response == 'y':
                         try:
                             res, shard = self.shards_controller.deploy_smart_contract(file_path, gas_limit, gas_price,
@@ -632,8 +632,7 @@ class CommandLineInterface:
                 break
 
         while True:
-            print('Do you want proceed with the deletion (Y/N)?')
-            response = input('')
+            response = input('Do you want proceed with the deletion (Y/N)?')
             if response == 'Y' or response == 'y':
                 res = self.controller.delete_smart_contract(smart_contract[choice - 1])
                 return res
