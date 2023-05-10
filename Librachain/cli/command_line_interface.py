@@ -168,7 +168,7 @@ class CommandLineInterface:
             print(f'Time left until next attempt: {int(self.session.get_time_left_for_unlock())} seconds\n')
             return -2
 
-    def change_password(self, username):
+    def change_password(self, username: str):
         while True:
             response = input('Do you want to change your password (Y/N)?')
             if response == 'Y' or response == 'y':
@@ -499,7 +499,7 @@ class CommandLineInterface:
             print('\nIncorrect password.\nSorry but you can\'t proceed with invocation of a method of a smart '
                   'contract.\n')
 
-    def print_smart_contract_methods(self, list_methods: list, contract):
+    def print_smart_contract_methods(self, list_methods: list, contract: object):
         n = 0
 
         for i in list_methods:
