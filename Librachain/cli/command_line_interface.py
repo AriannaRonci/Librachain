@@ -224,6 +224,7 @@ class CommandLineInterface:
             self.print_retry_exit_menu()
 
     def print_user_options(self):
+        print('MENU')
         while True:
             for key in self.user_options.keys():
                 print(key, '--', self.user_options[key])
@@ -334,6 +335,7 @@ class CommandLineInterface:
     def read_smart_contract(self):
         file_path = input('\nEnter the path of your file (press 0 to go back): ')
         if file_path == '0':
+            print('\n')
             return file_path
         elif not os.path.exists(file_path) or not os.path.isfile(file_path):
             print(f'I did not find the file at {str(file_path)}.\n')
@@ -360,16 +362,22 @@ class CommandLineInterface:
                     break
 
             while True:
-                smart_contract_address = input('Enter smart contact address: ')
+                smart_contract_address = input('Enter smart contact address (press 0 to go back): ')
                 if is_address(smart_contract_address):
+                    print('\n')
                     break
+                elif smart_contract_address == '0':
+                    print('\n')
+                    return
                 elif not (is_address(smart_contract_address)):
                     print('Invalid smart contract address. Retry.\n')
 
             while True:
-                shard = input('Enter shard address: ')
+                shard = input('Enter shard address (press 0 to go back): ')
                 if shard in self.shards_controller.get_shards():
                     break
+                elif shard == '0':
+                    return
                 elif shard not in self.shards_controller.get_shards():
                     print('Invalid shard address. Retry.\n')
 
@@ -645,7 +653,7 @@ class CommandLineInterface:
                 print('Wrong input.\n')
 
     def retrieve_list_values(self):
-        print('Choose list values, press enter to stop choosing values.')
+        print('Choose list values, press Enter to stop choosing values.')
         l = []
         while True:
             list_value = input('Value: ')
