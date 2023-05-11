@@ -364,7 +364,6 @@ class CommandLineInterface:
             while True:
                 smart_contract_address = input('Enter smart contact address (press 0 to go back): ')
                 if is_address(smart_contract_address):
-                    print('\n')
                     break
                 elif smart_contract_address == '0':
                     print('\n')
@@ -515,7 +514,7 @@ class CommandLineInterface:
 
     def print_smart_contract_methods(self, list_methods: list, contract: object):
         n = 0
-
+        print('\nSmart Contract Methods:')
         for i in list_methods:
             for j in contract.abi:
                 if str(i.split('(')[0]).replace(" ", "") == str(j['name']).replace(" ", ""):
