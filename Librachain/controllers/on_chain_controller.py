@@ -6,6 +6,9 @@ solcx.install_solc('0.6.0')
 
 
 class OnChainController:
+    """
+    OnChainController communicates with the onchainmanger contract
+    """
 
     def __init__(self):
         with open('soliditycontracts/contract_address.txt', 'r') as f:
@@ -20,18 +23,15 @@ class OnChainController:
         self.address = contract_address
         self.on_chain = self.w3.eth.contract(address=self.address, abi=self.abi)
 
-    def get_address_list(self, shard_address):
-        result = self.on_chain.functions.getAddressList(shard_address).call()
-        return result
-
     def add_to_dictionary(self, shard_port, contract_address, my_wallet, private_key):
         """
-
-        :param shard_address:
-        :param contract_address:
-        :param my_wallet:
-        :param private_key:
+        Adds the shard_port and the contract_address to the mapping stored inside the onchainmanager contract
+        :param shard_port: port of the specified shard
+        :param contract_address: address of a contract
+        :param my_wallet: public key of the user
+        :param private_key: private key of the user
         :return:
+            - event true if the transaction goes well
         """
         try:
             tx = self.on_chain.functions.addToDictionary(shard_port, contract_address).build_transaction(
@@ -50,6 +50,15 @@ class OnChainController:
             raise ex
 
     def is_valid_address(self, shard_port, contract_address):
-        result = self.on_chain.functions.isValidAddress(shard_port, contract_address).call()
-        return result
+        """
+        Check if the contract with the specified address is deployed on the specified shard
+        :param shard_port: port of the shard
+        :param contract_address: contract of the address
+        :return: the result of the function called
+        """
+        try:
+            result = self.on_chain.functions.isValidAddress(shard_port, contract_address).call()
+            return result
+        except Exception as ex:
+            raise ex
 

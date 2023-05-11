@@ -25,9 +25,19 @@ class ShardsController:
         self.invoke_onchain = OnChainController()
 
     def get_shards(self):
+        """
+        Allows to get a list of shard addresses
+        :return: a list of shard addresses
+        """
         return self.__shards
 
     def define_shards(self):
+        """
+        Creates a list of shard names and shard addresses
+        :return:
+            - a list of shard names
+            - a list of shard addresses
+        """
         base_shard = 'http://localhost:'
         base_address = 8545
         base_name = 'shard'
@@ -41,7 +51,7 @@ class ShardsController:
 
     def create_contract(self, smart_contract_path):
         """
-        This class creates a contract object based on source code and chooses the w3 provider
+        Creates a contract object based on source code and chooses the w3 provider
         considering the load on the blockchain
         :param smart_contract_path: path of the source code of the smart contract
         :return: built contract and w3 provider
@@ -64,14 +74,14 @@ class ShardsController:
     def deploy_smart_contract(self, smart_contract_path, gas_limit, gas_price, wallet, password):
         """
         Deployes a smart contract
-        :param private_key: private key of user
         :param smart_contract_path: path of the source code of the smart contract
         :param gas_limit: gas limit of the smart contract to deploy
         :param gas_price: gas price of the smart contract to deploy
         :param wallet: wallet of the user
+        :param private_key: password of the user
         :return:
             - contract address if the try does not fail
-            - name of the choosed shard
+            - address of the chose shard
         """
         try:
             my_contract, w3 = self.create_contract(smart_contract_path)
@@ -162,16 +172,20 @@ class ShardsController:
     def call_function(self, w3, function_name, attributes, contract, my_wallet, password, gas_price, gas_limit, view):
         """
         calls or transacts the function chosen by the user
-        :param gas_limit:
-        :param gas_price:
-        :param password:
-        :param w3:
+        :param w3: provider to use to call the function
         :param function_name: name of the chosen function
-        :param i: index of the chosen function
         :param attributes: chosen attributes by the user
         :param contract: built contract by souce code and address
         :param my_wallet: wallet of the user
-        :return: return of the called function
+        :param password: password of the user
+        :param gas_limit: gas limit of the transaction
+        :param gas_price: gas price of the transaction
+        :param view: is true if the function to call is view
+        :return: if the try does not fail:
+            - receipt of the transaction
+            - list of events generated from calling the contract
+            - list of event names
+
         """
         try:
             calling_function = getattr(contract.functions, function_name)
@@ -212,14 +226,15 @@ class ShardsController:
     def estimate_methodcall(self, w3, function_name, attributes, contract, gas_price, gas_limit, contract_address):
         """
 
-        :param w3:
-        :param function_name:
-        :param attributes:
-        :param contract:
-        :param gas_price:
-        :param gas_limit:
-        :param contract_address:
-        :return:
+        :param w3: provider to use to call the function
+        :param function_name: name of the chosen function
+        :param attributes: chosen attributes by the user
+        :param contract: built contract by souce code and address
+        :param gas_limit: gas limit of the transaction
+        :param gas_price: gas price of the transaction
+        :param contract_address: address of the contract to call
+        :return: if the try does not fail:
+            - the gas estimated for calling the smart contract
         """
         try:
             calling_function = getattr(contract.functions, function_name)
@@ -231,13 +246,11 @@ class ShardsController:
             gas = w3.eth.estimate_gas(tx)
             return gas
         except Exception as ex:
-            print(ex)
             raise ex
     def balance_load(self):
         """
         Balances the load of the blockchain
-        :return: calculated provider to make next transaction is the
-                 try does not fail
+        :return: calculated provider to which deploy the contract if the try does not fail
         """
         shards_providers = []
         shards = {}
