@@ -153,11 +153,8 @@ class CommandLineInterface:
             if res == 0:
                 print('\nYou are logged in.\n')
                 if self.controller.check_password_obsolete(username, password):
-                    res = self.suggest_change_password(username)
-                    if res == 0:
-                        print('Password successfully changed.\n')
-                    elif res == -1:
-                        print('Password not changed.\n')
+                    print('It\'s been 3 months since your password was last changed. We suggest you change it.\n')
+                    self.change_password(username)
                 return 0
 
             elif res == -1:
@@ -171,7 +168,7 @@ class CommandLineInterface:
             print(f'Time left until next attempt: {int(self.session.get_time_left_for_unlock())} seconds\n')
             return -2
 
-    def change_password(self, username):
+    def change_password(self, username: str):
         while True:
             response = input('Do you want to change your password (Y/N)?')
             if response == 'Y' or response == 'y':
@@ -192,17 +189,17 @@ class CommandLineInterface:
                 if not self.controller.check_password(username, old_password):
                     print('Submitted incorrect old password.\n')
                 else:
-                    self.controller.change_password(username, new_password, old_password)
+                    res = self.controller.change_password(username, new_password, old_password)
+                    if res == 0:
+                        print('Password changed.\n')
+                    elif res == -1 or res == -2:
+                        print('Sorry, but something went wrong with the password change!\n')
                 return
 
             elif response == 'N' or response == 'n':
                 return -1
             else:
                 print('Wrong input.\n')
-
-    def suggest_change_password(self, username):
-            print('It\'s been 3 months since your password was last changed. We suggest you change it.\n')
-            self.change_password(username)
 
     def print_retry_exit_menu(self):
         for key in self.wrong_input_options.keys():
@@ -502,7 +499,7 @@ class CommandLineInterface:
             print('\nIncorrect password.\nSorry but you can\'t proceed with invocation of a method of a smart '
                   'contract.\n')
 
-    def print_smart_contract_methods(self, list_methods: list, contract):
+    def print_smart_contract_methods(self, list_methods: list, contract: object):
         n = 0
 
         for i in list_methods:

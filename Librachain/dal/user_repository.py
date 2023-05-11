@@ -39,7 +39,7 @@ class UserRepository:
         self.dklen_param = 64
 
         # 3 months in seconds
-        self.pw_obsolescence_time = 60*60*24*30
+        self.pw_obsolescence_time = 60 * 60 * 24 * 30
 
     def _create_table_if_not_exists(self):
         """Creates the user table in the db if it doesn't exist already"""
@@ -118,7 +118,7 @@ class UserRepository:
         if user_attr is not None:
             deployed_smart_contracts = self.get_user_smart_contracts(user_attr[0])
             user = User(user_attr[0], user_attr[1], user_attr[2],
-                        user_attr[3],user_attr[4], deployed_smart_contracts)
+                        user_attr[3], user_attr[4], deployed_smart_contracts)
             return user
 
         return None
@@ -146,14 +146,14 @@ class UserRepository:
                 INSERT INTO Users
                 (username, password_hash, public_key, private_key, password_edit_timestamp)
                 VALUES (?, ?, ?, ?, ?)""",
-                (
-                    username,
-                    hashed_password,
-                    public_key,
-                    encrypted_private_key,
-                    self.fernet_encrypt(str(time.time()), password)
-                )   
-            )
+                                (
+                                    username,
+                                    hashed_password,
+                                    public_key,
+                                    encrypted_private_key,
+                                    self.fernet_encrypt(str(time.time()), password)
+                                )
+                                )
             self.conn.commit()
             return 0
         except sqlite3.IntegrityError:
@@ -188,7 +188,7 @@ class UserRepository:
         key = base64.urlsafe_b64encode(password_hash)
         cipher_suite = Fernet(key)
         ciphertext = cipher_suite.encrypt(plaintext.encode('utf-8'))
-        return ciphertext 
+        return ciphertext
 
     def fernet_decrypt(self, ciphertext, password: str):
         password_hash = hashlib.sha256(password.encode('utf-8')).digest()
@@ -329,18 +329,17 @@ class UserRepository:
                     UPDATE Users
                     SET password_hash = ?, private_key = ?, password_edit_timestamp = ?
                     WHERE username = ?""",
-                    (password_hash,
-                     encrypted_private_key,
-                     self.fernet_encrypt(str(time.time()), new_password),
-                     username)
-                )
+                                    (password_hash,
+                                     encrypted_private_key,
+                                     self.fernet_encrypt(str(time.time()), new_password),
+                                     username)
+                                    )
                 self.conn.commit()
                 return 0
             except Exception as ex:
                 raise ex
         else:
             return -1
-
 
     def is_password_obsolete(self, username, password):
         try:
@@ -358,9 +357,9 @@ class UserRepository:
     def check_keys(self, username, password, public_key, private_key):
         user = self.get_user_by_username(username)
         if (
-            user is not None and self.check_password(username, password) and
-            user.get_public_key() == public_key and
-            private_key == self.decrypt_private_key(user.get_private_key(), password)
+                user is not None and self.check_password(username, password) and
+                user.get_public_key() == public_key and
+                private_key == self.decrypt_private_key(user.get_private_key(), password)
         ):
             return True
         else:
