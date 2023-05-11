@@ -246,7 +246,7 @@ class ShardsController:
             gas = w3.eth.estimate_gas(tx)
             return gas
         except Exception as ex:
-            raise ex
+            return -1
     def balance_load(self):
         """
         Balances the load of the blockchain
