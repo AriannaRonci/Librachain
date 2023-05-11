@@ -1,0 +1,152 @@
+version: '3'
+services:
+   node:
+      container_name: onchainmanager
+      image: trufflesuite/ganache-cli:latest
+      ports: 
+         - "8545:8545"
+      volumes:
+         - ./ganache_data:/ganache_data
+      entrypoint:
+         - node
+         - /app/ganache-core.docker.cli.js
+         - --mnemonic 
+         - 'On-Chain Manager'
+         - --hostname 
+         - '0.0.0.0' 
+
+   shard1:
+      container_name: shard1
+      image: trufflesuite/ganache-cli:latest
+      ports:
+         - "8546:8546"
+      volumes:
+         - ./ganache_data:/ganache_data
+      entrypoint:
+         - node
+         - /app/ganache-core.docker.cli.js
+         - --mnemonic
+         - 'Software Secutirity 1'
+         - --hostname
+         - '0.0.0.0'
+         - -p
+         - '8546'
+
+   shard2:
+      container_name: shard2
+      image: trufflesuite/ganache-cli:latest
+      ports:
+         - "8547:8547"
+      volumes:
+         - ./ganache_data:/ganache_data
+      entrypoint:
+         - node
+         - /app/ganache-core.docker.cli.js
+         - --mnemonic
+         - 'Software Secutirity 2'
+         - --hostname
+         - '0.0.0.0'
+         - -p
+         - '8547'
+
+   shard3:
+      container_name: shard3
+      image: trufflesuite/ganache-cli:latest
+      ports:
+         - "8548:8548"
+      volumes:
+         - ./ganache_data:/ganache_data
+      entrypoint:
+         - node
+         - /app/ganache-core.docker.cli.js
+         - --mnemonic
+         - 'Software Secutirity 3'
+         - --hostname
+         - '0.0.0.0'
+         - -p
+         - '8548'
+
+   shard4:
+      container_name: shard4
+      image: trufflesuite/ganache-cli:latest
+      ports:
+         - "8549:8549"
+      volumes:
+         - ./ganache_data:/ganache_data
+      entrypoint:
+         - node
+         - /app/ganache-core.docker.cli.js
+         - --mnemonic
+         - 'Software Secutirity 4'
+         - --hostname
+         - '0.0.0.0'
+         - -p
+         - '8549'
+
+   shard5:
+      container_name: shard5
+      image: trufflesuite/ganache-cli:latest
+      ports:
+         - "8550:8550"
+      volumes:
+         - ./ganache_data:/ganache_data
+      entrypoint:
+         - node
+         - /app/ganache-core.docker.cli.js
+         - --mnemonic
+         - 'Software Secutirity 5'
+         - --hostname
+         - '0.0.0.0'
+         - -p
+         - '8550'
+
+   shard6:
+      container_name: shard6
+      image: trufflesuite/ganache-cli:latest
+      ports:
+         - "8551:8551"
+      volumes:
+         - ./ganache_data:/ganache_data
+      entrypoint:
+         - node
+         - /app/ganache-core.docker.cli.js
+         - --mnemonic
+         - 'Software Secutirity 6'
+         - --hostname
+         - '0.0.0.0'
+         - -p
+         - '8551'
+
+   shard7:
+      container_name: shard7
+      image: trufflesuite/ganache-cli:latest
+      ports:
+         - "8552:8552"
+      volumes:
+         - ./ganache_data:/ganache_data
+      entrypoint:
+         - node
+         - /app/ganache-core.docker.cli.js
+         - --mnemonic
+         - 'Software Secutirity 7'
+         - --hostname
+         - '0.0.0.0'
+         - -p
+         - '8552'
+
+   shard8:
+      container_name: shard8
+      image: trufflesuite/ganache-cli:latest
+      ports:
+         - "8553:8553"
+      volumes:
+         - ./ganache_data:/ganache_data
+      entrypoint:
+         - node
+         - /app/ganache-core.docker.cli.js
+         - --mnemonic
+         - 'Software Secutirity 8'
+         - --hostname
+         - '0.0.0.0'
+         - -p
+         - '8553'
