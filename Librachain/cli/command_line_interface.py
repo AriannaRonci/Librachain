@@ -170,7 +170,7 @@ class CommandLineInterface:
 
     def change_password(self, username: str):
         while True:
-            response = input('Do you want to change your password (Y/N)?')
+            response = input('Do you want to change your password (Y/N)? ')
             if response == 'Y' or response == 'y':
                 old_password = getpass.getpass('Old password: ')
 
@@ -224,6 +224,7 @@ class CommandLineInterface:
             self.print_retry_exit_menu()
 
     def print_user_options(self):
+        print('MENU')
         while True:
             for key in self.user_options.keys():
                 print(key, '--', self.user_options[key])
@@ -274,7 +275,7 @@ class CommandLineInterface:
 
             while True:
                 try:
-                    gas_limit = int(input('Gas limit (in Gwei): '))
+                    gas_limit = int(input('\nGas limit (in Gwei): '))
                     break
                 except ValueError:
                     print('Wrong input. Please enter a number ...\n')
@@ -296,7 +297,7 @@ class CommandLineInterface:
             else:
                 print(f'The estimated cost to deploy the smart contract is {str(estimate_cost)}.\n')
                 while True:
-                    response = input('Do you want proceed with the deploy (Y/N)?')
+                    response = input('Do you want proceed with the deploy (Y/N)? ')
                     if response == 'Y' or response == 'y':
                         try:
                             res, shard = self.shards_controller.deploy_smart_contract(file_path, gas_limit, gas_price,
@@ -332,8 +333,9 @@ class CommandLineInterface:
             print('\nIncorrect password.\nSorry but you can\'t proceed with the deployment of Smart Contract.\n')
 
     def read_smart_contract(self):
-        file_path = input('Enter the path of your file (press 0 to go back): ')
+        file_path = input('\nEnter the path of your file (press 0 to go back): ')
         if file_path == '0':
+            print('\n')
             return file_path
         elif not os.path.exists(file_path) or not os.path.isfile(file_path):
             print(f'I did not find the file at {str(file_path)}.\n')
@@ -360,16 +362,21 @@ class CommandLineInterface:
                     break
 
             while True:
-                smart_contract_address = input('Enter smart contact address:')
+                smart_contract_address = input('Enter smart contact address (press 0 to go back): ')
                 if is_address(smart_contract_address):
                     break
+                elif smart_contract_address == '0':
+                    print('\n')
+                    return
                 elif not (is_address(smart_contract_address)):
                     print('Invalid smart contract address. Retry.\n')
 
             while True:
-                shard = input('Enter shard address:')
+                shard = input('Enter shard address (press 0 to go back): ')
                 if shard in self.shards_controller.get_shards():
                     break
+                elif shard == '0':
+                    return
                 elif shard not in self.shards_controller.get_shards():
                     print('Invalid shard address. Retry.\n')
 
@@ -416,7 +423,7 @@ class CommandLineInterface:
                                       + Style.RESET_ALL)
                                 view = 0
                     while True:
-                        answer = input('Would you like to continue? (Y/N)')
+                        answer = input('Would you like to continue (Y/N)? ')
                         try:
                             if answer == 'Y' or answer == 'y':
                                 if view == 1:
@@ -429,7 +436,7 @@ class CommandLineInterface:
                                 else:
                                     while True:
                                         try:
-                                            gas_limit = int(input('Gas limit (in Gwei): '))
+                                            gas_limit = int(input('\nGas limit (in Gwei): '))
                                             break
                                         except ValueError:
                                             print('Wrong input. Please enter a number ...\n')
@@ -445,10 +452,15 @@ class CommandLineInterface:
                                                                                                parameters, contract,
                                                                                                gas_limit, gas_price,
                                                                                                smart_contract_address)
-                                    print('The estimated cost of your transaction is: ' + str(estimate_cost) + '\n')
+
+                                    if estimate_cost != -1:
+                                        print('The estimated cost of your transaction is: ' + str(estimate_cost) + '\n')
+                                    else:
+                                        print('Execution reverted: base fee exceeds gas limit.\n')
+                                        return
 
                                     while True:
-                                        asw = input('Would you like to continue? (Y/N)')
+                                        asw = input('Would you like to continue (Y/N)? ')
                                         try:
                                             if asw == 'Y' or asw == 'y':
                                                 res, events, event_names = self.shards_controller.call_function(web3,
@@ -458,12 +470,13 @@ class CommandLineInterface:
                                                                                            password, gas_price,
                                                                                            gas_limit, view)
                                                 print(f'Function called correctly, the transaction hash is:' + str(res['transactionHash']) + '.\n')
-                                                print('Events from smart contract')
+
                                                 if events != []:
+                                                    print('Events from smart contract.')
                                                     for i in range(0, len(events)):
                                                         print(Fore.LIGHTYELLOW_EX + "Event: "+event_names[i]+"\n" + "\n".join("{0} {1}".format("- "+k+": ", v) for k, v in events[i].items())
                                                             + Style.RESET_ALL)
-                                                    print("\n")
+                                                    print('\n')
                                                 return
                                             if asw == 'N' or asw == 'n':
                                                 print('Execution Reverted.\n')
@@ -501,7 +514,7 @@ class CommandLineInterface:
 
     def print_smart_contract_methods(self, list_methods: list, contract: object):
         n = 0
-
+        print('\nSmart Contract Methods:')
         for i in list_methods:
             for j in contract.abi:
                 if str(i.split('(')[0]).replace(" ", "") == str(j['name']).replace(" ", ""):
@@ -629,7 +642,7 @@ class CommandLineInterface:
                 break
 
         while True:
-            response = input('Do you want proceed with the deletion (Y/N)?')
+            response = input('Do you want proceed with the deletion (Y/N)? ')
             if response == 'Y' or response == 'y':
                 res = self.controller.delete_smart_contract(smart_contract[choice - 1])
                 return res
@@ -639,7 +652,7 @@ class CommandLineInterface:
                 print('Wrong input.\n')
 
     def retrieve_list_values(self):
-        print('Choose list values, press enter to stop choosing values.')
+        print('Choose list values, press Enter to stop choosing values.')
         l = []
         while True:
             list_value = input('Value: ')
