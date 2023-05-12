@@ -72,5 +72,6 @@ for i in range(0, len(contracts)):
         shard_name = shard_names[j]
         logging.info('%s %s %s %s', a, c, shard_name, r)
 
+print('\nSome users have already deployed '+ str(len(contracts)) + ' contracts in ' + str(len(shards)) + ' different shards.')
+print('To interact with smart contracts deployed you can look at the "log.txt" file.')
 
-print(dict(receipt))
