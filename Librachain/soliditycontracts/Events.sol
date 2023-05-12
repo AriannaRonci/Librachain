@@ -1,17 +1,17 @@
 // SPDX-License-Identifier: GPL-3.0
 
-pragma solidity >=0.8.2 <0.9.0;
+pragma solidity >=0.6.0.0;
 
 /**
- * @title Storage
+ * @title Events
  * @dev Store & retrieve value in a variable
  * @custom:dev-run-script ./scripts/deploy_with_ethers.ts
  */
-contract Storage {
+contract Events {
 
     int [] public data = [int(50), -63, 77, -28, 90];  
     event Stored(bool result);
-    event Prova(int intero, string stringa);
+    event Success(int intero, string stringa);
     /**
      * @dev Store value in variable
      * @param num value to store
@@ -29,7 +29,7 @@ contract Storage {
         for (uint i=0; i<numbers.length; i++){
             data.push(numbers[i]);
             emit Stored(true);
-            emit Prova(8, 'ciao');
+            emit Success(0, 'Evento caricato con successo');
         }
     }
 }
