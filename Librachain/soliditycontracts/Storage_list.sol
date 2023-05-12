@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0
 
-pragma solidity >=0.8.2 <0.9.0;
+pragma solidity >=0.6.00;
 
 /**
- * @title Storage
+ * @title StorageList
  * @dev Store & retrieve value in a variable
  * @custom:dev-run-script ./scripts/deploy_with_ethers.ts
  */
-contract Storage {
+contract StorageList {
 
     int [] public data = [int(50), -63, 77, -28, 90];  
     /**
