@@ -174,26 +174,28 @@ class CommandLineInterface:
             if response == 'Y' or response == 'y':
                 old_password = getpass.getpass('Old password: ')
 
-                while True:
-                    new_password = getpass.getpass('New password: ')
-                    check_password = getpass.getpass('Confirm new password: ')
-
-                    if not re.fullmatch(r'(?=.*?\d)(?=.*?[A-Z])(?=.*?[a-z])[A-Za-z0-9@#$%^&+=]{10,255}', new_password):
-                        print('Password must contains at least 10 symbols, at least one digit, at least one uppercase '
-                              'letter, at least one lowercase letter.\n')
-                    elif new_password != check_password:
-                        print('Password and confirm password do not match.\n')
-                    else:
-                        break
-
                 if not self.controller.check_password(username, old_password):
-                    print('Submitted incorrect old password.\n')
+                    print('\nSubmitted incorrect old password.\n')
                 else:
+                    while True:
+                        new_password = getpass.getpass('New password: ')
+                        check_password = getpass.getpass('Confirm new password: ')
+
+                        if not re.fullmatch(r'(?=.*?\d)(?=.*?[A-Z])(?=.*?[a-z])[A-Za-z0-9@#$%^&+=]{10,255}',
+                                            new_password):
+                            print(
+                                'Password must contains at least 10 symbols, at least one digit, at least one uppercase '
+                                'letter, at least one lowercase letter.\n')
+                        elif new_password != check_password:
+                            print('Password and confirm password do not match.\n')
+                        else:
+                            break
+
                     res = self.controller.change_password(username, new_password, old_password)
                     if res == 0:
-                        print('Password changed.\n')
+                        print('\nPassword changed.\n')
                     elif res == -1 or res == -2:
-                        print('Sorry, but something went wrong with the password change!\n')
+                        print('\nSorry, but something went wrong with the password change!\n')
                 return
 
             elif response == 'N' or response == 'n':
@@ -224,8 +226,8 @@ class CommandLineInterface:
             self.print_retry_exit_menu()
 
     def print_user_options(self):
-        print('MENU')
         while True:
+            print('MENU')
             for key in self.user_options.keys():
                 print(key, '--', self.user_options[key])
             try:
@@ -234,7 +236,7 @@ class CommandLineInterface:
                     print('\nHandle option \'Option 1: Deploy Smart Contract.\'')
                     self.deploy_menu()
                 elif option == 2:
-                    print('\nHandle option \'Option 2: Invoke Smart Contract\' Method.\'')
+                    print('\nHandle option \'Option 2: Invoke Smart Contract\'s Method.\'')
                     self.invoke_method_menu()
                 elif option == 3:
                     print(
@@ -292,7 +294,7 @@ class CommandLineInterface:
                 print('Your gas limit is too low.\n')
                 return
             elif estimate_cost == -2:
-                print('An unknown error occurred.\n')
+                print('Execution reverted: base fee exceeds gas limit.\n.\n')
                 return
             else:
                 print(f'The estimated cost to deploy the smart contract is {str(estimate_cost)}.\n')
@@ -309,19 +311,13 @@ class CommandLineInterface:
                         except Exception:
                             print('An unknown error occurred.\n')
                             return
-                        if res == -1:
-                            print('Your gas limit is too low\n')
-                            return
-                        elif res == -2:
-                            print('Deployment failed\n')
-                            return
-                        else:
-                            print('Deployment was successful\n')
-                            print(f'Contract deployed at address: {str(res)}.\n')
-                            print(f'Shard address: {str(shard)}.\n')
-                            self.controller.insert_smart_contract(smart_contract_name, res, shard,
-                                                                  self.session.get_user())
-                            return
+
+                        print('Deployment was successful\n')
+                        print(f'Contract deployed at address: {str(res)}.\n')
+                        print(f'Shard address: {str(shard)}.\n')
+                        self.controller.insert_smart_contract(smart_contract_name, res, shard,
+                                                              self.session.get_user())
+                        return
 
                     elif response == 'N' or response == 'n':
                         print('Transaction cancelled\n')
