@@ -305,6 +305,8 @@ class CommandLineInterface:
                         constructor = constructor + str(i)
                         if j == len(constructor_parameters):
                             constructor = constructor + ')'
+                    print('\nThis smart contract requires parameters in constructor: ' + Fore.RED + str(constructor)
+                          + Style.RESET_ALL)
                     attr = self.print_parameters_methods(constructor, w3)
 
             estimate_cost = self.shards_controller.estimate(file_path, attr, gas_limit, gas_price)
@@ -312,7 +314,7 @@ class CommandLineInterface:
                 print('Your gas limit is too low.\n')
                 return
             elif estimate_cost == -2:
-                print('Execution reverted: base fee exceeds gas limit.\n.\n')
+                print('Execution reverted: base fee exceeds gas limit.\n')
                 return
             else:
                 print(f'The estimated cost to deploy the smart contract is {str(estimate_cost)}.\n')
@@ -574,7 +576,7 @@ class CommandLineInterface:
                             attributes.append(float(i))
                         elif str(i).startswith('bytes'):
                             #attributes.append(param)
-                            attributes.append(web3.to_bytes(text=param))
+                            attributes.append(web3.to_hex(hexstr=param))
                         elif str(i).startswith('string') or str(i).startswith('address'):
                             attributes.append(param)
 
@@ -599,7 +601,8 @@ class CommandLineInterface:
                         elif str(i).startswith('bytes'):
                             for i in range(0, len(list)):
                                 #casted_list.append(web3.to_bytes(text=list[i]))
-                                casted_list.append(web3.to_bytes(text=list[i]))
+                                casted_list.append(web3.to_hex(hexstr=list[i]))
+                                #casted_list.append(web3.to_bytes(text=list[i]))
                             attributes.append(casted_list)
                         elif str(i).startswith('string') or str(i).startswith('address'):
                             for i in range(0, len(list)):
