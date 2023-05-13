@@ -289,7 +289,25 @@ class CommandLineInterface:
                 except ValueError:
                     print('Wrong input. Please enter a number ...\n')
 
-            estimate_cost = self.shards_controller.estimate(file_path, gas_limit, gas_price)
+            try:
+                has_params, w3, constructor_parameters = self.shards_controller.check_parameters(file_path)
+            except:
+                print('An unknown error occurred.\n')
+                return
+            if has_params == -1:
+                attr = []
+            if has_params == 1:
+                constructor = 'constructor('
+                if constructor_parameters != []:
+                    j = 0
+                    for i in constructor_parameters:
+                        j = j+1
+                        constructor = constructor + str(i)
+                        if j == len(constructor_parameters):
+                            constructor = constructor + ')'
+                    attr = self.print_parameters_methods(constructor, w3)
+
+            estimate_cost = self.shards_controller.estimate(file_path, attr, gas_limit, gas_price)
             if estimate_cost == -1:
                 print('Your gas limit is too low.\n')
                 return
@@ -302,7 +320,7 @@ class CommandLineInterface:
                     response = input('Do you want proceed with the deploy (Y/N)? ')
                     if response == 'Y' or response == 'y':
                         try:
-                            res, shard = self.shards_controller.deploy_smart_contract(file_path, gas_limit, gas_price,
+                            res, shard = self.shards_controller.deploy_smart_contract(file_path, attr, gas_limit, gas_price,
                                                                                       self.session.get_user().get_public_key(),
                                                                                       password)
                         except ContractLogicError:
@@ -555,6 +573,7 @@ class CommandLineInterface:
                         elif str(i).startswith('fixed') or str(i).startswith('unfixed'):
                             attributes.append(float(i))
                         elif str(i).startswith('bytes'):
+                            #attributes.append(param)
                             attributes.append(web3.to_bytes(text=param))
                         elif str(i).startswith('string') or str(i).startswith('address'):
                             attributes.append(param)
@@ -579,6 +598,7 @@ class CommandLineInterface:
                             attributes.append(casted_list)
                         elif str(i).startswith('bytes'):
                             for i in range(0, len(list)):
+                                #casted_list.append(web3.to_bytes(text=list[i]))
                                 casted_list.append(web3.to_bytes(text=list[i]))
                             attributes.append(casted_list)
                         elif str(i).startswith('string') or str(i).startswith('address'):

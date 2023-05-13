@@ -71,7 +71,7 @@ class ShardsController:
         except Exception:
             raise Exception
 
-    def deploy_smart_contract(self, smart_contract_path, gas_limit, gas_price, wallet, password):
+    def deploy_smart_contract(self, smart_contract_path, attr, gas_limit, gas_price, wallet, password):
         """
         Deployes a smart contract
         :param smart_contract_path: path of the source code of the smart contract
@@ -85,12 +85,20 @@ class ShardsController:
         """
         try:
             my_contract, w3 = self.create_contract(smart_contract_path)
-            tx = my_contract.constructor().build_transaction({
-                                                     'gasPrice': int(gas_price),
-                                                     'gas': int(gas_limit),
-                                                     'from': wallet,
-                                                     'nonce': w3.eth.get_transaction_count(wallet)
-                                                     })
+            if attr == []:
+                tx = my_contract.constructor().build_transaction({
+                    'gasPrice': int(gas_price),
+                    'gas': int(gas_limit),
+                    'from': wallet,
+                    'nonce': w3.eth.get_transaction_count(wallet)
+                })
+            else:
+                tx = my_contract.constructor(*attr).build_transaction({
+                    'gasPrice': int(gas_price),
+                    'gas': int(gas_limit),
+                    'from': wallet,
+                    'nonce': w3.eth.get_transaction_count(wallet)
+                })
             private_key = self.user_repo.decrypt_private_key(self.session.get_user().get_private_key(), password)
             signed_tx = w3.eth.account.sign_transaction(tx, private_key=private_key)
             raw_tx = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
@@ -109,7 +117,7 @@ class ShardsController:
         except Exception as ex:
             raise ex
 
-    def estimate(self, smart_contract_path, gas_limit, gas_price):
+    def estimate(self, smart_contract_path, attr, gas_limit, gas_price):
         """
         Estimates the gas used for a certain transaction
         :param smart_contract_path: path of the source code of the smart contract
@@ -117,19 +125,43 @@ class ShardsController:
         :param gas_price: gas price of the transaction
         :return: the amount of gas estimated if the try does not fail
         """
-        my_contract, w3 = self.create_contract(smart_contract_path)
         try:
-            tx = my_contract.constructor().build_transaction({
-                'gasPrice': gas_price,
-                'gas': gas_limit
-            })
-            gas = w3.eth.estimate_gas(tx)
-            return gas
+            my_contract, w3 = self.create_contract(smart_contract_path)
+            if attr == []:
+                tx = my_contract.constructor().build_transaction({
+                    'gasPrice': gas_price,
+                    'gas': gas_limit
+                })
+                gas = w3.eth.estimate_gas(tx)
+                return gas
+            else:
+                tx = my_contract.constructor(*attr).build_transaction({
+                    'gasPrice': gas_price,
+                    'gas': gas_limit
+                })
+                gas = w3.eth.estimate_gas(tx)
+                return gas
         except ContractLogicError:
             return -1
-        except:
+        except Exception as ex:
+            print(ex)
             return -2
 
+    def check_parameters(self, smart_contract_path):
+        try:
+            my_contract, w3 = self.create_contract(smart_contract_path)
+            parameter_types = []
+            for i in my_contract.abi:
+                if i['type'] == 'constructor':
+                    if len(i['inputs'][0]) > 0:
+                        constructor = i['inputs']
+                        for j in constructor:
+                            parameter_types.append(j['type'])
+                        return 1, w3, parameter_types
+                else:
+                    return -1, w3, parameter_types
+        except Exception as ex:
+            raise ex
     def smart_contract_methods_by_sourcecode(self, shard, smart_contract_address, path_source_code):
         """
         Retrieves smart contract methods
