@@ -1,0 +1,12 @@
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Storage.sol;  shard1 contract address: 0xC89Ce4735882C9F0f0FE26686c53074E09B0D550
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Storage.sol;  shard2 contract address: 0xC89Ce4735882C9F0f0FE26686c53074E09B0D550
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Storage.sol;  shard3 contract address: 0xC89Ce4735882C9F0f0FE26686c53074E09B0D550
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Storage.sol;  shard1 contract address: 0xD833215cBcc3f914bD1C9ece3EE7BF8B14f841bb
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Storage.sol;  shard2 contract address: 0xD833215cBcc3f914bD1C9ece3EE7BF8B14f841bb
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Storage.sol;  shard3 contract address: 0xD833215cBcc3f914bD1C9ece3EE7BF8B14f841bb
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Storage_list.sol;  shard1 contract address: 0x9561C133DD8580860B6b7E504bC5Aa500f0f06a7
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Storage_list.sol;  shard2 contract address: 0x9561C133DD8580860B6b7E504bC5Aa500f0f06a7
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/Storage_list.sol;  shard3 contract address: 0x9561C133DD8580860B6b7E504bC5Aa500f0f06a7
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/OnChainManager.sol;  shard1 contract address: 0xe982E462b094850F12AF94d21D470e21bE9D0E9C
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/OnChainManager.sol;  shard2 contract address: 0xe982E462b094850F12AF94d21D470e21bE9D0E9C
+account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1;  contract: soliditycontracts/OnChainManager.sol;  shard3 contract address: 0xe982E462b094850F12AF94d21D470e21bE9D0E9C

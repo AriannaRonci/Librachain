@@ -27,6 +27,7 @@ then
 
 	if command -v python3 &> /dev/null
 	then
+		$py = 0
 		echo "python3 is installed"
 	else
 		echo "python3 not found, let's try python"
@@ -35,6 +36,7 @@ then
 			echo "python found, let's check version"
 			if [ "$(python --version)" > "Python 3" ];
 			then
+				$py = 1
 				echo "Python version ok!"
 			else
 				echo "Python version not compatible, please install python3"
@@ -48,19 +50,28 @@ then
 	echo "==============================================="
 	echo ""
 
-	pip3 install -r Librachain/requrements.txt
+	pip install -r Librachain/requirements.txt
 
 	echo ""
 	echo "==============================================="
 	echo "          Setting up docker environment 	     "
 	echo "==============================================="
-	echo ""
+	
+	docker-compose up -d
+	
+	echo "" 
 	echo ""
 	echo "==============================================="
 	echo "          Setting up containers 	     	     "
 	echo "==============================================="
 	echo ""
+
+	if [ $py==0 ];
+		then python3 Librachain/deploy_on_chain.py
+		     python3 Librachain/set_up.py
+		     python3 Librachain/main.py
+		
+	fi
 fi
 
 echo "Goodbye!"
-

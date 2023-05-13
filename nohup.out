@@ -1,0 +1,1378 @@
+ Container shard2  Created
+ Container shard6  Created
+ Container shard8  Created
+ Container shard7  Created
+ Container shard3  Created
+ Container shard4  Created
+ Container onchainmanager  Created
+ Container shard1  Created
+ Container shard5  Created
+Attaching to onchainmanager, shard1, shard2, shard3, shard4, shard5, shard6, shard7, shard8
+shard4          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard4          | 
+shard4          | Available Accounts
+shard4          | ==================
+shard4          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard4          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard4          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard4          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard4          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard4          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+shard4          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard4          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard4          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+shard4          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard4          | 
+shard4          | Private Keys
+shard4          | ==================
+shard4          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard4          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+shard4          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard4          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+shard4          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+shard4          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+shard4          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard4          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard4          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard4          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard4          | 
+shard4          | HD Wallet
+shard4          | ==================
+shard4          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard4          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard4          | 
+shard4          | Gas Price
+shard4          | ==================
+shard4          | 20000000000
+shard4          | 
+shard4          | Gas Limit
+shard4          | ==================
+shard4          | 1e+21
+shard4          | 
+shard4          | Call Gas Limit
+shard4          | ==================
+shard4          | 9007199254740991
+shard4          | 
+shard4          | Listening on 0.0.0.0:8549
+onchainmanager  | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard3          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard8          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard7          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard2          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+onchainmanager  | 
+shard3          | 
+shard3          | Available Accounts
+shard3          | ==================
+onchainmanager  | Available Accounts
+onchainmanager  | ==================
+shard3          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard3          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard3          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard3          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard3          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard3          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+onchainmanager  | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+onchainmanager  | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard3          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+onchainmanager  | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard3          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+onchainmanager  | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+onchainmanager  | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard3          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+onchainmanager  | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+onchainmanager  | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard3          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+onchainmanager  | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard3          | 
+shard3          | Private Keys
+onchainmanager  | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+onchainmanager  | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard3          | ==================
+onchainmanager  | 
+onchainmanager  | Private Keys
+onchainmanager  | ==================
+onchainmanager  | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard3          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard3          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+onchainmanager  | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+onchainmanager  | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard3          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+onchainmanager  | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+onchainmanager  | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+onchainmanager  | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+onchainmanager  | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard3          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+onchainmanager  | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+onchainmanager  | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard3          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+onchainmanager  | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard3          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+onchainmanager  | 
+onchainmanager  | HD Wallet
+onchainmanager  | ==================
+onchainmanager  | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+onchainmanager  | Base HD Path:  m/44'/60'/0'/0/{account_index}
+onchainmanager  | 
+onchainmanager  | Gas Price
+onchainmanager  | ==================
+shard3          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard3          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard3          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard3          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard1          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+onchainmanager  | 20000000000
+shard3          | 
+onchainmanager  | 
+onchainmanager  | Gas Limit
+shard3          | HD Wallet
+onchainmanager  | ==================
+shard3          | ==================
+onchainmanager  | 1e+21
+shard3          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard3          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard3          | 
+shard3          | Gas Price
+shard3          | ==================
+onchainmanager  | 
+onchainmanager  | Call Gas Limit
+onchainmanager  | ==================
+onchainmanager  | 9007199254740991
+onchainmanager  | 
+onchainmanager  | Listening on 0.0.0.0:8545
+shard3          | 20000000000
+shard3          | 
+shard3          | Gas Limit
+shard3          | ==================
+shard3          | 1e+21
+shard3          | 
+shard3          | Call Gas Limit
+shard3          | ==================
+shard3          | 9007199254740991
+shard3          | 
+shard3          | Listening on 0.0.0.0:8548
+shard5          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard8          | 
+shard8          | Available Accounts
+shard8          | ==================
+shard8          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard8          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard8          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard8          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard8          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard8          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+shard8          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard8          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard8          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+shard8          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard8          | 
+shard8          | Private Keys
+shard8          | ==================
+shard8          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard8          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+shard8          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard8          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+shard8          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+shard8          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+shard8          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard8          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard8          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard8          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard8          | 
+shard8          | HD Wallet
+shard8          | ==================
+shard8          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard8          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard8          | 
+shard8          | Gas Price
+shard8          | ==================
+shard8          | 20000000000
+shard8          | 
+shard8          | Gas Limit
+shard8          | ==================
+shard8          | 1e+21
+shard8          | 
+shard8          | Call Gas Limit
+shard8          | ==================
+shard8          | 9007199254740991
+shard8          | 
+shard8          | Listening on 0.0.0.0:8553
+shard7          | 
+shard7          | Available Accounts
+shard7          | ==================
+shard7          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard7          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard7          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard7          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard7          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard7          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+shard7          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard7          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard7          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+shard7          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard7          | 
+shard7          | Private Keys
+shard7          | ==================
+shard7          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard7          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+shard7          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard7          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+shard7          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+shard7          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+shard7          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard7          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard7          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard7          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard7          | 
+shard7          | HD Wallet
+shard7          | ==================
+shard7          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard7          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard7          | 
+shard7          | Gas Price
+shard7          | ==================
+shard7          | 20000000000
+shard7          | 
+shard7          | Gas Limit
+shard7          | ==================
+shard7          | 1e+21
+shard7          | 
+shard7          | Call Gas Limit
+shard7          | ==================
+shard7          | 9007199254740991
+shard7          | 
+shard7          | Listening on 0.0.0.0:8552
+shard2          | 
+shard2          | Available Accounts
+shard2          | ==================
+shard2          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard2          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard2          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard2          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard2          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard2          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+shard2          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard2          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard2          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+shard2          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard2          | 
+shard2          | Private Keys
+shard2          | ==================
+shard2          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard2          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+shard2          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard2          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+shard2          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+shard2          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+shard2          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard2          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard2          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard2          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard2          | 
+shard2          | HD Wallet
+shard2          | ==================
+shard2          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard2          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard2          | 
+shard2          | Gas Price
+shard2          | ==================
+shard2          | 20000000000
+shard2          | 
+shard2          | Gas Limit
+shard2          | ==================
+shard2          | 1e+21
+shard2          | 
+shard2          | Call Gas Limit
+shard2          | ==================
+shard2          | 9007199254740991
+shard2          | 
+shard2          | Listening on 0.0.0.0:8547
+shard1          | 
+shard1          | Available Accounts
+shard1          | ==================
+shard5          | 
+shard5          | Available Accounts
+shard5          | ==================
+shard1          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard1          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard1          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard1          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard5          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard5          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard1          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard5          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard5          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard1          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+shard5          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard1          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard5          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+shard5          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard1          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard5          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard5          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+shard1          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+shard5          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard5          | 
+shard5          | Private Keys
+shard5          | ==================
+shard5          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard5          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+shard5          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard5          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+shard5          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+shard5          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+shard5          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard5          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard5          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard1          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard5          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard5          | 
+shard5          | HD Wallet
+shard5          | ==================
+shard5          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard5          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard5          | 
+shard5          | Gas Price
+shard5          | ==================
+shard1          | 
+shard1          | Private Keys
+shard1          | ==================
+shard5          | 20000000000
+shard5          | 
+shard5          | Gas Limit
+shard5          | ==================
+shard5          | 1e+21
+shard1          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard1          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+shard5          | 
+shard5          | Call Gas Limit
+shard1          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard1          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+shard5          | ==================
+shard5          | 9007199254740991
+shard5          | 
+shard5          | Listening on 0.0.0.0:8550
+shard1          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+shard1          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+shard1          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard1          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard1          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard1          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard1          | 
+shard1          | HD Wallet
+shard1          | ==================
+shard1          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard1          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard1          | 
+shard1          | Gas Price
+shard1          | ==================
+shard1          | 20000000000
+shard1          | 
+shard1          | Gas Limit
+shard1          | ==================
+shard1          | 1e+21
+shard1          | 
+shard1          | Call Gas Limit
+shard1          | ==================
+shard1          | 9007199254740991
+shard1          | 
+shard1          | Listening on 0.0.0.0:8546
+shard6          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard6          | 
+shard6          | Available Accounts
+shard6          | ==================
+shard6          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard6          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard6          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard6          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard6          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard6          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+shard6          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard6          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard6          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+shard6          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard6          | 
+shard6          | Private Keys
+shard6          | ==================
+shard6          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard6          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+shard6          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard6          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+shard6          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+shard6          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+shard6          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard6          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard6          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard6          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard6          | 
+shard6          | HD Wallet
+shard6          | ==================
+shard6          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard6          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard6          | 
+shard6          | Gas Price
+shard6          | ==================
+shard6          | 20000000000
+shard6          | 
+shard6          | Gas Limit
+shard6          | ==================
+shard6          | 1e+21
+shard6          | 
+shard6          | Call Gas Limit
+shard6          | ==================
+shard6          | 9007199254740991
+shard6          | 
+shard6          | Listening on 0.0.0.0:8551
+Gracefully stopping... (press Ctrl+C again to force)
+Aborting on container exit...
+ Container shard5  Stopping
+ Container shard2  Stopping
+ Container shard4  Stopping
+ Container shard1  Stopping
+ Container onchainmanager  Stopping
+ Container shard6  Stopping
+ Container shard3  Stopping
+ Container shard7  Stopping
+ Container shard8  Stopping
+ Container shard2  Killing
+ Container shard4  Killing
+ Container shard5  Killing
+ Container shard1  Killing
+ Container shard7  Killing
+ Container shard8  Killing
+ Container onchainmanager  Killing
+ Container shard3  Killing
+ Container shard6  Killing
+ Container onchainmanager  Killed
+ Container onchainmanager  Stopped
+ Container shard4  Killed
+ Container shard4  Stopped
+ Container shard2  Stopped
+ Container shard2  Killed
+ Container shard8  Killed
+ Container shard8  Stopped
+ Container shard5  Killed
+ Container shard5  Stopped
+ Container shard3  Killed
+ Container shard3  Stopped
+ Container shard6  Killed
+ Container shard6  Stopped
+ Container shard1  Stopped
+ Container shard1  Killed
+ Container shard7  Stopped
+ Container shard7  Killed
+canceled
+ Container shard2  Created
+ Container onchainmanager  Created
+ Container shard1  Created
+ Container shard4  Created
+ Container shard6  Created
+ Container shard7  Created
+ Container shard3  Created
+ Container shard8  Created
+ Container shard5  Created
+Attaching to onchainmanager, shard1, shard2, shard3, shard4, shard5, shard6, shard7, shard8
+shard2          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+onchainmanager  | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard4          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard5          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard8          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard1          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard3          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard2          | 
+shard2          | Available Accounts
+shard2          | ==================
+shard2          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard2          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard2          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard2          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard2          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard2          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+shard2          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard2          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard2          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+shard2          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard2          | 
+shard2          | Private Keys
+shard2          | ==================
+shard2          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard2          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+shard2          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard2          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+shard2          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+shard2          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+shard2          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard2          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard2          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard2          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard2          | 
+shard2          | HD Wallet
+shard2          | ==================
+shard2          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard2          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard2          | 
+shard2          | Gas Price
+shard2          | ==================
+shard2          | 20000000000
+shard2          | 
+shard2          | Gas Limit
+shard2          | ==================
+shard2          | 1e+21
+shard2          | 
+shard2          | Call Gas Limit
+shard2          | ==================
+shard2          | 9007199254740991
+shard2          | 
+shard2          | Listening on 0.0.0.0:8547
+onchainmanager  | 
+onchainmanager  | Available Accounts
+onchainmanager  | ==================
+onchainmanager  | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+onchainmanager  | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+onchainmanager  | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+onchainmanager  | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+onchainmanager  | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+onchainmanager  | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+onchainmanager  | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+onchainmanager  | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+onchainmanager  | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+onchainmanager  | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+onchainmanager  | 
+onchainmanager  | Private Keys
+onchainmanager  | ==================
+onchainmanager  | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+onchainmanager  | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+onchainmanager  | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+onchainmanager  | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+onchainmanager  | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+onchainmanager  | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+onchainmanager  | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+onchainmanager  | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+onchainmanager  | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+onchainmanager  | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+onchainmanager  | 
+onchainmanager  | HD Wallet
+onchainmanager  | ==================
+onchainmanager  | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+onchainmanager  | Base HD Path:  m/44'/60'/0'/0/{account_index}
+onchainmanager  | 
+onchainmanager  | Gas Price
+onchainmanager  | ==================
+onchainmanager  | 20000000000
+onchainmanager  | 
+onchainmanager  | Gas Limit
+onchainmanager  | ==================
+onchainmanager  | 1e+21
+onchainmanager  | 
+onchainmanager  | Call Gas Limit
+onchainmanager  | ==================
+onchainmanager  | 9007199254740991
+onchainmanager  | 
+onchainmanager  | Listening on 0.0.0.0:8545
+shard4          | 
+shard4          | Available Accounts
+shard4          | ==================
+shard4          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard4          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard4          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard4          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard4          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard4          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+shard4          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard4          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard4          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+shard4          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard4          | 
+shard4          | Private Keys
+shard4          | ==================
+shard4          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard4          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+shard4          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard4          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+shard4          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+shard4          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+shard4          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard4          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard4          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard4          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard4          | 
+shard4          | HD Wallet
+shard4          | ==================
+shard4          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard4          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard4          | 
+shard4          | Gas Price
+shard4          | ==================
+shard4          | 20000000000
+shard4          | 
+shard4          | Gas Limit
+shard4          | ==================
+shard4          | 1e+21
+shard4          | 
+shard4          | Call Gas Limit
+shard4          | ==================
+shard4          | 9007199254740991
+shard4          | 
+shard4          | Listening on 0.0.0.0:8549
+shard5          | 
+shard5          | Available Accounts
+shard5          | ==================
+shard5          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard5          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard5          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard5          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard5          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard5          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+shard3          | 
+shard3          | Available Accounts
+shard5          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard3          | ==================
+shard5          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard5          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+shard5          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard3          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard5          | 
+shard5          | Private Keys
+shard5          | ==================
+shard5          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard3          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard3          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard5          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+shard5          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard5          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+shard5          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+shard5          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+shard5          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard5          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard5          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard5          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard5          | 
+shard5          | HD Wallet
+shard5          | ==================
+shard5          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard5          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard5          | 
+shard5          | Gas Price
+shard5          | ==================
+shard3          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard3          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard5          | 20000000000
+shard3          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+shard3          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard5          | 
+shard5          | Gas Limit
+shard5          | ==================
+shard5          | 1e+21
+shard5          | 
+shard5          | Call Gas Limit
+shard3          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard5          | ==================
+shard5          | 9007199254740991
+shard5          | 
+shard5          | Listening on 0.0.0.0:8550
+shard3          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+shard3          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard3          | 
+shard3          | Private Keys
+shard3          | ==================
+shard3          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard3          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+shard3          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard3          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+shard3          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+shard3          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+shard3          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard3          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard3          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard3          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard3          | 
+shard3          | HD Wallet
+shard3          | ==================
+shard3          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard3          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard3          | 
+shard3          | Gas Price
+shard3          | ==================
+shard3          | 20000000000
+shard3          | 
+shard3          | Gas Limit
+shard3          | ==================
+shard3          | 1e+21
+shard3          | 
+shard3          | Call Gas Limit
+shard3          | ==================
+shard3          | 9007199254740991
+shard3          | 
+shard3          | Listening on 0.0.0.0:8548
+shard7          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard8          | 
+shard8          | Available Accounts
+shard8          | ==================
+shard8          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard8          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard8          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard8          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard8          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard8          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+shard1          | 
+shard1          | Available Accounts
+shard1          | ==================
+shard8          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard8          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard8          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+shard8          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard8          | 
+shard8          | Private Keys
+shard8          | ==================
+shard8          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard8          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+shard8          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard8          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+shard8          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+shard8          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+shard8          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard1          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard8          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard8          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard8          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard8          | 
+shard8          | HD Wallet
+shard8          | ==================
+shard8          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard8          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard8          | 
+shard1          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard8          | Gas Price
+shard8          | ==================
+shard1          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard1          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard8          | 20000000000
+shard8          | 
+shard8          | Gas Limit
+shard8          | ==================
+shard8          | 1e+21
+shard1          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard8          | 
+shard8          | Call Gas Limit
+shard8          | ==================
+shard8          | 9007199254740991
+shard8          | 
+shard1          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+shard8          | Listening on 0.0.0.0:8553
+shard1          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard1          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard1          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+shard1          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard1          | 
+shard1          | Private Keys
+shard1          | ==================
+shard1          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard1          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+shard1          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard1          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+shard1          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+shard1          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+shard1          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard1          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard1          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard1          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard1          | 
+shard1          | HD Wallet
+shard1          | ==================
+shard1          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard1          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard1          | 
+shard1          | Gas Price
+shard1          | ==================
+shard1          | 20000000000
+shard1          | 
+shard1          | Gas Limit
+shard1          | ==================
+shard1          | 1e+21
+shard1          | 
+shard1          | Call Gas Limit
+shard1          | ==================
+shard1          | 9007199254740991
+shard1          | 
+shard1          | Listening on 0.0.0.0:8546
+shard6          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard7          | 
+shard7          | Available Accounts
+shard7          | ==================
+shard7          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard7          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard7          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard7          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard7          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard7          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+shard7          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard7          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard7          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+shard7          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard7          | 
+shard7          | Private Keys
+shard7          | ==================
+shard7          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard7          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+shard7          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard7          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+shard7          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+shard7          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+shard7          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard7          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard7          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard7          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard7          | 
+shard7          | HD Wallet
+shard7          | ==================
+shard7          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard7          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard7          | 
+shard7          | Gas Price
+shard7          | ==================
+shard7          | 20000000000
+shard7          | 
+shard7          | Gas Limit
+shard7          | ==================
+shard7          | 1e+21
+shard7          | 
+shard7          | Call Gas Limit
+shard7          | ==================
+shard7          | 9007199254740991
+shard7          | 
+shard7          | Listening on 0.0.0.0:8552
+shard6          | 
+shard6          | Available Accounts
+shard6          | ==================
+shard6          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard6          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard6          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard6          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard6          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard6          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+shard6          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard6          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard6          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+shard6          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard6          | 
+shard6          | Private Keys
+shard6          | ==================
+shard6          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard6          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+shard6          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard6          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+shard6          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+shard6          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+shard6          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard6          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard6          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard6          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard6          | 
+shard6          | HD Wallet
+shard6          | ==================
+shard6          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard6          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard6          | 
+shard6          | Gas Price
+shard6          | ==================
+shard6          | 20000000000
+shard6          | 
+shard6          | Gas Limit
+shard6          | ==================
+shard6          | 1e+21
+shard6          | 
+shard6          | Call Gas Limit
+shard6          | ==================
+shard6          | 9007199254740991
+shard6          | 
+shard6          | Listening on 0.0.0.0:8551
+ Container onchainmanager  Running
+ Container shard2  Running
+ Container shard7  Running
+ Container shard4  Running
+ Container shard1  Running
+ Container shard6  Running
+ Container shard5  Running
+ Container shard3  Running
+ Container shard8  Running
+Attaching to onchainmanager, shard1, shard2, shard3, shard4, shard5, shard6, shard7, shard8
+shard7 exited with code 0
+shard7 exited with code 0
+shard1 exited with code 0
+shard1 exited with code 0
+shard2 exited with code 0
+shard2 exited with code 0
+shard6 exited with code 0
+shard6 exited with code 0
+shard5 exited with code 0
+shard5 exited with code 0
+shard4 exited with code 0
+shard4 exited with code 0
+onchainmanager exited with code 0
+onchainmanager exited with code 0
+shard3 exited with code 0
+shard3 exited with code 0
+shard8 exited with code 0
+shard8 exited with code 0
+ Container shard4  Created
+ Container shard1  Created
+ Container shard8  Created
+ Container shard2  Created
+ Container onchainmanager  Created
+ Container shard5  Created
+ Container shard7  Created
+ Container shard3  Created
+ Container shard6  Created
+Attaching to onchainmanager, shard1, shard2, shard3, shard4, shard5, shard6, shard7, shard8
+shard2          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard1          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard8          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard7          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard3          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard8          | 
+shard8          | Available Accounts
+shard8          | ==================
+shard8          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard8          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard8          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard8          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard8          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard8          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+shard8          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard8          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard8          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+shard8          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard8          | 
+shard8          | Private Keys
+shard8          | ==================
+shard8          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard8          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+shard8          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard8          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+shard8          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+shard8          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+shard8          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard8          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard8          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard8          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard8          | 
+shard8          | HD Wallet
+shard8          | ==================
+shard8          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard8          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard8          | 
+shard8          | Gas Price
+shard8          | ==================
+shard8          | 20000000000
+shard8          | 
+shard8          | Gas Limit
+shard8          | ==================
+shard8          | 1e+21
+shard8          | 
+shard8          | Call Gas Limit
+shard8          | ==================
+shard8          | 9007199254740991
+shard8          | 
+shard8          | Listening on 0.0.0.0:8553
+shard2          | 
+shard2          | Available Accounts
+shard2          | ==================
+shard2          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard2          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard2          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard2          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard2          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard2          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+shard2          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard2          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard2          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+shard2          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard1          | 
+shard1          | Available Accounts
+shard1          | ==================
+shard2          | 
+shard2          | Private Keys
+shard2          | ==================
+shard2          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard2          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+shard2          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard2          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+shard2          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+shard2          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+shard2          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard2          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard2          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard2          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard2          | 
+shard2          | HD Wallet
+shard2          | ==================
+shard2          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard2          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard2          | 
+shard2          | Gas Price
+shard2          | ==================
+shard2          | 20000000000
+shard2          | 
+shard2          | Gas Limit
+shard2          | ==================
+shard2          | 1e+21
+shard2          | 
+shard2          | Call Gas Limit
+shard2          | ==================
+shard2          | 9007199254740991
+shard2          | 
+shard2          | Listening on 0.0.0.0:8547
+shard1          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard1          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard1          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard1          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard1          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard1          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+shard1          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard1          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard1          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+shard1          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard1          | 
+shard1          | Private Keys
+shard1          | ==================
+shard1          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard1          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+shard1          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard1          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+shard1          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+shard1          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+shard1          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard1          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard1          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard1          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard1          | 
+shard1          | HD Wallet
+shard1          | ==================
+shard1          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard1          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard1          | 
+shard1          | Gas Price
+shard1          | ==================
+shard1          | 20000000000
+shard1          | 
+shard1          | Gas Limit
+shard1          | ==================
+shard1          | 1e+21
+shard1          | 
+shard1          | Call Gas Limit
+shard1          | ==================
+shard1          | 9007199254740991
+shard1          | 
+shard1          | Listening on 0.0.0.0:8546
+onchainmanager  | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard4          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard7          | 
+shard7          | Available Accounts
+shard7          | ==================
+shard7          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard7          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard7          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard7          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard7          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard7          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+shard7          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard7          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard7          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+shard7          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard7          | 
+shard7          | Private Keys
+shard7          | ==================
+shard7          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard7          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+shard7          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard7          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+shard7          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+shard7          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+shard7          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard7          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard7          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard7          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard7          | 
+shard7          | HD Wallet
+shard7          | ==================
+shard7          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard7          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard7          | 
+shard7          | Gas Price
+shard7          | ==================
+shard7          | 20000000000
+shard7          | 
+shard7          | Gas Limit
+shard7          | ==================
+shard7          | 1e+21
+shard7          | 
+shard7          | Call Gas Limit
+shard7          | ==================
+shard7          | 9007199254740991
+shard7          | 
+shard7          | Listening on 0.0.0.0:8552
+shard3          | 
+shard3          | Available Accounts
+shard3          | ==================
+shard3          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard3          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard3          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard3          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard3          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard3          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+shard3          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard3          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard3          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+shard3          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard3          | 
+shard3          | Private Keys
+shard3          | ==================
+shard3          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard3          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+shard3          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard3          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+shard3          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+shard3          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+shard3          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard3          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard3          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard3          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard3          | 
+shard3          | HD Wallet
+shard3          | ==================
+shard3          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard3          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard3          | 
+shard3          | Gas Price
+shard3          | ==================
+shard3          | 20000000000
+shard3          | 
+shard3          | Gas Limit
+shard3          | ==================
+shard3          | 1e+21
+shard3          | 
+shard3          | Call Gas Limit
+shard3          | ==================
+shard3          | 9007199254740991
+shard3          | 
+shard3          | Listening on 0.0.0.0:8548
+onchainmanager  | 
+onchainmanager  | Available Accounts
+onchainmanager  | ==================
+onchainmanager  | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+onchainmanager  | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+onchainmanager  | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+onchainmanager  | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+onchainmanager  | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+onchainmanager  | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+onchainmanager  | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+onchainmanager  | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+onchainmanager  | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+onchainmanager  | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+onchainmanager  | 
+onchainmanager  | Private Keys
+onchainmanager  | ==================
+onchainmanager  | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+onchainmanager  | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+onchainmanager  | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+onchainmanager  | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+onchainmanager  | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+onchainmanager  | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+onchainmanager  | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+onchainmanager  | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+onchainmanager  | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+onchainmanager  | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+onchainmanager  | 
+onchainmanager  | HD Wallet
+onchainmanager  | ==================
+onchainmanager  | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+onchainmanager  | Base HD Path:  m/44'/60'/0'/0/{account_index}
+onchainmanager  | 
+onchainmanager  | Gas Price
+onchainmanager  | ==================
+shard4          | 
+onchainmanager  | 20000000000
+onchainmanager  | 
+onchainmanager  | Gas Limit
+shard4          | Available Accounts
+onchainmanager  | ==================
+shard4          | ==================
+onchainmanager  | 1e+21
+onchainmanager  | 
+onchainmanager  | Call Gas Limit
+onchainmanager  | ==================
+onchainmanager  | 9007199254740991
+onchainmanager  | 
+onchainmanager  | Listening on 0.0.0.0:8545
+shard4          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard4          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard4          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard4          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard4          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard4          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+shard4          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard4          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard4          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+shard4          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard4          | 
+shard4          | Private Keys
+shard4          | ==================
+shard4          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard4          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+shard4          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard4          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+shard4          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+shard4          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+shard4          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard4          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard4          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard4          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard4          | 
+shard4          | HD Wallet
+shard4          | ==================
+shard4          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard4          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard4          | 
+shard4          | Gas Price
+shard4          | ==================
+shard4          | 20000000000
+shard4          | 
+shard4          | Gas Limit
+shard4          | ==================
+shard4          | 1e+21
+shard4          | 
+shard4          | Call Gas Limit
+shard4          | ==================
+shard4          | 9007199254740991
+shard4          | 
+shard4          | Listening on 0.0.0.0:8549
+shard6          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard5          | Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+shard6          | 
+shard6          | Available Accounts
+shard6          | ==================
+shard6          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard6          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard6          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard6          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard6          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard6          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+shard6          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard6          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard6          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+shard6          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard6          | 
+shard6          | Private Keys
+shard6          | ==================
+shard6          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard6          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+shard6          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard6          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+shard6          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+shard6          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+shard6          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard6          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard6          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard5          | 
+shard5          | Available Accounts
+shard6          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard6          | 
+shard6          | HD Wallet
+shard6          | ==================
+shard6          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard6          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard6          | 
+shard6          | Gas Price
+shard6          | ==================
+shard5          | ==================
+shard6          | 20000000000
+shard6          | 
+shard6          | Gas Limit
+shard6          | ==================
+shard6          | 1e+21
+shard6          | 
+shard6          | Call Gas Limit
+shard6          | ==================
+shard6          | 9007199254740991
+shard6          | 
+shard6          | Listening on 0.0.0.0:8551
+shard5          | (0) 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 (100 ETH)
+shard5          | (1) 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 (100 ETH)
+shard5          | (2) 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b (100 ETH)
+shard5          | (3) 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d (100 ETH)
+shard5          | (4) 0xd03ea8624C8C5987235048901fB614fDcA89b117 (100 ETH)
+shard5          | (5) 0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC (100 ETH)
+shard5          | (6) 0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9 (100 ETH)
+shard5          | (7) 0x28a8746e75304c0780E011BEd21C72cD78cd535E (100 ETH)
+shard5          | (8) 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E (100 ETH)
+shard5          | (9) 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e (100 ETH)
+shard5          | 
+shard5          | Private Keys
+shard5          | ==================
+shard5          | (0) 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+shard5          | (1) 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1
+shard5          | (2) 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c
+shard5          | (3) 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913
+shard5          | (4) 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743
+shard5          | (5) 0x395df67f0c2d2d9fe1ad08d1bc8b6627011959b79c53d7dd6a3536a33ab8a4fd
+shard5          | (6) 0xe485d098507f54e7733a205420dfddbe58db035fa577fc294ebd14db90767a52
+shard5          | (7) 0xa453611d9419d0e56f499079478fd72c37b251a94bfde4d19872c44cf65386e3
+shard5          | (8) 0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4
+shard5          | (9) 0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773
+shard5          | 
+shard5          | HD Wallet
+shard5          | ==================
+shard5          | Mnemonic:      myth like bonus scare over problem client lizard pioneer submit female collect
+shard5          | Base HD Path:  m/44'/60'/0'/0/{account_index}
+shard5          | 
+shard5          | Gas Price
+shard5          | ==================
+shard5          | 20000000000
+shard5          | 
+shard5          | Gas Limit
+shard5          | ==================
+shard5          | 1e+21
+shard5          | 
+shard5          | Call Gas Limit
+shard5          | ==================
+shard5          | 9007199254740991
+shard5          | 
+shard5          | Listening on 0.0.0.0:8550
+Gracefully stopping... (press Ctrl+C again to force)
+Aborting on container exit...
+ Container shard2  Stopping
+ Container shard4  Stopping
+ Container shard7  Stopping
+ Container shard5  Stopping
+ Container onchainmanager  Stopping
+ Container shard1  Stopping
+ Container shard8  Stopping
+ Container shard3  Stopping
+ Container shard6  Stopping
+ Container shard5  Killing
+ Container shard2  Killing
+ Container shard1  Killing
+ Container shard4  Killing
+ Container onchainmanager  Killing
+ Container shard8  Killing
+ Container shard3  Killing
+ Container shard7  Killing
+ Container shard6  Killing
+ Container shard7  Stopped
+ Container shard7  Killed
+ Container shard4  Stopped
+ Container shard4  Killed
+ Container shard6  Killed
+ Container shard6  Stopped
+ Container shard1  Stopped
+ Container shard1  Killed
+ Container shard8  Killed
+ Container shard8  Stopped
+ Container shard5  Killed
+ Container shard5  Stopped
+ Container onchainmanager  Killed
+ Container onchainmanager  Stopped
+ Container shard2  Stopped
+ Container shard2  Killed
+ Container shard3  Stopped
+ Container shard3  Killed
+canceled
