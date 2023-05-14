@@ -69,7 +69,7 @@ then
 	shards_numbers=$(grep "shards_number" config/configuration.yml | grep -o "[0-9]")
 	regex="shard[1-$shards_numbers]+"
 	services=$(grep -oE "$regex" docker-compose.yml | uniq | tr '\n' ' ')
-	! docker-compose up -d $services &&  exit
+	! sudo docker-compose up -d $services &&  exit
 	
 	echo "" 
 	echo ""
