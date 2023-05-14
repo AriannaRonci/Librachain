@@ -13,6 +13,21 @@ To run our application you need to have installed:
 * [Docker](https://docs.docker.com/engine/install/)
 * [Docker-compose](https://docs.docker.com/compose/install/linux/)
 
+#### Setting up the solidity compiler
+
+The solidity compiler can be installed in different ways, such as using your operating system packet manager or pip.
+Make sure `solc` is in your PATH (e.g. by adding $HOME/.local/bin to your path if you have installed it via pip).
+The newer solidity compiler versions has some compatibility problems with the other libraries. 
+We highly suggest to install the 0.8.19 solidity compiler version in order to avoid them. 
+The `solc-select` package allows to switch between different versions, if you have installed it you can run:
+
+```
+solc-select install 0.8.19
+solc-select use 0.8.19
+```
+
+This will ensure that you are using the 0.8.19 solidity compiler version.
+
 ### How to setup our program in your PC 
 
 * [Setup in UNIX-like OS's](#setupunix)
@@ -30,11 +45,11 @@ To run our application you need to have installed:
   chmod +x install.sh
   ./install.sh
 ```
-4. Finally you can run the *run.sh* file to start the program. Again, remeber to make this file executable before executing it.
+4. Finally you can run the *main.py* file to start the program. 
 ```
-  chmod +x run.sh
-  ./run.sh
+  python3 main.py
 ```
+
 
 <a name="setupwin"></a>
 #### Setup in Windows
@@ -44,24 +59,9 @@ To setup the application on windows, you need to run the following files in the 
 3. `set_up.py` (optional)
 4. `main.py`
 
-#### Setting up the solidity compiler
-
-The solidity compiler can be installed in different ways, such as using your operating system packet manager or pip.
-Make sure `solc` is in your PATH (e.g. by adding $HOME/.local/bin to your path if you have installed it via pip).
-The newer solidity compiler versions has some compatibility problems with the other libraries. 
-We highly suggest to install the 0.8.19 solidity compiler version in order to avoid them. 
-The `solc-select` package allows to switch between different versions, if you have installed it you can run:
-
-
-```
-solc-select install 0.8.19
-solc-select use 0.8.19
-```
-
-This will ensure that you are using the 0.8.19 solidity compiler version.
 
 ### Documentation
-In this section you can find the documentation of our project: [Documentation](mettilink)
+In this section you can find the documentation of our project: [Documentation](https://github.com/OT-Rax/swsb-project/blob/main/docs/software_security_and_block_chain_project.pdf)
 
 ### Contributors
 | Contributor name | Contacts |
