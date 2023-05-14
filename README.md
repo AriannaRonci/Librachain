@@ -34,6 +34,11 @@ To run our application you need to have installed:
 
 <a name="setupwin"></a>
 #### Setup in Windows
+To setup the application on windows, you need to run the following files in the specified order:
+1. `docker-compose.yml`
+2. `deploy_on_chain.py`
+3. `set_up.py` (optional)
+4. `main.py`
 
 
 
