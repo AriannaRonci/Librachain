@@ -1,4 +1,6 @@
-# swsb-project
+<div style="text-align:center"><img src="https://github.com/OT-Rax/swsb-project/blob/main/logo.png" width="200"></div>
+
+# Librachain project
 Software Security and Blockchain course project.
 The goal is implementing blockchain sharding by splitting the distributed ledger into multiple blockchains.
 
@@ -6,6 +8,8 @@ The goal is implementing blockchain sharding by splitting the distributed ledger
 To run our application you need to have installed:
 * [Python3.10 or higher](https://www.python.org/downloads/release/python-3100/)
 * [Pip](https://pip.pypa.io/en/stable/installation/)
+* [Solc 0.8.19](https://docs.soliditylang.org/en/latest/installing-solidity.html)
+* [Solc-select](https://pypi.org/project/solc-select/)
 * [Docker](https://docs.docker.com/engine/install/)
 * [Docker-compose](https://docs.docker.com/compose/install/linux/)
 
