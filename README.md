@@ -1,4 +1,4 @@
-<div style="text-align:center"><img src="https://github.com/OT-Rax/swsb-project/blob/main/logo.png" width="200"></div>
+<div style="text-align:center"><img src="https://github.com/OT-Rax/swsb-project/blob/main/docs/figures/logo.png" width="200"></div>
 
 # Librachain project
 Software Security and Blockchain course project.
