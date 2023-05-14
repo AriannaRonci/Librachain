@@ -257,7 +257,7 @@ class CommandLineInterface:
                     self.session.set_user(None)
                     return
                 else:
-                    print('Invalid option. Please enter a number between 1 and 5.\n')
+                    print('Invalid option. Please enter a number between 1 and 6.\n')
             except ValueError:
                 print('Wrong input. Please enter a number ...\n')
 
