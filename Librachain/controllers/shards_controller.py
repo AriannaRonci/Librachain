@@ -71,26 +71,35 @@ class ShardsController:
         except Exception:
             raise Exception
 
-    def deploy_smart_contract(self, smart_contract_path, gas_limit, gas_price, wallet, password):
+    def deploy_smart_contract(self, smart_contract_path, attr, gas_limit, gas_price, wallet, password):
         """
         Deployes a smart contract
         :param smart_contract_path: path of the source code of the smart contract
         :param gas_limit: gas limit of the smart contract to deploy
         :param gas_price: gas price of the smart contract to deploy
         :param wallet: wallet of the user
-        :param private_key: password of the user
+        :param password: password of the user
+        :param attr: parameters in constructor
         :return:
             - contract address if the try does not fail
             - address of the chose shard
         """
         try:
             my_contract, w3 = self.create_contract(smart_contract_path)
-            tx = my_contract.constructor().build_transaction({
-                                                     'gasPrice': int(gas_price),
-                                                     'gas': int(gas_limit),
-                                                     'from': wallet,
-                                                     'nonce': w3.eth.get_transaction_count(wallet)
-                                                     })
+            if attr == []:
+                tx = my_contract.constructor().build_transaction({
+                    'gasPrice': int(gas_price),
+                    'gas': int(gas_limit),
+                    'from': wallet,
+                    'nonce': w3.eth.get_transaction_count(wallet)
+                })
+            else:
+                tx = my_contract.constructor(*attr).build_transaction({
+                    'gasPrice': int(gas_price),
+                    'gas': int(gas_limit),
+                    'from': wallet,
+                    'nonce': w3.eth.get_transaction_count(wallet)
+                })
             private_key = self.user_repo.decrypt_private_key(self.session.get_user().get_private_key(), password)
             signed_tx = w3.eth.account.sign_transaction(tx, private_key=private_key)
             raw_tx = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
@@ -109,26 +118,52 @@ class ShardsController:
         except Exception as ex:
             raise ex
 
-    def estimate(self, smart_contract_path, gas_limit, gas_price):
+    def estimate(self, smart_contract_path, attr, gas_limit, gas_price):
         """
         Estimates the gas used for a certain transaction
         :param smart_contract_path: path of the source code of the smart contract
+        :param attr: parameters of constructor
         :param gas_limit: gas limit of the transaction
         :param gas_price: gas price of the transaction
         :return: the amount of gas estimated if the try does not fail
         """
-        my_contract, w3 = self.create_contract(smart_contract_path)
         try:
-            tx = my_contract.constructor().build_transaction({
-                'gasPrice': gas_price,
-                'gas': gas_limit
-            })
-            gas = w3.eth.estimate_gas(tx)
-            return gas
+            my_contract, w3 = self.create_contract(smart_contract_path)
+            if attr == []:
+                tx = my_contract.constructor().build_transaction({
+                    'gasPrice': gas_price,
+                    'gas': gas_limit
+                })
+                gas = w3.eth.estimate_gas(tx)
+                return gas
+            else:
+                tx = my_contract.constructor(*attr).build_transaction({
+                    'gasPrice': gas_price,
+                    'gas': gas_limit
+                })
+                gas = w3.eth.estimate_gas(tx)
+                return gas
         except ContractLogicError:
             return -1
-        except:
+        except Exception as ex:
+            print(ex)
             return -2
+
+    def check_parameters(self, smart_contract_path):
+        try:
+            my_contract, w3 = self.create_contract(smart_contract_path)
+            parameter_types = []
+            for i in my_contract.abi:
+                if i['type'] == 'constructor':
+                    if len(i['inputs'][0]) > 0:
+                        constructor = i['inputs']
+                        for j in constructor:
+                            parameter_types.append(j['type'])
+                        return 1, w3, parameter_types
+                else:
+                    return -1, w3, parameter_types
+        except Exception as ex:
+            raise ex
 
     def smart_contract_methods_by_sourcecode(self, shard, smart_contract_address, path_source_code):
         """
@@ -225,7 +260,7 @@ class ShardsController:
 
     def estimate_methodcall(self, w3, function_name, attributes, contract, gas_price, gas_limit, contract_address):
         """
-
+        estimate the cost of calling a function
         :param w3: provider to use to call the function
         :param function_name: name of the chosen function
         :param attributes: chosen attributes by the user
@@ -247,6 +282,7 @@ class ShardsController:
             return gas
         except Exception as ex:
             return -1
+
     def balance_load(self):
         """
         Balances the load of the blockchain
@@ -258,17 +294,6 @@ class ShardsController:
             for i in range(1, self.__num_shards+1):
                 shards_providers.append(Web3(HTTPProvider(self.__shards[i-1])))
                 shards.update({self.__shard_names[i-1]: shards_providers[i-1].eth.block_number})
-            #shard1 = Web3(HTTPProvider('http://localhost:8545'))
-            #shard2 = Web3(HTTPProvider('http://localhost:8546'))
-            #shard3 = Web3(HTTPProvider('http://localhost:8547'))
-            #shards_providers = [shard1, shard2, shard3]
-            #shards_name = ['shard1', 'shard2', 'shard3']
-
-            #shards = {
-            #    shards_name[0]: shard1.eth.block_number,
-            #    shards_name[1]: shard2.eth.block_number,
-            #    shards_name[2]: shard3.eth.block_number
-            #}
             for i in range(0, len(shards)):
                 if i == 0:
                     chosen_shard = shards_providers[i]

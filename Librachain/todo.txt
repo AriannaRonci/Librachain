@@ -1,3 +1,4 @@
 aggiungi l'autoselezione di solc-select
 - controllo su duplicate key
-- firma con chiave privata nell'invocazione dei metodi 
+- firma con chiave privata nell'invocazione dei metodi
+- inserire solc nei requirements
