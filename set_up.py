@@ -6,7 +6,20 @@ from config import config
 
 solcx.install_solc('0.6.0')
 
-num_of_shards = config.config["shards_number"]
+n_of_shards = config.config["shards_number"]
+try:
+    if int(n_of_shards) > 8:
+        num_of_shards = 8
+    elif int(n_of_shards) <= 0:
+        num_of_shards = 1
+    else:
+        num_of_shards = int(n_of_shards)
+except Exception:
+    num_of_shards = 3
+
+print(num_of_shards)
+
+
 base_shard = 'http://localhost:'
 base_address = 8546
 base_name = 'shard'

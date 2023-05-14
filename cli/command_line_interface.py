@@ -44,12 +44,15 @@ class CommandLineInterface:
 
     def get_application_parameters(self):
         num_of_shards = config.config["shards_number"]
-        if int(num_of_shards) > 8:
-            return 8
-        elif int(num_of_shards) <= 0:
-            return 1
-        else:
-            return int(num_of_shards)
+        try:
+            if int(num_of_shards) > 8:
+                return 8
+            elif int(num_of_shards) <= 0:
+                return 1
+            else:
+                return int(num_of_shards)
+        except Exception:
+            return 3
 
     def print_menu(self):
         for key in self.menu_options.keys():
