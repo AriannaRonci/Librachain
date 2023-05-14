@@ -17,7 +17,6 @@ try:
 except Exception:
     num_of_shards = 3
 
-print(num_of_shards)
 
 
 base_shard = 'http://localhost:'
