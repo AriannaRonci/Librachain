@@ -63,7 +63,6 @@ then
 	services=$(grep -oE "$regex" docker-compose.yml | uniq | tr '\n' ' ')
 	! sudo docker-compose up -d onchain $services &&  exit
 	
-	echo "" 
 	echo ""
 	echo "==============================================="
 	echo "            Setting up containers 	     "
@@ -72,6 +71,15 @@ then
 
 	! ($python_command deploy_on_chain.py && $python_command set_up.py) && exit
 
+	echo ""
+	echo "==============================================="
+	echo "            Setting up database 	     	     "
+	echo "==============================================="
+	echo ""
+
+	rm -f db/librachain
+
+	echo ""
 	echo "==============================================="
 	echo "        Librachain installed correctly! 	     "
 	echo "==============================================="
