@@ -55,21 +55,13 @@ then
 
 	echo ""
 	echo "==============================================="
-	echo "          Seting up solidity compiler 	     "
-	echo "==============================================="
-	echo ""
-		
-	solc-select use 0.8.19
-
-	echo ""
-	echo "==============================================="
 	echo "          Setting up docker environment 	     "
 	echo "==============================================="
 	 
 	shards_numbers=$(grep "shards_number" config/configuration.yml | grep -o "[0-9]")
 	regex="shard[1-$shards_numbers]+"
 	services=$(grep -oE "$regex" docker-compose.yml | uniq | tr '\n' ' ')
-	! sudo docker-compose up -d $services &&  exit
+	! sudo docker-compose up -d onchain $services &&  exit
 	
 	echo "" 
 	echo ""
