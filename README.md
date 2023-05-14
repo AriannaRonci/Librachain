@@ -37,7 +37,7 @@ This will ensure that you are using the 0.8.19 solidity compiler version.
 #### Setup in UNIX-like OS's
 1. First you need to clone this repository.
 ```
-  git clone https://github.com/OT-Rax/swsb-project
+  git clone https://github.com/OT-Rax/librachain
 ```
 2. You can change the configuration parameters in the *configuration.yml* file inside the config folder.
 3. Then, you need to run the *install.sh* file. In order to do this, you first need to make this file executable with the command *chmod +x install.sh*. This file will start the containers.
