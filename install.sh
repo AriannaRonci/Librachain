@@ -55,6 +55,14 @@ then
 
 	echo ""
 	echo "==============================================="
+	echo "          Seting up solidity compiler 	     "
+	echo "==============================================="
+	echo ""
+		
+	solc-select use 0.8.19
+
+	echo ""
+	echo "==============================================="
 	echo "          Setting up docker environment 	     "
 	echo "==============================================="
 	 
@@ -66,14 +74,15 @@ then
 	echo "" 
 	echo ""
 	echo "==============================================="
-	echo "          Setting up containers 	     	     "
+	echo "            Setting up containers 	     "
 	echo "==============================================="
 	echo ""
 
-	$python_command deploy_on_chain.py
-	$python_command set_up.py
-	$python_command main.py
-		
+	! ($python_command deploy_on_chain.py && $python_command set_up.py) && exit
+
+	echo "==============================================="
+	echo "        Librachain installed correctly! 	     "
+	echo "==============================================="
 fi
 
 echo "Goodbye!"
