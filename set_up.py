@@ -2,15 +2,11 @@ import logging
 import solcx
 from web3 import Web3, HTTPProvider
 from solcx import compile_standard, compile_source
+from config import config
 
 solcx.install_solc('0.6.0')
 
-with open('set_parameters.txt', 'r') as f:
-    for line in f:
-        line_to_read = '- Number of shards:'
-        if line.startswith(line_to_read):
-            num_of_shards = line.split(line_to_read, 1)[1]
-
+num_of_shards = config.config["shards_number"]
 base_shard = 'http://localhost:'
 base_address = 8546
 base_name = 'shard'
