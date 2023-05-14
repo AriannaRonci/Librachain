@@ -1,4 +1,4 @@
-<div style="text-align:center"><img src="https://github.com/OT-Rax/swsb-project/blob/main/logo.png" width="200"></div>
+<div style="text-align:center"><img src="https://github.com/OT-Rax/swsb-project/blob/main/docs/figures/logo.png" width="200"></div>
 
 # Librachain project
 Software Security and Blockchain course project.
@@ -45,11 +45,11 @@ This will ensure that you are using the 0.8.19 solidity compiler version.
   chmod +x install.sh
   ./install.sh
 ```
-4. Finally you can run the *run.sh* file to start the program. Again, remeber to make this file executable before executing it.
+4. Finally you can run the *main.py* file to start the program. 
 ```
-  chmod +x run.sh
-  ./run.sh
+  python3 main.py
 ```
+
 
 <a name="setupwin"></a>
 #### Setup in Windows
@@ -61,7 +61,7 @@ To setup the application on windows, you need to run the following files in the 
 
 
 ### Documentation
-In this section you can find the documentation of our project: [Documentation](mettilink)
+In this section you can find the documentation of our project: [Documentation](https://github.com/OT-Rax/swsb-project/blob/main/docs/software_security_and_block_chain_project.pdf)
 
 ### Contributors
 | Contributor name | Contacts |
