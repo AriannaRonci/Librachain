@@ -146,7 +146,7 @@ class ShardsController:
         except ContractLogicError:
             return -1
         except Exception as ex:
-            print(ex)
+            #print(ex)
             return -2
 
     def check_parameters(self, smart_contract_path):

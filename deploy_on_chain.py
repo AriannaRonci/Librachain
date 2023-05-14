@@ -24,9 +24,9 @@ while True:
 		# Deploy the contract
 		contract_address = '0x2612Af3A521c2df9EAF28422Ca335b04AdF3ac66'
 
-		MyContract = web3.eth.contract(abi=contract_abi,
-		bytecode=contract_bytecode)
+		MyContract = web3.eth.contract(abi=contract_abi, bytecode=contract_bytecode)
 		tx_hash = MyContract.constructor().transact({'from': account})
+
 		receipt = web3.eth.wait_for_transaction_receipt(tx_hash)
 
 		logging.basicConfig(filename='soliditycontracts/contract_address.txt', filemode='w', level=logging.DEBUG, format='')

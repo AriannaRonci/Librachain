@@ -82,10 +82,10 @@ class CommandLineInterface:
         public_key = input('Public Key: ')
 
         while True:
-            private_key = input('Private Key: ')
-            # private_key = getpass.getpass('Private Key: ')
-            check_private_key = input('Confirm Private Key: ')
-            # check_private_key = getpass.getpass('Confirm Private Key: ')
+            #private_key = input('Private Key: ')
+            private_key = getpass.getpass('Private Key: ')
+            #check_private_key = input('Confirm Private Key: ')
+            check_private_key = getpass.getpass('Confirm Private Key: ')
             if private_key == check_private_key:
                 break
             else:
@@ -137,8 +137,8 @@ class CommandLineInterface:
 
         if self.session.get_time_left_for_unlock() <= 0 and self.controller.check_number_attempts():
             public_key = input('Public Key: ')
-            private_key = input('Private Key: ')
-            # private_key = getpass.getpass('Private Key: ')
+            #private_key = input('Private Key: ')
+            private_key = getpass.getpass('Private Key: ')
             username = input('Username: ')
             password = getpass.getpass('Password: ')
             res = self.controller.login(username, password, public_key, private_key)
