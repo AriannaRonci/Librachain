@@ -17,7 +17,7 @@ To run our application you need to have installed:
 
 The solidity compiler can be installed in different ways, such as using your operating system packet manager or pip.
 Make sure `solc` is in your PATH (e.g. by adding $HOME/.local/bin to your path if you have installed it via pip).
-The newer solidity compiler versions has some compatibility problems with the other libraries. 
+The newer solidity compiler versions have some compatibility problems with the other libraries. 
 We highly suggest to install the 0.8.19 solidity compiler version in order to avoid them. 
 The `solc-select` package allows to switch between different versions, if you have installed it you can run:
 
