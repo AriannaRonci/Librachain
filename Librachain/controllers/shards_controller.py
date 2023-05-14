@@ -78,7 +78,8 @@ class ShardsController:
         :param gas_limit: gas limit of the smart contract to deploy
         :param gas_price: gas price of the smart contract to deploy
         :param wallet: wallet of the user
-        :param private_key: password of the user
+        :param password: password of the user
+        :param attr: parameters in constructor
         :return:
             - contract address if the try does not fail
             - address of the chose shard
@@ -121,6 +122,7 @@ class ShardsController:
         """
         Estimates the gas used for a certain transaction
         :param smart_contract_path: path of the source code of the smart contract
+        :param attr: parameters of constructor
         :param gas_limit: gas limit of the transaction
         :param gas_price: gas price of the transaction
         :return: the amount of gas estimated if the try does not fail
@@ -162,6 +164,7 @@ class ShardsController:
                     return -1, w3, parameter_types
         except Exception as ex:
             raise ex
+
     def smart_contract_methods_by_sourcecode(self, shard, smart_contract_address, path_source_code):
         """
         Retrieves smart contract methods
@@ -257,7 +260,7 @@ class ShardsController:
 
     def estimate_methodcall(self, w3, function_name, attributes, contract, gas_price, gas_limit, contract_address):
         """
-
+        estimate the cost of calling a function
         :param w3: provider to use to call the function
         :param function_name: name of the chosen function
         :param attributes: chosen attributes by the user
@@ -279,6 +282,7 @@ class ShardsController:
             return gas
         except Exception as ex:
             return -1
+
     def balance_load(self):
         """
         Balances the load of the blockchain
@@ -290,17 +294,6 @@ class ShardsController:
             for i in range(1, self.__num_shards+1):
                 shards_providers.append(Web3(HTTPProvider(self.__shards[i-1])))
                 shards.update({self.__shard_names[i-1]: shards_providers[i-1].eth.block_number})
-            #shard1 = Web3(HTTPProvider('http://localhost:8545'))
-            #shard2 = Web3(HTTPProvider('http://localhost:8546'))
-            #shard3 = Web3(HTTPProvider('http://localhost:8547'))
-            #shards_providers = [shard1, shard2, shard3]
-            #shards_name = ['shard1', 'shard2', 'shard3']
-
-            #shards = {
-            #    shards_name[0]: shard1.eth.block_number,
-            #    shards_name[1]: shard2.eth.block_number,
-            #    shards_name[2]: shard3.eth.block_number
-            #}
             for i in range(0, len(shards)):
                 if i == 0:
                     chosen_shard = shards_providers[i]
