@@ -45,11 +45,11 @@ This will ensure that you are using the 0.8.19 solidity compiler version.
   chmod +x install.sh
   ./install.sh
 ```
-4. Finally you can run the *run.sh* file to start the program. Again, remeber to make this file executable before executing it.
+4. Finally you can run the *main.py* file to start the program. 
 ```
-  chmod +x run.sh
-  ./run.sh
+  python3 main.py
 ```
+
 
 <a name="setupwin"></a>
 #### Setup in Windows
