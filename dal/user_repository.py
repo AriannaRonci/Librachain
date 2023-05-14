@@ -254,6 +254,16 @@ class UserRepository:
             raise ex
 
     def get_smart_contract_by_address(self, address, shard):
+        """Retrieves smart contract from db.
+
+        Args:
+            address: string, smart contract address
+            shard: integer, shard where the smart contract is deployed
+        Returns:
+            A SmartContract object corresponding to the given adress
+        Raises:
+            A generic exception if the smart contract doesn't exist.
+        """
         try:
             row = self.cursor.execute("SELECT * FROM SmartContracts WHERE shard=? and address=?",
                                       (shard, address)).fetchone()
@@ -290,6 +300,16 @@ class UserRepository:
             return -2
 
     def delete_deployed_smart_contract(self, smart_contract: SmartContract):
+        """Deletes a smart contract from db.
+
+        Args:
+            smart_contract: SmartContract model to delete in db
+        Returns:
+            An integer that identifies the result:
+                  0: smart contract deleted correctly
+                 -1: invalid entry
+                 -2: unknown database error
+        """
         try:
             self.cursor.execute("DELETE FROM SmartContracts WHERE id=?", (smart_contract.get_id(),))
             self.conn.commit()
@@ -306,16 +326,14 @@ class UserRepository:
         Record's password_edit_timestamp is updated to current timestamp.
 
         Args:
-            username: 
-            new_password:
-            old_password:
+            username: string
+            new_password: string
+            old_password: string
         Returns:
              0: succesfully changed password
             -1: user entry not found in db
         Raises:
             The exception raised by the db when runnin the query
-
-        TODO: missing args
         """
 
         user = self.get_user_by_username(username)
@@ -342,6 +360,18 @@ class UserRepository:
             return -1
 
     def is_password_obsolete(self, username, password):
+        """Checks if a user's password is obsolete.
+        
+        Args:
+            username: string, username whose password needs to be checked
+            password: string, usern's passwords
+        Returns:
+            True: password is obsolete           
+            False: password not obsolete    
+        Raises:
+            Generic exception
+        """
+
         try:
             password_edit_timestamp = self.cursor.execute("""
                 SELECT password_edit_timestamp FROM Users
@@ -355,6 +385,17 @@ class UserRepository:
             raise ex
 
     def check_keys(self, username, password, public_key, private_key):
+        """Checks if a user's password, public key and private key match in the db.
+        
+        Args:
+            username: string, username whose keys needs to be checked
+            password: string, usern's passwords
+            public_key: string, supplied public key
+            private_key:  string, supplied private key
+        Returns:
+            True: keys match
+            False: keys don't match
+        """
         user = self.get_user_by_username(username)
         if (
                 user is not None and self.check_password(username, password) and
