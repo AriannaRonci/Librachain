@@ -61,7 +61,7 @@ To setup the application on windows, you need to run the following files in the 
 
 
 ### Documentation
-In this section you can find the documentation of our project: [Documentation](mettilink)
+In this section you can find the documentation of our project: [Documentation](https://github.com/OT-Rax/swsb-project/blob/main/docs/software_security_and_block_chain_project.pdf)
 
 ### Contributors
 | Contributor name | Contacts |
